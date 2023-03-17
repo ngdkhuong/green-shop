@@ -1213,12 +1213,34 @@ ul.cart-list>li.total>.btn:hover {
     color: #ffffff;
 }
 
+.mask-icon button.cart {
+    background: #49be25;
+    position: absolute;
+    bottom: 0;
+    left: 0px;
+    padding: 10px 20px;
+    font-weight: 700;
+    color: #ffffff;
+    border: none;
+    cursor: pointer;
+}
+
 .mask-icon a.cart:hover {
     background: #000000;
     color: #ffffff;
 }
 
+.mask-icon button.cart:hover {
+    background: #000000;
+    color: #ffffff;
+}
+
 .mask-icon ul li a:hover {
+    background: #000000;
+    color: #ffffff;
+}
+
+.mask-icon ul li button:hover {
     background: #000000;
     color: #ffffff;
 }

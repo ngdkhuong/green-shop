@@ -1,9 +1,11 @@
+<?php session_start(); ?>
 <?php include_once('../lib/db.php'); ?>
+<?php include_once('../lib/function.php'); ?>
 <?php include_once('../lib/category.class.php'); ?>
 <?php include_once('../lib/administrator.class.php'); ?>
 <?php include_once('../lib/role.class.php'); ?>
 <?php include_once('../lib/product.class.php'); ?>
-<?php 
+<?php
 $category = new Category;
 $administrator = new Administrator;
 $product = new Product;
@@ -53,31 +55,32 @@ $product = new Product;
         <div class="container-fluid">
             <div class="row">
                 <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-					<div class="custom-select-box">
+                    <div class="custom-select-box">
                         <select id="basic" class="selectpicker show-tick form-control" data-placeholder="$ USD">
-							<option>¥ JPY</option>
-							<option>$ USD</option>
-							<option>€ EUR</option>
-						</select>
+                            <option>¥ JPY</option>
+                            <option>$ USD</option>
+                            <option>€ EUR</option>
+                        </select>
                     </div>
                     <div class="right-phone-box">
                         <p>Call US :- <a href=""> +11 900 800 100</a></p>
                     </div>
                     <div class="our-link">
                         <ul>
-                            <li><a href=""><i class="fa fa-user s_color"></i> My Account</a></li>
+                            <li><a href="my-account.php"><i class="fa fa-user s_color"></i> My Account</a></li>
                             <li><a href=""><i class="fas fa-location-arrow"></i> Our location</a></li>
-                            <li><a href=""><i class="fas fa-headset"></i> Contact Us</a></li>
+                            <li><a href="contact-us.php"><i class="fas fa-headset"></i> Contact Us</a></li>
                         </ul>
                     </div>
                 </div>
                 <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-					<div class="login-box">
-						<select id="basic" class="selectpicker show-tick form-control" data-placeholder="Sign In">
-							<option>Register Here</option>
-							<option>Sign In</option>
-						</select>
-					</div>
+                    <div class="login-box">
+                        <select class="selectpicker show-tick form-control" onchange="location = this.options[this.selectedIndex].value;" data-title="Login" data-placeholder="Sign In">
+                            <option value="signup.php">Register Here</option>
+                            <option value="login.php">Sign in</option>
+                        </select>
+                    </div>
+
                     <div class="text-slid-box">
                         <div id="offer-box" class="carouselTicker">
                             <ul class="offer-box">
@@ -103,11 +106,12 @@ $product = new Product;
                                     <i class="fab fa-opencart"></i> 20% off Entire Purchase Promo code: offT30
                                 </li>
                                 <li>
-                                    <i class="fab fa-opencart"></i> Off 50%! Shop Now 
+                                    <i class="fab fa-opencart"></i> Off 50%! Shop Now
                                 </li>
                             </ul>
                         </div>
                     </div>
+
                 </div>
             </div>
         </div>
@@ -122,8 +126,8 @@ $product = new Product;
                 <!-- Start Header Navigation -->
                 <div class="navbar-header">
                     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-menu" aria-controls="navbars-rs-food" aria-expanded="false" aria-label="Toggle navigation">
-                    <i class="fa fa-bars"></i>
-                </button>
+                        <i class="fa fa-bars"></i>
+                    </button>
                     <a class="navbar-brand" href="index.php"><img src="../assets/images/logo.png" class="logo" alt=""></a>
                 </div>
                 <!-- End Header Navigation -->
@@ -134,61 +138,119 @@ $product = new Product;
                         <li class="nav-item active"><a class="nav-link" href="index.php">Home</a></li>
                         <li class="nav-item"><a class="nav-link" href="about.php">About Us</a></li>
                         <li class="dropdown">
-                            <a href="" class="nav-link dropdown-toggle arrow" data-toggle="dropdown">SHOP</a>
+                            <a href="shop.php" class="nav-link dropdown-toggle arrow" data-toggle="dropdown">SHOP</a>
                             <ul class="dropdown-menu">
-								<li><a href="shop.php">Sidebar Shop</a></li>
-								<li><a href="shop-detail.php">Shop Detail</a></li>
-                                <li><a href="cart.php">Cart</a></li>
-                                <li><a href="checkout.php">Checkout</a></li>
-                                <li><a href="my-account.php">My Account</a></li>
-                                <li><a href="wishlist.php">Wishlist</a></li>
+                                <?php
+                                $rows = $administrator->getAllBrands();
+                                foreach ($rows as $row) { ?>
+                                    <li><a href="store.php?id_brand=<?php echo $row['id_admin'] ?>"><?php echo $row['name_brand'] ?></a></li>
+                                <?php }
+                                ?>
                             </ul>
+
                         </li>
                         <li class="nav-item"><a class="nav-link" href="gallery.php">Gallery</a></li>
                         <li class="nav-item"><a class="nav-link" href="contact-us.php">Contact Us</a></li>
                     </ul>
                 </div>
                 <!-- /.navbar-collapse -->
+                <?php
+                if (!isset($_SESSION['sort-view'])) {
+                    $_SESSION['sort-view'] = 0;
+                }
+                if (isset($_POST['sort-view'])) {
+                    $_SESSION['sort-view'] = $_POST['sort-view'];
+                }
+                $sort = $_SESSION['sort-view'];
 
+                if (!isset($_SESSION['my-cart']) || isset($_POST['delete-cart'])) {
+                    $_SESSION['my-cart'] = [];
+                }
+
+                $flag = 0;
+                $i = 0;
+                foreach ($_SESSION['my-cart'] as $item) {
+                    if (isset($_POST['id_prd'])) {
+                        if ($_POST['id_prd'] == $item[0]) {
+                            $flag = 1;
+                            break;
+                        }
+                        $i++;
+                    }
+                }
+                $soluong = isset($_POST['soluong']) ? $_POST['soluong'] : 1;
+                if (isset($_POST['id_prd']) && $flag == 0) {
+                    $item = [$_POST['id_prd'], $soluong];
+                    array_push($_SESSION['my-cart'], $item);
+                } else if (isset($_POST['id_prd']) && $flag == 1) {
+                    $_SESSION['my-cart'][$i][1] += $soluong;
+                }
+                if (isset($_POST['id_delete'])) {
+                    array_splice($_SESSION['my-cart'], $_POST['id_delete'], 1);
+                }
+
+                if (isset($_POST['id_plus'])) {
+                    $index = $_POST['id_plus'];
+                    $_SESSION['my-cart'][$index][1] += 1;
+                }
+
+                if (isset($_POST['id_minus'])) {
+                    $index = $_POST['id_minus'];
+                    if ($_SESSION['my-cart'][$index][1] > 1) {
+                        $_SESSION['my-cart'][$index][1] -= 1;
+                    } elseif ($_SESSION['my-cart'][$index][1] == 1) {
+                        $_SESSION['my-cart'][$index][1] = 1;
+                    }
+                }
+                ?>
                 <!-- Start Atribute Navigation -->
                 <div class="attr-nav">
                     <ul>
                         <li class="search"><a href=""><i class="fa fa-search"></i></a></li>
                         <li class="side-menu">
-							<a href="">
-								<i class="fa fa-shopping-bag"></i>
-								<span class="badge">3</span>
-								<p>My Cart</p>
-							</a>
-						</li>
+                            <a href="">
+                                <i class="fa fa-shopping-bag"></i>
+                                <span class="badge"><?php echo count($_SESSION['my-cart']); ?></span>
+                                <p>My Cart</p>
+                            </a>
+                        </li>
                     </ul>
                 </div>
                 <!-- End Atribute Navigation -->
             </div>
+
+
             <!-- Start Side Menu -->
             <div class="side">
                 <a href="" class="close-side"><i class="fa fa-times"></i></a>
                 <li class="cart-box">
                     <ul class="cart-list">
-                        <li>
-                            <a href="" class="photo"><img src="../assets/images/img-pro-01.jpg" class="cart-thumb" alt="" /></a>
-                            <h6><a href="">Delica omtantur </a></h6>
-                            <p>1x - <span class="price">$80.00</span></p>
-                        </li>
-                        <li>
-                            <a href="" class="photo"><img src="../assets/images/img-pro-02.jpg" class="cart-thumb" alt="" /></a>
-                            <h6><a href="">Omnes ocurreret</a></h6>
-                            <p>1x - <span class="price">$60.00</span></p>
-                        </li>
-                        <li>
-                            <a href="" class="photo"><img src="../assets/images/img-pro-03.jpg" class="cart-thumb" alt="" /></a>
-                            <h6><a href="">Agam facilisis</a></h6>
-                            <p>1x - <span class="price">$40.00</span></p>
-                        </li>
+                        <?php
+                        $total_cart = 0;
+                        $j = 0;
+                        foreach ($_SESSION['my-cart'] as $item) {
+                            $row = $product->getProductId($item[0]);
+                        ?>
+                            <li>
+                                <span class="float-right" style="margin-top: 15px;">
+                                    <form action="" method="post">
+                                        <input hidden type="text" name="id_delete" value="<?php echo $j ?>">
+                                        <button type="submit" class="btn" type="button"><i class="fa fa-times"></i></button>
+                                    </form>
+                                </span>
+                                <a href="shop-detail.php?id_prd=<?php echo $row['id_prd'] ?>" class="photo"><img src="../assets/img/upload/img_product/<?php echo $row['img_prd_1'] ?>" class="cart-thumb" alt="" /></a>
+                                <h6 style="display: block;"><a href="shop-detail.php?id_prd=<?php echo $row['id_prd'] ?>"><?php echo $row['name_prd'] ?></a></h6>
+                                <p><?php echo $item[1]; ?>x - <span class="price"><?php echo number_format($row['price'], 0, '', ',') ?> VNĐ</span></p>
+                            </li>
+                        <?php
+                            $total_cart += $row['price'] * $item[1];
+                            $j++;
+                        } ?>
                         <li class="total">
-                            <a href="" class="btn btn-default hvr-hover btn-cart">VIEW CART</a>
-                            <span class="float-right"><strong>Total</strong>: $180.00</span>
+                            <p class="mb-2"><strong>Total</strong>: <?php echo number_format($total_cart, 0, '', ',') ?> VNĐ</p>
+                            <a href="cart.php" class="btn btn-default hvr-hover btn-cart">VIEW CART</a>
                         </li>
+
                     </ul>
                 </li>
             </div>

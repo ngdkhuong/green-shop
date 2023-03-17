@@ -43,6 +43,7 @@ class Administrator extends Database {
         $stmt->execute([$username, $mk]);
         return $stmt->rowCount();
     }
+    
     function getLoginAdmin($username, $mk){
         $sql="SELECT * FROM administrator WHERE username=? AND mk=?";
         $stmt = $this->connect()->prepare($sql);
