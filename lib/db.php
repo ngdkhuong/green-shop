@@ -4,7 +4,7 @@ class Database
     private $servername = "localhost";
     private $username = "root";
     private $password = "";
-    private $dbname = "greenshop";
+    private $dbname = "green";
 
     public function connect()
     {

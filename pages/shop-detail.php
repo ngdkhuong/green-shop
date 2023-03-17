@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <?php include_once('../part/header.php'); ?>
 <?php
 if(isset($_GET['id_prd'])){
@@ -7,6 +8,19 @@ if(isset($_GET['id_prd'])){
     echo "<meta http-equiv='refresh' content='0;url=index.php'>";
 }
 
+=======
+<?php
+if (isset($_GET['id_prd'])) {
+    $id_prd = $_GET['id_prd'];
+} else {
+    header("location: shop.php");
+    exit;
+}
+?>
+<?php
+include_once('../part/header.php');
+$row = $product->getProductId($id_prd);
+>>>>>>> huy
 ?>
 <!-- Start All Title Box -->
 <div class="all-title-box">
@@ -59,6 +73,7 @@ if(isset($_GET['id_prd'])){
             <div class="col-xl-7 col-lg-7 col-md-6">
                 <div class="single-product-details">
                     <h2><?php echo $row['name_prd'] ?></h2>
+<<<<<<< HEAD
                     <h5> <del><?php echo $row['cost'] ?> VNĐ</del> <?php echo $row['price'] ?> VNĐ</h5>
                     <p class="available-stock"><span> More than 20 available / <a href="">8 sold </a></span>
                     <p>
@@ -78,6 +93,38 @@ if(isset($_GET['id_prd'])){
                             <a class="btn hvr-hover" data-fancybox-close="" href="">Add to cart</a>
                         </div>
                     </div>
+=======
+                    <h5>
+                        <?php if ($row['price'] < $row['cost']) { ?>
+                            <del><?php echo number_format($row['cost'], 0, '', ',') ?> VNĐ</del>
+                        <?php } ?>
+                        <?php echo number_format($row['price'], 0, '', ',') ?> VNĐ
+                    </h5>
+                    <p class="available-stock">
+                        <span> Còn lại: <?php echo $row['quanlity']?> sản phẩm 
+                            <!-- / <a href="">8 sold </a> -->
+                        </span>
+                    <p>
+                    <h4>Mô tả chi tiết sản phẩm:</h4>
+                    <p><?php echo $row['detail'] ?></p>
+                    <form action="" method="post">
+                        <ul>
+                            <li>
+                                <div class="form-group quantity-box">
+                                    <label class="control-label">Quantity</label>
+                                    <input name="soluong" class="form-control" value="1" min="1" max="<?php echo $row['quanlity']?>" type="number">
+                                    <input type="hidden" name="id_prd" value="<?php echo $row['id_prd'] ?>">
+                                </div>
+                            </li>
+                        </ul>
+                        <div class="price-box-bar">
+                            <div class="cart-and-bay-btn">
+                                <!-- <a class="btn hvr-hover" data-fancybox-close="" href="">Buy New</a> -->
+                                <button class="btn hvr-hover text-white font-weight-bold" data-fancybox-close="" href="">Add to cart</button>
+                            </div>
+                        </div>
+                    </form>
+>>>>>>> huy
                     <div class="add-to-btn">
                         <div class="add-comp">
                             <a class="btn hvr-hover" href=""><i class="fas fa-heart"></i> Add to wishlist</a>
