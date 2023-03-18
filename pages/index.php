@@ -10,11 +10,7 @@
                     <div class="col-md-12">
                         <h1 class="m-b-20"><strong>Welcome To <br> Greenshop</strong></h1>
                         <p class="m-b-40">See how your users experience your website in realtime or view <br> trends to see any changes in performance over time.</p>
-<<<<<<< HEAD
-                        <p><a class="btn hvr-hover" href="">Shop New</a></p>
-=======
                         <p><a class="btn hvr-hover" href="shop.php">Shop New</a></p>
->>>>>>> huy
                     </div>
                 </div>
             </div>
@@ -55,12 +51,6 @@
 <div class="categories-shop">
     <div class="container">
         <div class="row">
-<<<<<<< HEAD
-            <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
-                <div class="shop-cat-box">
-                    <img class="img-fluid" src="../assets/images/categories_img_01.jpg" alt="" />
-                    <a class="btn hvr-hover" href="">Lorem ipsum dolor</a>
-=======
             <?php
             $min = 3;
             $max = 8;
@@ -71,27 +61,18 @@
                 <div class="shop-cat-box">
                     <img class="img-fluid" src="../assets/images/categories_img_01.jpg" alt="" />
                     <a class="btn hvr-hover" href="store.php?id_brand=<?php echo $array[0] ?>"><?php echo $administrator->getAdminId($array[0])['name_brand'] ?></a>
->>>>>>> huy
                 </div>
             </div>
             <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
                 <div class="shop-cat-box">
                     <img class="img-fluid" src="../assets/images/categories_img_02.jpg" alt="" />
-<<<<<<< HEAD
-                    <a class="btn hvr-hover" href="">Lorem ipsum dolor</a>
-=======
                     <a class="btn hvr-hover" href="store.php?id_brand=<?php echo $array[1] ?>"><?php echo $administrator->getAdminId($array[1])['name_brand'] ?></a>
->>>>>>> huy
                 </div>
             </div>
             <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
                 <div class="shop-cat-box">
                     <img class="img-fluid" src="../assets/images/categories_img_03.jpg" alt="" />
-<<<<<<< HEAD
-                    <a class="btn hvr-hover" href="">Lorem ipsum dolor</a>
-=======
                     <a class="btn hvr-hover" href="store.php?id_brand=<?php echo $array[2] ?>"><?php echo $administrator->getAdminId($array[2])['name_brand'] ?></a>
->>>>>>> huy
                 </div>
             </div>
         </div>
@@ -104,20 +85,12 @@
         <div class="row">
             <div class="col-lg-6 col-md-6 col-sm-12">
                 <div class="offer-box-products">
-<<<<<<< HEAD
-                    <img class="img-fluid" src="../assets/images/add-img-01.jpg" alt="" />
-=======
                     <img class="img-fluid" src="../assets/images/add-img-01.png" alt="" />
->>>>>>> huy
                 </div>
             </div>
             <div class="col-lg-6 col-md-6 col-sm-12">
                 <div class="offer-box-products">
-<<<<<<< HEAD
-                    <img class="img-fluid" src="../assets/images/add-img-02.jpg" alt="" />
-=======
                     <img class="img-fluid" src="../assets/images/add-img-02.png" alt="" />
->>>>>>> huy
                 </div>
             </div>
         </div>
@@ -148,32 +121,6 @@
         </div>
 
         <div class="row special-list">
-<<<<<<< HEAD
-            <div class="col-lg-3 col-md-6 special-grid best-seller">
-                <div class="products-single fix">
-                    <div class="box-img-hover">
-                        <div class="type-lb">
-                            <p class="sale">Sale</p>
-                        </div>
-                        <img src="../assets/images/img-pro-01.jpg" class="img-fluid" alt="Image">
-                        <div class="mask-icon">
-                            <ul>
-                                <li><a href="" data-toggle="tooltip" data-placement="right" title="View"><i class="fas fa-eye"></i></a></li>
-                                <li><a href="" data-toggle="tooltip" data-placement="right" title="Compare"><i class="fas fa-sync-alt"></i></a></li>
-                                <li><a href="" data-toggle="tooltip" data-placement="right" title="Add to Wishlist"><i class="far fa-heart"></i></a></li>
-                            </ul>
-                            <a class="cart" href="">Add to Cart</a>
-                        </div>
-                    </div>
-                    <div class="why-text">
-                        <h4>Lorem ipsum dolor sit amet</h4>
-                        <h5> $7.79</h5>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-lg-3 col-md-6 special-grid top-featured">
-=======
             <?php
             $min = 1;
             $max = $product->countAllProducts();;
@@ -217,7 +164,6 @@
 
 
             <!-- <div class="col-lg-3 col-md-6 special-grid top-featured">
->>>>>>> huy
                 <div class="products-single fix">
                     <div class="box-img-hover">
                         <div class="type-lb">
@@ -284,11 +230,7 @@
                         <h5> $15.79</h5>
                     </div>
                 </div>
-<<<<<<< HEAD
-            </div>
-=======
             </div> -->
->>>>>>> huy
         </div>
     </div>
 </div>
