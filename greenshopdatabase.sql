@@ -3,13 +3,13 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th3 17, 2023 lúc 05:53 AM
+-- Thời gian đã tạo: Th3 19, 2023 lúc 10:14 PM
 -- Phiên bản máy phục vụ: 10.4.24-MariaDB
 -- Phiên bản PHP: 8.1.6
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
-SET time_zone = "+00:00";
+SET time_zone = "+07:00";
 
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
@@ -35,7 +35,9 @@ CREATE TABLE `administrator` (
   `fullname` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
   `phone` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
   `email` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
+  `address` varchar(200) COLLATE utf8_unicode_ci NOT NULL,
   `avatar` varchar(200) COLLATE utf8_unicode_ci NOT NULL,
+  `banner` varchar(200) COLLATE utf8_unicode_ci NOT NULL,
   `mk` varchar(100) COLLATE utf8_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
@@ -43,15 +45,15 @@ CREATE TABLE `administrator` (
 -- Đang đổ dữ liệu cho bảng `administrator`
 --
 
-INSERT INTO `administrator` (`id_admin`, `id_role`, `username`, `name_brand`, `fullname`, `phone`, `email`, `avatar`, `mk`) VALUES
-(1, 1, 'admin', '', 'Ngô Quang Huy', '0378396888', 'huy123@gmail.com', '', '202cb962ac59075b964b07152d234b70'),
-(2, 2, 'subadmin', '', '', '', '', '', '202cb962ac59075b964b07152d234b70'),
-(3, 3, 'freshfruitshop', 'Fresh Fruit Shop', '', '', '', '', '202cb962ac59075b964b07152d234b70'),
-(4, 3, 'hahafoodshop', 'Haha Food Shop', '', '', '', '', '202cb962ac59075b964b07152d234b70'),
-(5, 3, 'deliciousfruitshop', 'Delicious Fruit Shop', '', '', '', '', '202cb962ac59075b964b07152d234b70'),
-(6, 3, 'dalatfruitstore', 'Đà Lạt Fruit Store', '', '', '', '', '202cb962ac59075b964b07152d234b70'),
-(7, 3, 'citifruitstore', 'Citi Fruits Store', '', '', '', '', '202cb962ac59075b964b07152d234b70'),
-(8, 3, 'nongsansachstore', 'Nông Sản Sạch Store', '', '', '', '', '202cb962ac59075b964b07152d234b70');
+INSERT INTO `administrator` (`id_admin`, `id_role`, `username`, `name_brand`, `fullname`, `phone`, `email`, `address`, `avatar`, `banner`, `mk`) VALUES
+(1, 1, 'admin', '', 'Ngô Quang Huy', '0378396888', 'huy123@gmail.com', '123/123 cmt8', '03192023163732289400huy-ngo-avatar.png', '', '202cb962ac59075b964b07152d234b70'),
+(2, 2, 'subadmin', '', '', '', '', '', '', '', '202cb962ac59075b964b07152d234b70'),
+(3, 3, 'freshfruitshop', 'Fresh Fruit Shop', 'Nguyễn Văn A', '1900123456', 'freshfruitshop@store.com', '123/456 Tân Bình Thành Phố Hồ Chí Minh', '03192023203236274200logo1.jpg', '03192023203236274800banner1.jpg', '202cb962ac59075b964b07152d234b70'),
+(4, 3, 'hahafoodshop', 'Haha Food Shop', 'Nguyễn Văn B', '1900456789', 'hahafoodshop@store.com', '456/123 Tân Phú TP Hồ Chí Minh', '03192023204547710700logo2.jpg', '03192023204547711300banner2.jpg', '202cb962ac59075b964b07152d234b70'),
+(5, 3, 'deliciousfruitshop', 'Delicious Fruit Shop', '', '', '', '', '', '', '202cb962ac59075b964b07152d234b70'),
+(6, 3, 'dalatfruitstore', 'Đà Lạt Fruit Store', '', '', '', '', '', '', '202cb962ac59075b964b07152d234b70'),
+(7, 3, 'citifruitstore', 'Citi Fruits Store', '', '', '', '', '', '', '202cb962ac59075b964b07152d234b70'),
+(8, 3, 'nongsansachstore', 'Nông Sản Sạch Store', 'Phạm Quang C', '1900456123', 'nongsansach@store.com', '456/789 Bình Thạnh Tp Hồ Chí Minh', '03192023205600843100logo3.jpg', '03192023205600843700banner3.jpg', '202cb962ac59075b964b07152d234b70');
 
 -- --------------------------------------------------------
 

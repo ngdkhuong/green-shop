@@ -6,9 +6,17 @@ if (!isset($_GET['id_brand']) || $_GET['id_brand'] == "") {
 }
 ?>
 <?php include_once('../part/header.php'); ?>
-
+<?php if ($administrator->getAdminId($id_brand)['banner'] != "") { ?>
+    <style>
+        .all-title-box {
+            background: url("../assets/img/upload/banner_store/<?php echo $administrator->getAdminId($id_brand)['banner'] ?>") no-repeat center center;
+            background-size: cover;
+            background-attachment: fixed;
+        }
+    </style>
+<?php } ?>
 <!-- Start All Title Box -->
-<div class="all-title-box" class="">
+<div class="all-title-box">
     <div class="container">
         <div class="row">
             <div class="col-lg-12">
