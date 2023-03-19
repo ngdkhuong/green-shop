@@ -9,6 +9,14 @@ class Product extends Database{
         return $rows;
     }
 
+    function getAllProductsOfBrand($id_admin){
+        $sql="SELECT * FROM product WHERE id_admin=?";
+        $stmt = $this->connect()->prepare($sql);
+        $stmt->execute([$id_admin]);
+        $rows = $stmt->fetchAll();
+        return $rows;
+    }
+
     function getAllProductsAvailable(){
         $sql="SELECT * FROM product WHERE quanlity>0";
         $stmt = $this->connect()->prepare($sql);
@@ -37,6 +45,27 @@ class Product extends Database{
         $stmt->execute();
         $rows = $stmt->fetchAll();
         return $rows;
+    }
+
+    function getAllProductsNumPagesAvailableSortSearch($search,$sl,$offset,$sort){
+        if($sort==1){
+            $sql="SELECT * FROM product WHERE name_prd LIKE '%".$search."%' AND quanlity>0 ORDER BY price DESC LIMIT ".$sl." OFFSET ".$offset;
+        }elseif($sort==2){
+            $sql="SELECT * FROM product WHERE name_prd LIKE '%".$search."%' AND quanlity>0 ORDER BY price ASC LIMIT ".$sl." OFFSET ".$offset;
+        }else{
+            $sql="SELECT * FROM product WHERE name_prd LIKE '%".$search."%' AND quanlity>0 LIMIT ".$sl." OFFSET ".$offset;
+        }
+        $stmt = $this->connect()->prepare($sql);
+        $stmt->execute();
+        $rows = $stmt->fetchAll();
+        return $rows;
+    }
+
+    function countAllProductsAvailableSearch($search){
+        $sql="SELECT * FROM product WHERE name_prd LIKE '%".$search."%' AND quanlity>0";
+        $stmt = $this->connect()->prepare($sql);
+        $stmt->execute();
+        return $stmt->rowCount();
     }
 
     function getAllProductsNumPagesAvailableOfBrand($sl,$offset,$id_brand){

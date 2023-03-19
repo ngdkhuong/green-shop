@@ -6,24 +6,30 @@ if(!isset($_SESSION['login_admin'])){
     header("location: ../../pages/login-admin.php");
     exit;
 }
+$id_admin = $_SESSION['login_admin']['id_admin']; //đặt tạm
+
 ?>
 <?php include_once('../../lib/db.php'); ?>
 <?php include_once('../../lib/category.class.php'); ?>
 <?php include_once('../../lib/administrator.class.php'); ?>
 <?php include_once('../../lib/role.class.php'); ?>
 <?php include_once('../../lib/product.class.php'); ?>
+<?php 
+$category = new Category;
+$administrator = new Administrator;
+$product = new Product;
+?>
 <?php include_once('../part/header.php'); ?>
 
 
 <?php
-$id_admin = $_SESSION['login_admin']['id_admin']; //đặt tạm
-$category = new Category;
-$administrator = new Administrator;
-$product = new Product;
 $control = isset($_GET['control']) ? $_GET['control'] : "";
-
 switch ($control) {
     case 'category':
+        if($_SESSION['login_admin']['id_role']!=3){
+            echo "<meta http-equiv='refresh' content='0;url=index.php'>";
+            exit;
+        }
         $name_cate = isset($_POST['name_cate']) ? $_POST['name_cate'] : "";
         if (isset($_POST['name_cate']) && $name_cate!="") {
             $category->insertCategory($name_cate, $id_admin);
@@ -32,6 +38,10 @@ switch ($control) {
         break;
 
     case 'deletecategory':
+        if($_SESSION['login_admin']['id_role']!=3){
+            echo "<meta http-equiv='refresh' content='0;url=index.php'>";
+            exit;
+        }
         $id_cate = isset($_GET['id_cate']) ? $_GET['id_cate'] : "";
         if ($id_cate != "") {
             $category->deleteCategoryId($id_cate, $id_admin);
@@ -42,12 +52,16 @@ switch ($control) {
         break;
 
     case 'editcategory':
+        if($_SESSION['login_admin']['id_role']!=3){
+            echo "<meta http-equiv='refresh' content='0;url=index.php'>";
+            exit;
+        }
         $id_cate = isset($_GET['id_cate']) ? $_GET['id_cate'] : "";
         $name_cate_update = isset($_POST['name_cate_update']) ? $_POST['name_cate_update'] : "";
         if ($id_cate != "" && $name_cate_update != "") {
             $category->editCateId($id_cate, $name_cate_update, $id_admin);
             echo "<meta http-equiv='refresh' content='0;url=index.php?control=category'>";
-            break;
+            exit;
         } else {
             // echo "<meta http-equiv='refresh' content='0;url=../../../../pages/404.php'>";
         }
@@ -55,10 +69,18 @@ switch ($control) {
         break;
 
     case 'administrator':
+        if($_SESSION['login_admin']['id_role']!=1 && $_SESSION['login_admin']['id_role']!=2){
+            echo "<meta http-equiv='refresh' content='0;url=index.php'>";
+            exit;
+        }
         include('administrator.php');
         break;
 
     case 'addadmin':
+        if($_SESSION['login_admin']['id_role']!=1){
+            echo "<meta http-equiv='refresh' content='0;url=index.php'>";
+            exit;
+        }
         $username = isset($_POST['username']) ? $_POST['username'] : "";
         $mk = isset($_POST['mk']) ? $_POST['mk'] : "";
         $conf_mk = isset($_POST['conf_mk']) ? $_POST['conf_mk'] : "";
@@ -90,22 +112,31 @@ switch ($control) {
             $id_role = htmlspecialchars(addslashes(trim($id_role)));
             $administrator->insertAdmin($username, $mk, $id_role);
             echo "<meta http-equiv='refresh' content='0;url=index.php?control=administrator'>";
-            break;
+            exit;
         }
         include('administrator.php');
         break;
 
     case 'deleteadmin':
+        if($_SESSION['login_admin']['id_role']!=1){
+            echo "<meta http-equiv='refresh' content='0;url=index.php'>";
+            exit;
+        }
         $id_admin = isset($_GET['id_admin']) ? $_GET['id_admin'] : "";
         if ($id_admin != "") {
             $administrator->deleteAdminId($id_admin);
             echo "<meta http-equiv='refresh' content='0;url=index.php?control=administrator'>";
+            exit;
         } else {
-            echo "<meta http-equiv='refresh' content='0;url=../../../../pages/404.php'>";
+            // echo "<meta http-equiv='refresh' content='0;url=../../../../pages/404.php'>";
         }
         break;
 
     case 'editadmin':
+        if($_SESSION['login_admin']['id_role']!=1){
+            echo "<meta http-equiv='refresh' content='0;url=index.php'>";
+            exit;
+        }
         $id_admin = isset($_GET['id_admin']) ? $_GET['id_admin'] : "";
         $row = $administrator->getAdminId($id_admin);
 
@@ -132,17 +163,20 @@ switch ($control) {
             $id_role = htmlspecialchars(addslashes(trim($id_role)));
             $administrator->editAdminId($id_admin, $mk, $id_role);
             echo "<meta http-equiv='refresh' content='0;url=index.php?control=administrator'>";
-            break;
+            exit;
         }
         include('administrator.php');
         break;
 
     case 'product':
-
         include('product.php');
         break;
 
     case 'addproduct':
+        if($_SESSION['login_admin']['id_role']!=3){
+            echo "<meta http-equiv='refresh' content='0;url=index.php'>";
+            exit;
+        }
         $name_prd = isset($_POST['name_prd']) ? $_POST['name_prd'] : "";
         $id_cate = isset($_POST['id_cate']) ? $_POST['id_cate'] : "";
         $cost = isset($_POST['cost']) ? $_POST['cost'] : "";
@@ -259,15 +293,18 @@ switch ($control) {
             $img_prd_3 = htmlspecialchars(addslashes(trim($img_prd_3)));
             $product->insertProduct($name_prd, $id_cate, $img_prd_1, $img_prd_2, $img_prd_3, $detail, $cost, $price, $quanlity, $id_admin);
             echo "<meta http-equiv='refresh' content='0;url=index.php?control=product'>";
-            break;
+            exit;
         }
         include('product.php');
         break;
 
     case 'editproduct':
+        if($_SESSION['login_admin']['id_role']!=3){
+            echo "<meta http-equiv='refresh' content='0;url=index.php'>";
+            exit;
+        }
         $id_prd = isset($_GET['id_prd']) ? $_GET['id_prd'] : "";
         $row = $product->getProductId($id_prd);
-
         $name_prd = isset($_POST['name_prd']) ? $_POST['name_prd'] : "";
         $id_cate = isset($_POST['id_cate']) ? $_POST['id_cate'] : "";
         $cost = isset($_POST['cost']) ? $_POST['cost'] : "";
@@ -298,7 +335,6 @@ switch ($control) {
             if ($detail == "") {
                 array_push($err, 'Vui lòng nhập mô tả sản phẩm');
             }
-
             if ($_FILES['img_prd_1']['error'] > 0) {
                 array_push($err, 'File Upload Bị Lỗi');
             } else {
@@ -384,28 +420,121 @@ switch ($control) {
             $img_prd_3 = htmlspecialchars(addslashes(trim($img_prd_3)));
             $product->editProductId($id_prd, $name_prd, $id_cate, $img_prd_1, $img_prd_2, $img_prd_3, $detail, $cost, $price, $quanlity, $id_admin);
             echo "<meta http-equiv='refresh' content='0;url=index.php?control=product'>";
-            break;
+            exit;
         }
         include('product.php');
         break;
 
     case 'deleteproduct':
+        if($_SESSION['login_admin']['id_role']!=3){
+            echo "<meta http-equiv='refresh' content='0;url=index.php'>";
+            exit;
+        }
         $id_prd = isset($_GET['id_prd']) ? $_GET['id_prd'] : "";
         if ($id_prd != "") {
             $product->deleteProductId($id_prd, $id_admin);
             echo "<meta http-equiv='refresh' content='0;url=index.php?control=product'>";
+            exit;
         } else {
-            echo "<meta http-equiv='refresh' content='0;url=../../../../pages/404.php'>";
+            // echo "<meta http-equiv='refresh' content='0;url=../../../../pages/404.php'>";
         }
         break;
+
     case 'profile':
+        $admin = $administrator->getAdminId($_SESSION['login_admin']['id_admin']);
+        include('profile.php');
+        break;
+
+    case 'updateprofile':
+        $admin = $administrator->getAdminId($_SESSION['login_admin']['id_admin']);
+        $fullname = isset($_POST['fullname']) ? $_POST['fullname'] : "";
+        $name_brand = isset($_POST['name_brand']) ? $_POST['name_brand'] : "";
+        $phone = isset($_POST['phone']) ? $_POST['phone'] : "";
+        $email = isset($_POST['email']) ? $_POST['email'] : "";
+        $address = isset($_POST['address']) ? $_POST['address'] : "";
+        $avatar = isset($_FILES['avatar']) ? $_FILES['avatar'] : "";
+        $banner = isset($_FILES['banner']) ? $_FILES['banner'] : "";
+        $err=[];
+
+        if (isset($_POST['fullname'])){
+            if($fullname==""){
+                array_push($err, 'Vui lòng nhập họ và tên');
+            }
+            if($phone==""){
+                array_push($err, 'Vui lòng nhập số điện thoại');
+            }
+            if($email==""){
+                array_push($err, 'Vui lòng nhập email');
+            }
+            if($address==""){
+                array_push($err, 'Vui lòng nhập địa chỉ');
+            }
+            if ($_FILES['avatar']['error'] > 0) {
+                array_push($err, 'File Upload Bị Lỗi');
+            } else {
+                // Upload file
+                $file_name = $_FILES['avatar']['name'];
+                $file_size = $_FILES['avatar']['size'];
+                $file_path = $_FILES['avatar']['tmp_name'];
+                $file_type = $_FILES['avatar']['type'];
+                if (strlen(strstr($file_type, 'image')) > 0) {
+                    if ((round($file_size / 1014, 0)) <= 10240) {
+                        $now = DateTime::createFromFormat('U.u', microtime(true));
+                        $result = $now->format("m_d_Y_H_i_s_u");
+                        $krr    = explode('_', $result);
+                        $result = implode("", $krr);
+                        // echo $result;
+                        move_uploaded_file($_FILES['avatar']['tmp_name'], '../../assets/img/upload/avatar_admin/' . $result . $file_name);
+                        $avatar = $result . $file_name;
+                    } else {
+                        array_push($err, 'Vui lòng nhập file < 10MB');
+                    }
+                } else {
+                    array_push($err, 'Vui lòng nhập file định dạng là ảnh');
+                }
+            }
+            if($banner!=""){
+                if ($_FILES['banner']['error'] == 0){
+                    // Upload file
+                    $file_name = $_FILES['banner']['name'];
+                    $file_size = $_FILES['banner']['size'];
+                    $file_path = $_FILES['banner']['tmp_name'];
+                    $file_type = $_FILES['banner']['type'];
+                    if (strlen(strstr($file_type, 'image')) > 0) {
+                        if ((round($file_size / 1014, 0)) <= 10240) {
+                            $now = DateTime::createFromFormat('U.u', microtime(true));
+                            $result = $now->format("m_d_Y_H_i_s_u");
+                            $krr    = explode('_', $result);
+                            $result = implode("", $krr);
+                            // echo $result;
+                            move_uploaded_file($_FILES['banner']['tmp_name'], '../../assets/img/upload/banner_store/' . $result . $file_name);
+                            $banner = $result . $file_name;
+                        }
+                    }
+                }
+            }
+            
+        }
+        if (isset($_POST['fullname']) && count($err) == 0){
+            $fullname = htmlspecialchars(addslashes(trim($fullname)));
+            $name_brand = htmlspecialchars(addslashes(trim($name_brand)));
+            $phone = htmlspecialchars(addslashes(trim($phone)));
+            $email = htmlspecialchars(addslashes(trim($email)));
+            $address = htmlspecialchars(addslashes(trim($address)));
+            $avatar = htmlspecialchars(addslashes(trim($avatar)));
+            $banner = htmlspecialchars(addslashes(trim($banner)));
+            $administrator->updateAdminId($_SESSION['login_admin']['id_admin'],$fullname,$name_brand, $phone, $email, $address, $avatar, $banner);
+            echo "<meta http-equiv='refresh' content='0;url=index.php?control=profile'>";
+            exit;
+        }
         include('profile.php');
         break;
 
     case 'logout':
         session_unset();
-        print_r($_SESSION['login_admin']);
+        // print_r($_SESSION['login_admin']);
         echo "<meta http-equiv='refresh' content='0;url=../../pages/login-admin.php'>";
+        exit;
         break;
 
     default:

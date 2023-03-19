@@ -93,8 +93,20 @@
                 </li>
                 <li class="user-profile header-notification">
                     <a href="#">
-                        <img src="../assets/images/avatar-4.jpg" class="img-radius" alt="User-Profile-Image">
-                        <span>John Doe</span>
+                        <img style="width: 40px; height: 40px;" src="../../assets/img/upload/avatar_admin/<?php echo $administrator->getAdminId($_SESSION['login_admin']['id_admin'])['avatar']==""?"avatar.jpeg":$administrator->getAdminId($_SESSION['login_admin']['id_admin'])['avatar']; ?>" class="img-radius" alt="User-Profile-Image">
+                        <span>
+                        <?php 
+                        if($administrator->getAdminId($_SESSION['login_admin']['id_admin'])['name_brand']==""){
+                            if($administrator->getAdminId($_SESSION['login_admin']['id_admin'])['fullname']==""){
+                                echo $administrator->getAdminId($_SESSION['login_admin']['id_admin'])['username'];
+                            }else{
+                                echo $administrator->getAdminId($_SESSION['login_admin']['id_admin'])['fullname'];
+                            }
+                        }else{
+                            echo $administrator->getAdminId($_SESSION['login_admin']['id_admin'])['name_brand'];
+                        }
+                        ?>
+                        </span>
                         <i class="ti-angle-down"></i>
                     </a>
                     <ul class="show-notification profile-notification">
