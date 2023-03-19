@@ -30,7 +30,7 @@
                 foreach ($rows as $row) { ?>
                     <div class="media mb-3">
                         <div class="mr-2">
-                            <img style="width: 64px; height: 64px;" class="rounded-circle border p-1" src="../assets/img/upload/avatar_admin/avatar.jpeg" alt="">
+                            <img style="width: 64px; height: 64px;" class="rounded-circle border p-1" src="../assets/img/upload/avatar_admin/<?php echo $row['avatar']==""?"avatar.jpeg":$row['avatar']?>" alt="">
                         </div>
                         <div class="media-body">
                             <h2><b>Cửa hàng</b> <?php echo $row['name_brand'] ?></h2>

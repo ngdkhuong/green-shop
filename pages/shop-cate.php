@@ -8,6 +8,15 @@ if (!isset($_GET['id_cate']) || $_GET['id_cate']==""){
 <?php include_once('../part/header.php'); ?>
 
 <!-- Start All Title Box -->
+<?php if ($administrator->getAdminId($category->getCateId($id_cate)['id_admin'])['banner'] != "") { ?>
+    <style>
+        .all-title-box {
+            background: url("../assets/img/upload/banner_store/<?php echo $administrator->getAdminId($category->getCateId($id_cate)['id_admin'])['banner'] ?>") no-repeat center center;
+            background-size: cover;
+            background-attachment: fixed;
+        }
+    </style>
+<?php } ?>
 <div class="all-title-box" class="">
     <div class="container">
         <div class="row">

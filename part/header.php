@@ -185,13 +185,20 @@ $product = new Product;
                 } else if (isset($_POST['id_prd']) && $flag == 1) {
                     $_SESSION['my-cart'][$i][1] += $soluong;
                 }
+
                 if (isset($_POST['id_delete'])) {
                     array_splice($_SESSION['my-cart'], $_POST['id_delete'], 1);
                 }
 
                 if (isset($_POST['id_plus'])) {
                     $index = $_POST['id_plus'];
-                    $_SESSION['my-cart'][$index][1] += 1;
+                    if ($_SESSION['my-cart'][$index][1] == $product->getProductId($_SESSION['my-cart'][$index][0])['quanlity']) { ?>
+                        <script>
+                            alert('Sản phẩm vượt quá tồn kho, không thể đặt thêm');
+                        </script>
+                <?php } else {
+                        $_SESSION['my-cart'][$index][1] += 1;
+                    }
                 }
 
                 if (isset($_POST['id_minus'])) {
@@ -204,6 +211,7 @@ $product = new Product;
                 }
                 ?>
                 <!-- Start Atribute Navigation -->
+
                 <div class="attr-nav">
                     <ul>
                         <li class="search"><a href=""><i class="fa fa-search"></i></a></li>
@@ -263,7 +271,7 @@ $product = new Product;
     <!-- Start Top Search -->
     <div class="top-search">
         <div class="container">
-            <form action="" method="get">
+            <form action="shop.php" method="get">
                 <div class="input-group">
                     <button style="cursor: pointer;" class="input-group-addon"><i class="fa fa-search"></i></button>
                     <input name="search" type="text" class="form-control" placeholder="Search">
