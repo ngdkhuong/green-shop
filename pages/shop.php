@@ -1,5 +1,5 @@
 <?php include_once('../part/header.php'); ?>
-
+<?php $search = isset($_GET['search']) ? $_GET['search'] : ""; ?>
 <!-- Start All Title Box -->
 <div class="all-title-box" class="">
     <div class="container">
@@ -15,7 +15,36 @@
     </div>
 </div>
 <!-- End All Title Box -->
-
+<div class="container">
+    <div class="row">
+        <div class="card card-outline-secondary my-4 col-12 p-0">
+            <div class="card-header">
+                <h2>Các cửa hàng liên quan đến "<span style="font-weight: 700;"><?php echo $search ?></span>"</h2>
+            </div>
+            <div class="card-body">
+                <?php
+                $rows = $administrator->getAllBrandsSearch($search);
+                if (count($rows)==0){
+                    echo "Không tìm thấy kết quả nào";
+                }
+                foreach ($rows as $row) { ?>
+                    <div class="media mb-3">
+                        <div class="mr-2">
+                            <img style="width: 64px; height: 64px;" class="rounded-circle border p-1" src="../assets/img/upload/avatar_admin/avatar.jpeg" alt="">
+                        </div>
+                        <div class="media-body">
+                            <h2><b>Cửa hàng</b> <?php echo $row['name_brand'] ?></h2>
+                            <div><a class="p-0" style="color:black; font-weight: 400;" href="store.php?id_brand=<?php echo $row['id_admin']?>">Đến trang cửa hàng</a>  |  Sản phẩm: <?php echo $product->countAllProductsOfBrand($row['id_admin'])?>  |  Đánh giá: 5 <i class="fas fa-star"></i>  |  Lượt xem: 999  |  Lượt mua sản phẩm: 999</div>
+                            <small class="text-muted">Hotline: 1900-123-456 | Email: store@gmail.com</small>
+                        </div>
+                    </div>
+                    <hr>
+                <?php }
+                ?>
+            </div>
+        </div>
+    </div>
+</div>
 <!-- Start Shop Page  -->
 <div class="shop-box-inner">
     <div class="container">
@@ -23,19 +52,18 @@
             <div class="col-xl-9 col-lg-9 col-sm-12 col-xs-12 shop-content-right">
                 <div class="right-product-box">
                     <div class="product-item-filter row">
-
                         <div class="col-md-8 col-sm-12 text-center text-sm-left">
                             <form action="" method="post">
                                 <div class="toolbar-sorter-right" style="width: 50%">
                                     <span>Sort by </span>
                                     <select name="sort-view" id="basic" class="selectpicker show-tick form-control" data-placeholder="$ USD">
-                                        <option value="0" <?php echo $sort==0?"selected":""?>>Nothing</option>
-                                        <option value="1" <?php echo $sort==1?"selected":""?>>High Price → Low Price</option>
-                                        <option value="2" <?php echo $sort==2?"selected":""?>>Low Price → High Price</option>
+                                        <option value="0" <?php echo $sort == 0 ? "selected" : "" ?>>Nothing</option>
+                                        <option value="1" <?php echo $sort == 1 ? "selected" : "" ?>>High Price → Low Price</option>
+                                        <option value="2" <?php echo $sort == 2 ? "selected" : "" ?>>Low Price → High Price</option>
                                     </select>
                                 </div>
                                 <button class="ml-1 btn hvr-hover text-white title" style="line-height: 28px; font-weight: bolder;">Lọc</button>
-                                <p>Showing all <?php echo $product->countAllProducts() ?> results</p>
+                                <p>Showing all <?php echo $product->countAllProductsAvailableSearch($search) ?> results</p>
                             </form>
                         </div>
                         <div class="col-md-4 col-sm-12 text-center text-sm-right">
@@ -49,26 +77,32 @@
                             </ul>
                         </div>
                     </div>
+                    <?php
+                    $sl = 9;
+                    $maxpage = ceil($product->countAllProductsAvailableSearch($search) / $sl);
+                    if (!isset($_POST['page']) || $_POST['page'] == "" || $_POST['page'] == 0) {
+                        $page = 1;
+                    } else {
+                        $page = $_POST['page'];
+                    }
+
+                    if ($page > $maxpage) {
+                        $page = $maxpage;
+                    }
+                    $offset = ($page - 1) * $sl;
+                    // $rows = $product->getAllProductsNumPagesAvailableSort($sl, $offset, $sort);
+                    
+                    
+                    ?>
                     <div class="product-categorie-box">
                         <div class="tab-content">
                             <div role="tabpanel" class="tab-pane fade show active" id="grid-view">
                                 <div class="row">
                                     <!-- Vòng lập sp -->
                                     <?php
-                                    $sl = 9;
-                                    $maxpage = ceil($product->countAllProducts() / $sl);
-                                    if (!isset($_GET['page']) || $_GET['page'] == "" || $_GET['page'] == 0) {
-                                        $page = 1;
-                                    } else {
-                                        $page = $_GET['page'];
-                                    }
-
-                                    if ($page > $maxpage) {
-                                        $page = $maxpage;
-                                    }
-                                    $offset = ($page - 1) * $sl;
-                                    $rows = $product->getAllProductsNumPagesAvailableSort($sl, $offset, $sort);
-
+                                    if($product->countAllProductsAvailableSearch($search)!=0){
+                                        $rows = $product->getAllProductsNumPagesAvailableSortSearch($search, $sl, $offset, $sort);
+                                    
                                     foreach ($rows as $row) { ?>
                                         <div class="col-sm-6 col-md-6 col-lg-4 col-xl-4">
                                             <div class="products-single fix">
@@ -99,15 +133,14 @@
                                                 </div>
                                             </div>
                                         </div>
-                                    <?php } ?>
+                                    <?php }} ?>
                                 </div>
-
-
                             </div>
                             <div role="tabpanel" class="tab-pane fade" id="list-view">
                                 <!-- Vòng lập sp -->
                                 <?php
-                                $rows = $product->getAllProductsNumPagesAvailableSort($sl, $offset, $sort);
+                                if($product->countAllProductsAvailableSearch($search)!=0){
+                                $rows = $product->getAllProductsNumPagesAvailableSortSearch($search, $sl, $offset, $sort);
                                 foreach ($rows as $row) { ?>
                                     <div class="list-view-box">
                                         <div class="row">
@@ -150,16 +183,28 @@
                                             </div>
                                         </div>
                                     </div>
-                                <?php } ?>
-
+                                <?php }} ?>
                             </div>
                             <div class="linkPage">
-                                <a class="btn hvr-hover" style="color: white; border: none;" id="linkNum" href="?page=<?php echo $page - 1; ?>">Trước</a>
+                                <form action="" style="display: inline-block;" method="post">
+                                    <input hidden type="text" name="page" value="<?php echo $page - 1; ?>">
+                                    <button class="btn hvr-hover" style="color: white; border: none;" type="submit">Trước</button>
+                                </form>
                                 <?php
                                 for ($i = 1; $i <= $maxpage; $i++) { ?>
-                                    <a class="btn hvr-hover" style="color: white; border: none; <?php echo $page == $i ? "background-color: black;" : "" ?>" id="linkNum" href="?page=<?php echo $i ?>"><?php echo $i ?></a>
+                                    <form action="" style="display: inline-block;" method="post">
+                                        <input hidden type="text" name="page" value="<?php echo $i ?>">
+                                        <button class="btn hvr-hover" style="color: white; border: none; <?php echo $page == $i ? "background-color: black;" : "" ?>" type="submit"><?php echo $i ?></button>
+                                    </form>
+                                    <!-- <a class="btn hvr-hover" style="color: white; border: none; <?php //echo $page == $i ? "background-color: black;" : "" 
+                                                                                                        ?>" id="linkNum" href="?page=<?php //echo $i 
+                                                                                                                                        ?>"><?php //echo $i 
+                                                                                                                                                                                                    ?></a> -->
                                 <?php } ?>
-                                <a class="btn hvr-hover" style="color: white; border: none;" id="linkNum" href="?page=<?php echo $page + 1; ?>">Sau</a>
+                                <form action="" style="display: inline-block;" method="post">
+                                    <input hidden type="text" name="page" value="<?php echo $page + 1; ?>">
+                                    <button class="btn hvr-hover" style="color: white; border: none;" type="submit">Sau</button>
+                                </form>
                             </div>
                         </div>
                     </div>
@@ -205,12 +250,12 @@
                         <div class="price-box-slider">
                             <div id="slider-range"></div>
                             <form action="" method="post">
-                            <p>
-                                <input hidden id="amount1" name="filter1" type="text">
-                                <input hidden id="amount2" name="filter2" type="text">
-                                <input name="filter" type="text" id="amount" readonly style="border:0; color:#fbb714; font-weight:bold; width: 100%;">
-                                <button class="btn hvr-hover" type="submit">Filter</button> 
-                            </p>
+                                <p>
+                                    <input hidden id="amount1" name="filter1" type="text">
+                                    <input hidden id="amount2" name="filter2" type="text">
+                                    <input name="filter" type="text" id="amount" readonly style="border:0; color:#fbb714; font-weight:bold; width: 100%;">
+                                    <button class="btn hvr-hover" type="submit">Filter</button>
+                                </p>
                             </form>
                         </div>
                     </div>
