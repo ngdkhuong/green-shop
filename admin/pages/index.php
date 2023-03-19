@@ -1,9 +1,9 @@
-<?php 
-session_start(); 
+<?php
+session_start();
 // print_r($_SESSION['login_admin']);
-if(!isset($_SESSION['login_admin'])){
+if (!isset($_SESSION['login_admin'])) {
     // echo "<meta http-equiv='refresh' content='0;url=../../pages/login-admin.php'>";
-    header("location: ../../pages/login-admin.php");
+    header("location: ../pages/login-admin.php");
     exit;
 }
 ?>
@@ -25,7 +25,7 @@ $control = isset($_GET['control']) ? $_GET['control'] : "";
 switch ($control) {
     case 'category':
         $name_cate = isset($_POST['name_cate']) ? $_POST['name_cate'] : "";
-        if (isset($_POST['name_cate']) && $name_cate!="") {
+        if (isset($_POST['name_cate']) && $name_cate != "") {
             $category->insertCategory($name_cate, $id_admin);
         }
         include('category.php');
@@ -208,7 +208,9 @@ switch ($control) {
                 $file_type = $_FILES['img_prd_2']['type'];
                 if (strlen(strstr($file_type, 'image')) > 0) {
                     if ((round($file_size / 1014, 0)) <= 10240) {
+                        /* Creating a DateTime object from the current time. */
                         $now = DateTime::createFromFormat('U.u', microtime(true));
+                        /* The above code is using the date function to format the date and time. */
                         $result = $now->format("m_d_Y_H_i_s_u");
                         $krr    = explode('_', $result);
                         $result = implode("", $krr);
@@ -405,7 +407,7 @@ switch ($control) {
     case 'logout':
         session_unset();
         print_r($_SESSION['login_admin']);
-        echo "<meta http-equiv='refresh' content='0;url=../../pages/login-admin.php'>";
+        echo "<meta http-equiv='refresh' content='0;url=../../admin/pages/login-admin.php'>";
         break;
 
     default:
