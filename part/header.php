@@ -3,7 +3,7 @@
 <?php include_once('../lib/administrator.class.php'); ?>
 <?php include_once('../lib/role.class.php'); ?>
 <?php include_once('../lib/product.class.php'); ?>
-<?php 
+<?php
 $category = new Category;
 $administrator = new Administrator;
 $product = new Product;
@@ -53,12 +53,12 @@ $product = new Product;
         <div class="container-fluid">
             <div class="row">
                 <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-					<div class="custom-select-box">
+                    <div class="custom-select-box">
                         <select id="basic" class="selectpicker show-tick form-control" data-placeholder="$ USD">
-							<option>¥ JPY</option>
-							<option>$ USD</option>
-							<option>€ EUR</option>
-						</select>
+                            <option>¥ JPY</option>
+                            <option>$ USD</option>
+                            <option>€ EUR</option>
+                        </select>
                     </div>
                     <div class="right-phone-box">
                         <p>Call US :- <a href=""> +11 900 800 100</a></p>
@@ -72,12 +72,23 @@ $product = new Product;
                     </div>
                 </div>
                 <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-					<div class="login-box">
-						<select id="basic" class="selectpicker show-tick form-control" data-placeholder="Sign In">
-							<option>Register Here</option>
-							<option>Sign In</option>
-						</select>
-					</div>
+
+                    <div class="login-box">
+                        <script type="text/javascript">
+                            function goto_url(url) {
+                                if (url != '0')
+                                    window.location.assign('' + url + '');
+                            }
+                        </script>
+
+                        <select name="select" onchange="goto_url(this.value);" id="basic" class="selectpicker show-tick form-control" data-placeholder="Sign In">
+
+                          
+                            <option value="http://localhost/green-shop/pages/checkout.php">Register Here</option>
+
+                            <option value="http://localhost/green-shop/pages/login.php">Sign In</option>
+                        </select>
+                    </div>
                     <div class="text-slid-box">
                         <div id="offer-box" class="carouselTicker">
                             <ul class="offer-box">
@@ -103,7 +114,7 @@ $product = new Product;
                                     <i class="fab fa-opencart"></i> 20% off Entire Purchase Promo code: offT30
                                 </li>
                                 <li>
-                                    <i class="fab fa-opencart"></i> Off 50%! Shop Now 
+                                    <i class="fab fa-opencart"></i> Off 50%! Shop Now
                                 </li>
                             </ul>
                         </div>
@@ -122,8 +133,8 @@ $product = new Product;
                 <!-- Start Header Navigation -->
                 <div class="navbar-header">
                     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-menu" aria-controls="navbars-rs-food" aria-expanded="false" aria-label="Toggle navigation">
-                    <i class="fa fa-bars"></i>
-                </button>
+                        <i class="fa fa-bars"></i>
+                    </button>
                     <a class="navbar-brand" href="index.php"><img src="../assets/images/logo.png" class="logo" alt=""></a>
                 </div>
                 <!-- End Header Navigation -->
@@ -136,8 +147,8 @@ $product = new Product;
                         <li class="dropdown">
                             <a href="" class="nav-link dropdown-toggle arrow" data-toggle="dropdown">SHOP</a>
                             <ul class="dropdown-menu">
-								<li><a href="shop.php">Sidebar Shop</a></li>
-								<li><a href="shop-detail.php">Shop Detail</a></li>
+                                <li><a href="shop.php">Sidebar Shop</a></li>
+                                <li><a href="shop-detail.php">Shop Detail</a></li>
                                 <li><a href="cart.php">Cart</a></li>
                                 <li><a href="checkout.php">Checkout</a></li>
                                 <li><a href="my-account.php">My Account</a></li>
@@ -155,12 +166,12 @@ $product = new Product;
                     <ul>
                         <li class="search"><a href=""><i class="fa fa-search"></i></a></li>
                         <li class="side-menu">
-							<a href="">
-								<i class="fa fa-shopping-bag"></i>
-								<span class="badge">3</span>
-								<p>My Cart</p>
-							</a>
-						</li>
+                            <a href="">
+                                <i class="fa fa-shopping-bag"></i>
+                                <span class="badge">3</span>
+                                <p>My Cart</p>
+                            </a>
+                        </li>
                     </ul>
                 </div>
                 <!-- End Atribute Navigation -->
