@@ -1,10 +1,10 @@
 <?php session_start(); ?>
 
-<?php include_once('../../lib/db.php'); ?>
-<?php include_once('../../lib/category.class.php'); ?>
-<?php include_once('../../lib/administrator.class.php'); ?>
-<?php include_once('../../lib/role.class.php'); ?>
-<?php include_once('../../lib/product.class.php'); ?>
+<?php include_once('../lib/db.php'); ?>
+<?php include_once('../lib/category.class.php'); ?>
+<?php include_once('../lib/administrator.class.php'); ?>
+<?php include_once('../lib/role.class.php'); ?>
+<?php include_once('../lib/product.class.php'); ?>
 <?php
 $administrator = new Administrator;
 ?>
@@ -27,17 +27,17 @@ $administrator = new Administrator;
     <meta name="keywords" content="free dashboard template, free admin, free bootstrap template, bootstrap admin template, admin theme, admin dashboard, dashboard template, admin template, responsive" />
     <meta name="author" content="codedthemes">
     <!-- Favicon icon -->
-    <link rel="icon" href="../../assets/images/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="../assets/images/favicon.ico" type="image/x-icon">
     <!-- Google font-->
     <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600" rel="stylesheet">
     <!-- Required Fremwork -->
-    <link rel="stylesheet" type="text/css" href="../../admin/assets/css/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="../admin/assets/css/bootstrap/css/bootstrap.min.css">
     <!-- themify-icons line icon -->
-    <link rel="stylesheet" type="text/css" href="../../admin/assets/icon/themify-icons/themify-icons.css">
+    <link rel="stylesheet" type="text/css" href="../admin/assets/icon/themify-icons/themify-icons.css">
     <!-- ico font -->
-    <link rel="stylesheet" type="text/css" href="../../admin/assets/icon/icofont/css/icofont.css">
+    <link rel="stylesheet" type="text/css" href="../admin/assets/icon/icofont/css/icofont.css">
     <!-- Style.css -->
-    <link rel="stylesheet" type="text/css" href="../../admin/assets/css/style.css">
+    <link rel="stylesheet" type="text/css" href="../admin/assets/css/style.css">
 </head>
 
 <body class="fix-menu">
@@ -58,7 +58,7 @@ $administrator = new Administrator;
                     <div class="login-card card-block auth-body mr-auto ml-auto">
                         <form method="post" class="md-float-material">
 
-                            <img src="../../assets/images/logo.png" alt="logo.png">
+                            <img src="../assets/images/logo.png" alt="logo.png">
                             <div class="auth-box">
                                 <div class="row m-b-20">
                                     <div class="col-md-12">
@@ -89,7 +89,7 @@ $administrator = new Administrator;
                                         $_SESSION['login_admin']['id_admin'] = $row['id_admin'];
                                         $_SESSION['login_admin']['username'] = $row['username'];
                                         $_SESSION['login_admin']['id_role'] = $row['id_role'];
-                                        echo "<meta http-equiv='refresh' content='0;url=../../admin/pages/index.php'>";
+                                        echo "<meta http-equiv='refresh' content='0;url=../admin/pages/index.php'>";
                                         exit;
                                     } else { ?>
                                         <p style="color: red;">Sai mật khẩu hoặc tên đăng nhập</p>

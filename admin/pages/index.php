@@ -407,7 +407,7 @@ switch ($control) {
     case 'logout':
         session_unset();
         print_r($_SESSION['login_admin']);
-        echo "<meta http-equiv='refresh' content='0;url=../../admin/pages/login-admin.php'>";
+        echo "<meta http-equiv='refresh' content='0;url=../../pages/login-admin.php'>";
         break;
 
     default:
