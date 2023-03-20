@@ -1,14 +1,17 @@
 <?php
 
-class Administrator extends Database {
-    function insertAdmin($username, $mk, $id_role){
-        $sql= "INSERT INTO administrator (username, mk, id_role) VALUES (?,?,?)";
+class Administrator extends Database
+{
+    function insertAdmin($username, $mk, $id_role)
+    {
+        $sql = "INSERT INTO administrator (username, mk, id_role) VALUES (?,?,?)";
         $stmt = $this->connect()->prepare($sql);
         $stmt->execute([$username, $mk, $id_role]);
     }
 
-    function getAllAdmins(){
-        $sql="SELECT * FROM administrator";
+    function getAllAdmins()
+    {
+        $sql = "SELECT * FROM administrator";
         $stmt = $this->connect()->prepare($sql);
         $stmt->execute();
         $rows = $stmt->fetchAll();
@@ -39,22 +42,25 @@ class Administrator extends Database {
         return $row;
     }
 
-    function checkUsername($username){
-        $sql="SELECT * FROM administrator WHERE username=?";
+    function checkUsername($username)
+    {
+        $sql = "SELECT * FROM administrator WHERE username=?";
         $stmt = $this->connect()->prepare($sql);
         $stmt->execute([$username]);
         return $stmt->rowCount();
     }
 
-    function checkLoginAdmin($username, $mk){
-        $sql="SELECT * FROM administrator WHERE username=? AND mk=?";
+    function checkLoginAdmin($username, $mk)
+    {
+        $sql = "SELECT * FROM administrator WHERE username=? AND mk=?";
         $stmt = $this->connect()->prepare($sql);
         $stmt->execute([$username, $mk]);
         return $stmt->rowCount();
     }
-    
-    function getLoginAdmin($username, $mk){
-        $sql="SELECT * FROM administrator WHERE username=? AND mk=?";
+
+    function getLoginAdmin($username, $mk)
+    {
+        $sql = "SELECT * FROM administrator WHERE username=? AND mk=?";
         $stmt = $this->connect()->prepare($sql);
         $stmt->execute([$username, $mk]);
         $row = $stmt->fetch();
@@ -67,8 +73,9 @@ class Administrator extends Database {
         $stmt->execute([$id_admin]);
     }
 
-    function editAdminId($id_admin, $mk, $id_role){
-        $sql="UPDATE administrator SET mk=?, id_role=? WHERE id_admin=?";
+    function editAdminId($id_admin, $mk, $id_role)
+    {
+        $sql = "UPDATE administrator SET mk=?, id_role=? WHERE id_admin=?";
         $stmt = $this->connect()->prepare($sql);
         $stmt->execute([$mk, $id_role, $id_admin]);
     }
