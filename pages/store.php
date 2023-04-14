@@ -6,6 +6,8 @@ if (!isset($_GET['id_brand']) || $_GET['id_brand'] == "") {
 }
 ?>
 <?php include_once('../part/header.php'); ?>
+<<<<<<< HEAD
+=======
 
 <?php
 $row = $administrator->getAdminId($id_brand);
@@ -33,6 +35,7 @@ if (isset($_GET['id_brand']) && $flag1 == 0) {
     $administrator->viewStore($view, $id_brand);
 }
 ?>
+>>>>>>> 6d2ed111b7f00328b5e66f18533e7da0b6e94a69
 <?php if ($administrator->getAdminId($id_brand)['banner'] != "") { ?>
     <style>
         .all-title-box {

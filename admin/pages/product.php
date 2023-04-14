@@ -81,6 +81,19 @@
                                                 <tr>
                                                     <td><?php echo $row['id_prd'] ?></td>
                                                     <td><a href=""><?php echo $row['name_prd'] ?></a></td>
+<<<<<<< HEAD
+                                                    <td><img width="100px" src="../../assets/img/upload/img_product/<?php echo $row['img_prd_1'] ?>" alt=""></td>
+                                                    <td title="<?php
+                                                                $row1 = $category->getCateId($row['id_cate']);
+                                                                echo $row1['name_cate'];
+                                                                ?>"><?php echo $row['id_cate'] ?></td>
+                                                    <td title="<?php
+                                                                $row2 = $administrator->getAdminId($row['id_admin']);
+                                                                echo $row2['username'];
+                                                                ?>"><?php echo $row['id_admin'] ?></td>
+                                                    <td><?php echo $row['cost'] ?></td>
+                                                    <td><?php echo $row['price'] ?></td>
+=======
                                                     <td><img width="50px" src="../../assets/img/upload/img_product/<?php echo $row['img_prd_1'] ?>" alt=""></td>
                                                     <td><?php
                                                         $row1 = $category->getCateId($row['id_cate']);
@@ -96,6 +109,7 @@
                                                     ?>
                                                     <td><?php echo number_format($row['cost'], 0, '', ',') ?>đ</td>
                                                     <td><?php echo number_format($row['price'], 0, '', ',') ?>đ</td>
+>>>>>>> 6d2ed111b7f00328b5e66f18533e7da0b6e94a69
                                                     <td><?php echo $row['quanlity'] ?></td>
                                                     <?php
                                                     if ($_SESSION['login_admin']['id_role'] == 3) { ?>
@@ -103,6 +117,10 @@
                                                         <td><a href="?control=deleteproduct&id_prd=<?php echo $row['id_prd'] ?>" class="btn btn-danger">Xóa</a></td>
                                                     <?php }
                                                     ?>
+<<<<<<< HEAD
+
+=======
+>>>>>>> 6d2ed111b7f00328b5e66f18533e7da0b6e94a69
                                                 </tr>
                                             <?php } ?>
                                         </tbody>
@@ -228,7 +246,11 @@
                                     <div class="form-group row">
                                         <label class="col-sm-2 col-form-label">Tên sản phẩm</label>
                                         <div class="col-sm-10">
+<<<<<<< HEAD
+                                            <input name="name_prd" type="text" class="form-control" placeholder="Nhập tên sản phẩm" value="<?php echo $row['name_prd'] ?>">
+=======
                                             <input name="name_prd" pattern="[^'\x22-]+" title="Không hợp lệ" type="text" class="form-control" placeholder="Nhập tên sản phẩm" value="<?php echo $row['name_prd'] ?>">
+>>>>>>> 6d2ed111b7f00328b5e66f18533e7da0b6e94a69
                                         </div>
                                     </div>
                                     <div class="form-group row">
@@ -236,10 +258,17 @@
                                         <div class="col-sm-10">
                                             <select name="id_cate" class="form-control">
                                                 <?php
+<<<<<<< HEAD
+                                                $rows = $category->getAllCategorys();
+                                                foreach ($rows as $row1) {
+                                                ?>
+                                                    <option value="<?php echo $row1['id_cate'] ?>"><?php echo $row1['name_cate'] ?></option>
+=======
                                                 $rows = $category->getAllCategorysOfidAdmin($_SESSION['login_admin']['id_admin']);
                                                 foreach ($rows as $row1) {
                                                 ?>
                                                     <option value="<?php echo $row1['id_cate'] ?>" <?php echo $row1['id_cate']==$row['id_cate']?"selected":"" ?>><?php echo $row1['name_cate'] ?></option>
+>>>>>>> 6d2ed111b7f00328b5e66f18533e7da0b6e94a69
                                                 <?php } ?>
                                             </select>
                                         </div>
@@ -247,25 +276,41 @@
                                     <div class="form-group row">
                                         <label class="col-sm-2 col-form-label">Giá sản phẩm</label>
                                         <div class="col-sm-10">
+<<<<<<< HEAD
+                                            <input name="cost" type="number" class="form-control" placeholder="Nhập giá gốc: 100000" value="<?php echo $row['cost'] ?>">
+=======
                                             <input name="cost" type="number" min="0" class="form-control" placeholder="Nhập Giá sản phẩm: 100000" value="<?php echo $row['cost'] ?>">
+>>>>>>> 6d2ed111b7f00328b5e66f18533e7da0b6e94a69
                                         </div>
                                     </div>
                                     <div class="form-group row">
                                         <label class="col-sm-2 col-form-label">Giá bán hiện tại</label>
                                         <div class="col-sm-10">
+<<<<<<< HEAD
+                                            <input name="price" type="number" class="form-control" placeholder="Nhập giá bán: 90000" value="<?php echo $row['price'] ?>">
+=======
                                             <input name="price" type="number" min="0" class="form-control" placeholder="Nhập Giá bán hiện tại: 90000" value="<?php echo $row['price'] ?>">
+>>>>>>> 6d2ed111b7f00328b5e66f18533e7da0b6e94a69
                                         </div>
                                     </div>
                                     <div class="form-group row">
                                         <label class="col-sm-2 col-form-label">Số lượng</label>
                                         <div class="col-sm-10">
+<<<<<<< HEAD
+                                            <input name="quanlity" type="number" class="form-control" placeholder="Nhập số lượng" value="<?php echo $row['quanlity'] ?>">
+=======
                                             <input name="quanlity" type="number" min="0" class="form-control" placeholder="Nhập số lượng" value="<?php echo $row['quanlity'] ?>">
+>>>>>>> 6d2ed111b7f00328b5e66f18533e7da0b6e94a69
                                         </div>
                                     </div>
                                     <div class="form-group row">
                                         <label class="col-sm-2 col-form-label">Mô Tả</label>
                                         <div class="col-sm-10">
+<<<<<<< HEAD
+                                            <textarea name="detail" rows="5" cols="5" class="form-control" placeholder="Nhập mô tả sản phẩm"><?php echo $row['detail'] ?></textarea>
+=======
                                             <textarea name="detail" rows="5" cols="5" pattern="[^'\x22-]+" title="Không hợp lệ" class="form-control" placeholder="Nhập mô tả sản phẩm"><?php echo $row['detail'] ?></textarea>
+>>>>>>> 6d2ed111b7f00328b5e66f18533e7da0b6e94a69
                                         </div>
                                     </div>
                                     <div class="form-group row">

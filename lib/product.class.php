@@ -55,6 +55,15 @@ class Product extends Database{
         return $rows;
     }
 
+<<<<<<< HEAD
+    function getAllProductsNumPagesAvailableSortSearch($search,$sl,$offset,$sort){
+        if($sort==1){
+            $sql="SELECT * FROM product WHERE name_prd LIKE '%".$search."%' AND quanlity>0 ORDER BY price DESC LIMIT ".$sl." OFFSET ".$offset;
+        }elseif($sort==2){
+            $sql="SELECT * FROM product WHERE name_prd LIKE '%".$search."%' AND quanlity>0 ORDER BY price ASC LIMIT ".$sl." OFFSET ".$offset;
+        }else{
+            $sql="SELECT * FROM product WHERE name_prd LIKE '%".$search."%' AND quanlity>0 LIMIT ".$sl." OFFSET ".$offset;
+=======
     function getAllProductsNumPagesAvailableSortSearchFilter($search,$minprice,$maxprice,$sl,$offset,$sort){
         if($sort==1){
             $sql="SELECT * FROM product WHERE name_prd LIKE '%".$search."%' AND price >=".$minprice." AND price<=".$maxprice." AND quanlity>0 ORDER BY price DESC LIMIT ".$sl." OFFSET ".$offset;
@@ -62,6 +71,7 @@ class Product extends Database{
             $sql="SELECT * FROM product WHERE name_prd LIKE '%".$search."%' AND price >=".$minprice." AND price<=".$maxprice." AND quanlity>0 ORDER BY price ASC LIMIT ".$sl." OFFSET ".$offset;
         }else{
             $sql="SELECT * FROM product WHERE name_prd LIKE '%".$search."%' AND price >=".$minprice." AND price<=".$maxprice." AND quanlity>0 LIMIT ".$sl." OFFSET ".$offset;
+>>>>>>> 6d2ed111b7f00328b5e66f18533e7da0b6e94a69
         }
         $stmt = $this->connect()->prepare($sql);
         $stmt->execute();
@@ -69,8 +79,13 @@ class Product extends Database{
         return $rows;
     }
 
+<<<<<<< HEAD
+    function countAllProductsAvailableSearch($search){
+        $sql="SELECT * FROM product WHERE name_prd LIKE '%".$search."%' AND quanlity>0";
+=======
     function countAllProductsAvailableSearch($search,$minprice,$maxprice){
         $sql="SELECT * FROM product WHERE name_prd LIKE '%".$search."%' AND price >=".$minprice." AND price<=".$maxprice." AND quanlity>0";
+>>>>>>> 6d2ed111b7f00328b5e66f18533e7da0b6e94a69
         $stmt = $this->connect()->prepare($sql);
         $stmt->execute();
         return $stmt->rowCount();

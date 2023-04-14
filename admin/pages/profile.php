@@ -13,6 +13,17 @@
                                     <div class="usre-image">
                                         <img style="width: 100px; height: 100px;" src="../../assets/img/upload/avatar_admin/<?php echo $admin['avatar'] == "" ? "avatar.jpeg" : $admin['avatar']; ?>" class="img-radius" alt="User-Profile-Image">
                                     </div>
+<<<<<<< HEAD
+                                    <h6 class="f-w-600 m-t-25 m-b-10">
+                                        <?php
+                                        if ($admin['name_brand'] == "") {
+                                            echo $admin['fullname'];
+                                        } else {
+                                            echo $admin['name_brand'];
+                                        }
+                                        ?>
+                                    </h6>
+=======
                                     <a href="index.php?control=profile">
                                         <h6 class="f-w-600 m-t-25 m-b-10">
                                             <?php
@@ -24,6 +35,7 @@
                                             ?>
                                         </h6>
                                     </a>
+>>>>>>> 6d2ed111b7f00328b5e66f18533e7da0b6e94a69
                                     <!-- <p class="text-muted">Active | Male | Born 23.05.1992</p>
                                     <hr>
                                     <p class="text-muted m-t-15">Activity Level: 87%</p>
@@ -109,7 +121,11 @@
                                                 </tr>
                                                 <tr>
                                                     <th scope="row">Mật khẩu</th>
+<<<<<<< HEAD
+                                                    <td><button class="btn btn-inverse">Thay đổi mật khẩu</button></td>
+=======
                                                     <td><a href="index.php?control=changepassword" class="btn btn-inverse">Thay đổi mật khẩu</a></td>
+>>>>>>> 6d2ed111b7f00328b5e66f18533e7da0b6e94a69
                                                 </tr>
                                             </tbody>
                                         </table>
@@ -192,6 +208,8 @@
                                 </div>
                             </div>
                         <?php } ?>
+<<<<<<< HEAD
+=======
                         <?php
                         if ($_GET['control'] == "changepassword") { ?>
                             <div class="col-md-8">
@@ -240,6 +258,7 @@
                                 </div>
                             </div>
                         <?php } ?>
+>>>>>>> 6d2ed111b7f00328b5e66f18533e7da0b6e94a69
                     </div>
                 </div>
             </div>

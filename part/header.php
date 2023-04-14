@@ -256,8 +256,18 @@ if (!isset($_SESSION['alert'])) {
                         }
                     }
                 }
+<<<<<<< HEAD
+                $soluong = isset($_POST['soluong']) ? $_POST['soluong'] : 1;
+                if (isset($_POST['id_prd']) && $flag == 0) {
+                    $item = [$_POST['id_prd'], $soluong];
+                    array_push($_SESSION['my-cart'], $item);
+                } else if (isset($_POST['id_prd']) && $flag == 1) {
+                    $_SESSION['my-cart'][$i][1] += $soluong;
+                }
+=======
 
 
+>>>>>>> 6d2ed111b7f00328b5e66f18533e7da0b6e94a69
 
                 if (isset($_POST['id_delete'])) {
                     array_splice($_SESSION['my-cart'], $_POST['id_delete'], 1);
@@ -265,9 +275,17 @@ if (!isset($_SESSION['alert'])) {
 
                 if (isset($_POST['id_plus'])) {
                     $index = $_POST['id_plus'];
+<<<<<<< HEAD
+                    if ($_SESSION['my-cart'][$index][1] == $product->getProductId($_SESSION['my-cart'][$index][0])['quanlity']) { ?>
+                        <script>
+                            alert('Sản phẩm vượt quá tồn kho, không thể đặt thêm');
+                        </script>
+                <?php } else {
+=======
                     if ($_SESSION['my-cart'][$index][1] == $product->getProductId($_SESSION['my-cart'][$index][0])['quanlity']) {
                         $_SESSION['alert'] = "Sản phẩm vượt quá tồn kho, không thể đặt thêm";
                     } else {
+>>>>>>> 6d2ed111b7f00328b5e66f18533e7da0b6e94a69
                         $_SESSION['my-cart'][$index][1] += 1;
                     }
                 }
@@ -388,7 +406,11 @@ if (!isset($_SESSION['alert'])) {
             <form action="shop.php" method="get">
                 <div class="input-group">
                     <button style="cursor: pointer;" class="input-group-addon"><i class="fa fa-search"></i></button>
+<<<<<<< HEAD
+                    <input name="search" type="text" class="form-control" placeholder="Search">
+=======
                     <input name="search" type="text" class="form-control" pattern="[^'\x22-]+" title="Không hợp lệ" placeholder="Search">
+>>>>>>> 6d2ed111b7f00328b5e66f18533e7da0b6e94a69
                     <span class="input-group-addon close-search"><i class="fa fa-times"></i></span>
                 </div>
             </form>

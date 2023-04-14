@@ -199,7 +199,11 @@
                                                     <td><?php echo $row['id_admin'] ?></td>
                                                     <td><?php echo $row['username'] ?></td>
                                                     <td><?php echo $row['fullname'] == "" ? "Chưa cập nhập" : $row['fullname'] ?></td>
+<<<<<<< HEAD
+                                                    <td><?php echo $row['name_brand'] == "" ? "Chưa cập nhập" : $row['name_brand'] ?></td>
+=======
                                                     <td><a href="?control=store&id_brand=<?php echo $row['id_admin']?>"><?php echo $row['name_brand'] == "" ? "Chưa cập nhập" : $row['name_brand'] ?></a></td>
+>>>>>>> 6d2ed111b7f00328b5e66f18533e7da0b6e94a69
                                                     <td><?php echo $row['email'] == "" ? "Chưa cập nhập" : $row['email'] ?></td>
                                                     <td><?php echo $row['phone'] == "" ? "Chưa cập nhập" : $row['phone'] ?></td>
                                                     <?php if($_SESSION['login_admin']['id_role']==1){ ?>

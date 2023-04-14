@@ -18,6 +18,12 @@ $id_admin = $_SESSION['login_admin']['id_admin']; //đặt tạm
 <?php include_once('../../lib/administrator.class.php'); ?>
 <?php include_once('../../lib/role.class.php'); ?>
 <?php include_once('../../lib/product.class.php'); ?>
+<<<<<<< HEAD
+<?php 
+$category = new Category;
+$administrator = new Administrator;
+$product = new Product;
+=======
 <?php include_once('../../lib/user.class.php'); ?>
 <?php include_once('../../lib/bill.class.php'); ?>
 <?php include_once('../../lib/coupon.class.php'); ?>
@@ -37,6 +43,7 @@ $contact = new Contact;
 if (!isset($_SESSION['alert'])) {
     $_SESSION['alert'] = "";
 }
+>>>>>>> 6d2ed111b7f00328b5e66f18533e7da0b6e94a69
 ?>
 <?php include_once('../part/header.php'); ?>
 
@@ -45,18 +52,32 @@ if (!isset($_SESSION['alert'])) {
 $control = isset($_GET['control']) ? $_GET['control'] : "";
 switch ($control) {
     case 'category':
+<<<<<<< HEAD
+        if($_SESSION['login_admin']['id_role']!=3){
+            echo "<meta http-equiv='refresh' content='0;url=index.php'>";
+            exit;
+        }
+        $name_cate = isset($_POST['name_cate']) ? $_POST['name_cate'] : "";
+        if (isset($_POST['name_cate']) && $name_cate != "") {
+            $category->insertCategory($name_cate, $id_admin);
+=======
         if ($_SESSION['login_admin']['id_role'] == 3) {
             $name_cate = isset($_POST['name_cate']) ? $_POST['name_cate'] : "";
             if (isset($_POST['add-cate']) && isset($_POST['name_cate']) && $name_cate != "") {
                 $category->insertCategory($name_cate, $id_admin);
                 $_SESSION['alert'] = "Thêm mới danh mục thành công";
             }
+>>>>>>> 6d2ed111b7f00328b5e66f18533e7da0b6e94a69
         }
         include('category.php');
         break;
 
     case 'deletecategory':
+<<<<<<< HEAD
+        if($_SESSION['login_admin']['id_role']!=3){
+=======
         if ($_SESSION['login_admin']['id_role'] != 3) {
+>>>>>>> 6d2ed111b7f00328b5e66f18533e7da0b6e94a69
             echo "<meta http-equiv='refresh' content='0;url=index.php'>";
             exit;
         }
@@ -76,7 +97,11 @@ switch ($control) {
         break;
 
     case 'editcategory':
+<<<<<<< HEAD
+        if($_SESSION['login_admin']['id_role']!=3){
+=======
         if ($_SESSION['login_admin']['id_role'] != 3) {
+>>>>>>> 6d2ed111b7f00328b5e66f18533e7da0b6e94a69
             echo "<meta http-equiv='refresh' content='0;url=index.php'>";
             exit;
         }
@@ -92,12 +117,21 @@ switch ($control) {
             $_SESSION['alert'] = "Sửa danh mục thành công";
             echo "<meta http-equiv='refresh' content='0;url=index.php?control=category'>";
             exit;
+<<<<<<< HEAD
+        } else {
+            // echo "<meta http-equiv='refresh' content='0;url=../../../../pages/404.php'>";
+=======
+>>>>>>> 6d2ed111b7f00328b5e66f18533e7da0b6e94a69
         }
         include('category.php');
         break;
 
     case 'administrator':
+<<<<<<< HEAD
+        if($_SESSION['login_admin']['id_role']!=1 && $_SESSION['login_admin']['id_role']!=2){
+=======
         if ($_SESSION['login_admin']['id_role'] != 1 && $_SESSION['login_admin']['id_role'] != 2) {
+>>>>>>> 6d2ed111b7f00328b5e66f18533e7da0b6e94a69
             echo "<meta http-equiv='refresh' content='0;url=index.php'>";
             exit;
         }
@@ -105,7 +139,11 @@ switch ($control) {
         break;
 
     case 'addadmin':
+<<<<<<< HEAD
+        if($_SESSION['login_admin']['id_role']!=1){
+=======
         if ($_SESSION['login_admin']['id_role'] != 1) {
+>>>>>>> 6d2ed111b7f00328b5e66f18533e7da0b6e94a69
             echo "<meta http-equiv='refresh' content='0;url=index.php'>";
             exit;
         }
@@ -147,6 +185,19 @@ switch ($control) {
         break;
 
     case 'deleteadmin':
+<<<<<<< HEAD
+        if($_SESSION['login_admin']['id_role']!=1){
+            echo "<meta http-equiv='refresh' content='0;url=index.php'>";
+            exit;
+        }
+        $id_admin = isset($_GET['id_admin']) ? $_GET['id_admin'] : "";
+        if ($id_admin != "") {
+            $administrator->deleteAdminId($id_admin);
+            echo "<meta http-equiv='refresh' content='0;url=index.php?control=administrator'>";
+            exit;
+        } else {
+            // echo "<meta http-equiv='refresh' content='0;url=../../../../pages/404.php'>";
+=======
         if ($_SESSION['login_admin']['id_role'] != 1) {
             echo "<meta http-equiv='refresh' content='0;url=index.php'>";
             exit;
@@ -157,16 +208,26 @@ switch ($control) {
             $_SESSION['alert'] = "Xóa admin thành công";
             echo "<meta http-equiv='refresh' content='0;url=index.php?control=administrator'>";
             exit;
+>>>>>>> 6d2ed111b7f00328b5e66f18533e7da0b6e94a69
         }
         break;
 
     case 'editadmin':
+<<<<<<< HEAD
+        if($_SESSION['login_admin']['id_role']!=1){
+            echo "<meta http-equiv='refresh' content='0;url=index.php'>";
+            exit;
+        }
+        $id_admin = isset($_GET['id_admin']) ? $_GET['id_admin'] : "";
+        $row = $administrator->getAdminId($id_admin);
+=======
         if ($_SESSION['login_admin']['id_role'] != 1) {
             echo "<meta http-equiv='refresh' content='0;url=index.php'>";
             exit;
         }
         $id_admin_get = isset($_GET['id_admin']) ? $_GET['id_admin'] : "";
         $row = $administrator->getAdminId($id_admin_get);
+>>>>>>> 6d2ed111b7f00328b5e66f18533e7da0b6e94a69
 
         $username = isset($_POST['username']) ? $_POST['username'] : "";
         $mk = isset($_POST['mk']) ? $_POST['mk'] : "";
@@ -197,6 +258,8 @@ switch ($control) {
         include('administrator.php');
         break;
 
+<<<<<<< HEAD
+=======
     case 'coupon':
         include('coupon.php');
         break;
@@ -321,12 +384,17 @@ switch ($control) {
         include('coupon.php');
         break;
 
+>>>>>>> 6d2ed111b7f00328b5e66f18533e7da0b6e94a69
     case 'product':
         include('product.php');
         break;
 
     case 'addproduct':
+<<<<<<< HEAD
+        if($_SESSION['login_admin']['id_role']!=3){
+=======
         if ($_SESSION['login_admin']['id_role'] != 3) {
+>>>>>>> 6d2ed111b7f00328b5e66f18533e7da0b6e94a69
             echo "<meta http-equiv='refresh' content='0;url=index.php'>";
             exit;
         }
@@ -453,16 +521,23 @@ switch ($control) {
         break;
 
     case 'editproduct':
+<<<<<<< HEAD
+        if($_SESSION['login_admin']['id_role']!=3){
+=======
         if ($_SESSION['login_admin']['id_role'] != 3) {
+>>>>>>> 6d2ed111b7f00328b5e66f18533e7da0b6e94a69
             echo "<meta http-equiv='refresh' content='0;url=index.php'>";
             exit;
         }
         $id_prd = isset($_GET['id_prd']) ? $_GET['id_prd'] : "";
         $row = $product->getProductId($id_prd);
+<<<<<<< HEAD
+=======
         if ($_SESSION['login_admin']['id_admin'] != $row['id_admin']) {
             echo "<meta http-equiv='refresh' content='0;url=index.php'>";
             exit;
         }
+>>>>>>> 6d2ed111b7f00328b5e66f18533e7da0b6e94a69
         $name_prd = isset($_POST['name_prd']) ? $_POST['name_prd'] : "";
         $id_cate = isset($_POST['id_cate']) ? $_POST['id_cate'] : "";
         $cost = isset($_POST['cost']) ? $_POST['cost'] : "";
@@ -589,7 +664,11 @@ switch ($control) {
         break;
 
     case 'deleteproduct':
+<<<<<<< HEAD
+        if($_SESSION['login_admin']['id_role']!=3){
+=======
         if ($_SESSION['login_admin']['id_role'] != 3) {
+>>>>>>> 6d2ed111b7f00328b5e66f18533e7da0b6e94a69
             echo "<meta http-equiv='refresh' content='0;url=index.php'>";
             exit;
         }
@@ -605,16 +684,29 @@ switch ($control) {
             $_SESSION['alert'] = "Xóa sản phẩm thành công";
             echo "<meta http-equiv='refresh' content='0;url=index.php?control=product'>";
             exit;
+<<<<<<< HEAD
+        } else {
+            // echo "<meta http-equiv='refresh' content='0;url=../../../../pages/404.php'>";
+=======
+>>>>>>> 6d2ed111b7f00328b5e66f18533e7da0b6e94a69
         }
         break;
 
     case 'profile':
+<<<<<<< HEAD
+        $admin = $administrator->getAdminId($_SESSION['login_admin']['id_admin']);
+=======
         $admin = $administrator->getAdminId($id_admin);
+>>>>>>> 6d2ed111b7f00328b5e66f18533e7da0b6e94a69
         include('profile.php');
         break;
 
     case 'updateprofile':
+<<<<<<< HEAD
+        $admin = $administrator->getAdminId($_SESSION['login_admin']['id_admin']);
+=======
         $admin = $administrator->getAdminId($id_admin);
+>>>>>>> 6d2ed111b7f00328b5e66f18533e7da0b6e94a69
         $fullname = isset($_POST['fullname']) ? $_POST['fullname'] : "";
         $name_brand = isset($_POST['name_brand']) ? $_POST['name_brand'] : "";
         $phone = isset($_POST['phone']) ? $_POST['phone'] : "";
@@ -622,6 +714,25 @@ switch ($control) {
         $address = isset($_POST['address']) ? $_POST['address'] : "";
         $avatar = isset($_FILES['avatar']) ? $_FILES['avatar'] : "";
         $banner = isset($_FILES['banner']) ? $_FILES['banner'] : "";
+<<<<<<< HEAD
+        $err=[];
+
+        if (isset($_POST['fullname'])){
+            if($fullname==""){
+                array_push($err, 'Vui lòng nhập họ và tên');
+            }
+            if($phone==""){
+                array_push($err, 'Vui lòng nhập số điện thoại');
+            }
+            if($email==""){
+                array_push($err, 'Vui lòng nhập email');
+            }
+            if($address==""){
+                array_push($err, 'Vui lòng nhập địa chỉ');
+            }
+            if ($_FILES['avatar']['error'] > 0) {
+                array_push($err, 'File Upload Bị Lỗi');
+=======
         $err = [];
 
         if (isset($_POST['fullname'])) {
@@ -640,6 +751,7 @@ switch ($control) {
             if ($_FILES['avatar']['error'] > 0) {
                 // array_push($err, 'File Upload Bị Lỗi');
                 $avatar = $admin['avatar'];
+>>>>>>> 6d2ed111b7f00328b5e66f18533e7da0b6e94a69
             } else {
                 // Upload file
                 $file_name = $_FILES['avatar']['name'];
@@ -662,6 +774,31 @@ switch ($control) {
                     array_push($err, 'Vui lòng nhập file định dạng là ảnh');
                 }
             }
+<<<<<<< HEAD
+            if($banner!=""){
+                if ($_FILES['banner']['error'] == 0){
+                    // Upload file
+                    $file_name = $_FILES['banner']['name'];
+                    $file_size = $_FILES['banner']['size'];
+                    $file_path = $_FILES['banner']['tmp_name'];
+                    $file_type = $_FILES['banner']['type'];
+                    if (strlen(strstr($file_type, 'image')) > 0) {
+                        if ((round($file_size / 1014, 0)) <= 10240) {
+                            $now = DateTime::createFromFormat('U.u', microtime(true));
+                            $result = $now->format("m_d_Y_H_i_s_u");
+                            $krr    = explode('_', $result);
+                            $result = implode("", $krr);
+                            // echo $result;
+                            move_uploaded_file($_FILES['banner']['tmp_name'], '../../assets/img/upload/banner_store/' . $result . $file_name);
+                            $banner = $result . $file_name;
+                        }
+                    }
+                }
+            }
+            
+        }
+        if (isset($_POST['fullname']) && count($err) == 0){
+=======
             if ($_FILES['banner']['error'] > 0) {
                 // array_push($err, 'File Upload Bị Lỗi');
                 $banner = $admin['banner'];
@@ -689,6 +826,7 @@ switch ($control) {
             }
         }
         if (isset($_POST['fullname']) && count($err) == 0) {
+>>>>>>> 6d2ed111b7f00328b5e66f18533e7da0b6e94a69
             $fullname = htmlspecialchars(addslashes(trim($fullname)));
             $name_brand = htmlspecialchars(addslashes(trim($name_brand)));
             $phone = htmlspecialchars(addslashes(trim($phone)));
@@ -696,6 +834,9 @@ switch ($control) {
             $address = htmlspecialchars(addslashes(trim($address)));
             $avatar = htmlspecialchars(addslashes(trim($avatar)));
             $banner = htmlspecialchars(addslashes(trim($banner)));
+<<<<<<< HEAD
+            $administrator->updateAdminId($_SESSION['login_admin']['id_admin'],$fullname,$name_brand, $phone, $email, $address, $avatar, $banner);
+=======
             $administrator->updateAdminId($id_admin, $fullname, $name_brand, $phone, $email, $address, $avatar, $banner);
             $_SESSION['alert'] = "Cập nhập thông tin thành công";
             echo "<meta http-equiv='refresh' content='0;url=index.php?control=profile'>";
@@ -725,6 +866,7 @@ switch ($control) {
             $mk = md5(htmlspecialchars(addslashes(trim($mk))));
             $administrator->changePasswordAdmin($id_admin, $mk);
             $_SESSION['alert'] = "Đổi mật khẩu thành công";
+>>>>>>> 6d2ed111b7f00328b5e66f18533e7da0b6e94a69
             echo "<meta http-equiv='refresh' content='0;url=index.php?control=profile'>";
             exit;
         }
@@ -736,6 +878,8 @@ switch ($control) {
         // print_r($_SESSION['login_admin']);
         echo "<meta http-equiv='refresh' content='0;url=../../pages/login-admin.php'>";
         exit;
+<<<<<<< HEAD
+=======
         break;
 
     case 'bill':
@@ -785,6 +929,7 @@ switch ($control) {
 
     case 'store':
         include('../dashboard/store.php');
+>>>>>>> 6d2ed111b7f00328b5e66f18533e7da0b6e94a69
         break;
 
     default:
