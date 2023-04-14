@@ -23,15 +23,35 @@
             <div class="col-lg-6">
                 <div class="login__form">
                     <h1>Login</h1>
-                    <form action="#">
+                    <form action="" method="post">
+                        <?php
+                        $numrows = -1;
+                        $mk = isset($_POST["mk"]) ? $_POST["mk"] : "";
+                        $username = isset($_POST["username"]) ? $_POST["username"] : "";
+                        $username = htmlspecialchars(addslashes(trim($username)));
+                        $mk = htmlspecialchars(addslashes(trim($mk)));
+                        $mk = md5($mk);
+                        $numrows = $user->checkLoginUser($username, $mk);
+                        $row = $user->getLoginUser($username, $mk);
+                        ?>
                         <div class="input__item">
-                            <input type="text" placeholder="Email address">
+                            <input name="username" type="text" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" value="<?php echo $username ?>" placeholder="Email address">
                             <span class="icon_mail"></span>
                         </div>
                         <div class="input__item">
-                            <input type="text" placeholder="Password">
+                            <input name="mk" type="password" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Phải chứa ít nhất một số và một chữ hoa và chữ thường và ít nhất 8 ký tự trở lên" placeholder="Password">
                             <span class="icon_lock"></span>
                         </div>
+                        <?php if (isset($_POST["username"])) {
+                            if ($numrows == 1) {
+                                $_SESSION['login_user']['id_user'] = $row['id_user'];
+                                $_SESSION['login_user']['username'] = $row['username'];
+                                echo "<meta http-equiv='refresh' content='0;url=my-account.php'>";
+                                exit;
+                            } else { ?>
+                                <p style="color: red;">Sai mật khẩu hoặc tên đăng nhập</p>
+                        <?php }
+                        } ?>
                         <button type="submit" class="btn hvr-hover text-white">Login Now</button>
                     </form>
                     <a href="" class="forget_pass">Forgot Your Password?</a>
@@ -40,7 +60,7 @@
             <div class="col-lg-6">
                 <div class="login__register">
                     <h1>Dont’t Have An Account?</h1>
-                    <a href="" class="btn hvr-hover text-white">Register Now</a>
+                    <a href="signup.php" class="btn hvr-hover text-white">Register Now</a>
                 </div>
             </div>
         </div>

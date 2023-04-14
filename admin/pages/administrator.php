@@ -6,7 +6,7 @@
                 <div class="page-header card">
                     <div class="card-block">
                         <h4 class="m-b-10">Quản trị viên</h4>
-                        <?php if ($_GET['control'] != 'addadmin') { ?>
+                        <?php if ($_GET['control'] != 'addadmin' && $_SESSION['login_admin']['id_role']==1) { ?>
                             <a href="index.php?control=addadmin"><button class="btn btn-primary mb-2">Thêm mới quản trị viên</button></a>
                         <?php } ?>
                         <!-- <p class="text-muted m-b-10">lorem ipsum dolor sit amet, consectetur adipisicing elit</p> -->
@@ -47,19 +47,19 @@
                                     <div class="form-group row">
                                         <label class="col-sm-2 col-form-label">Tên tài khoản</label>
                                         <div class="col-sm-10">
-                                            <input name="username" type="text" class="form-control" placeholder="Nhập tên tài khoản" value="<?php echo $username?>">
+                                            <input name="username" type="text" pattern="[^'\x22-]+" title="Không hợp lệ" class="form-control" placeholder="Nhập tên tài khoản" value="<?php echo $username?>">
                                         </div>
                                     </div>
                                     <div class="form-group row">
                                         <label class="col-sm-2 col-form-label">Mật khẩu</label>
                                         <div class="col-sm-10">
-                                            <input name="mk" type="password" class="form-control" placeholder="Nhập mật khẩu" value="<?php echo $mk?>">
+                                            <input name="mk" type="password" pattern="[^'\x22-]+" title="Không hợp lệ" class="form-control" placeholder="Nhập mật khẩu" value="<?php echo $mk?>">
                                         </div>
                                     </div>
                                     <div class="form-group row">
                                         <label class="col-sm-2 col-form-label">Xác nhận mật khẩu</label>
                                         <div class="col-sm-10">
-                                            <input name="conf_mk" type="password" class="form-control" placeholder="Nhập lại mật khẩu" value="<?php echo $conf_mk?>">
+                                            <input name="conf_mk" type="password" pattern="[^'\x22-]+" title="Không hợp lệ" class="form-control" placeholder="Nhập lại mật khẩu" value="<?php echo $conf_mk?>">
                                         </div>
                                     </div>
                                     <div class="form-group row">
@@ -76,12 +76,6 @@
                                             </select>
                                         </div>
                                     </div>
-                                    <!-- <div class="form-group row">
-                                    <label class="col-sm-2 col-form-label">Ảnh đại diện</label>
-                                    <div class="col-sm-10">
-                                        <input type="file" class="form-control">
-                                    </div>
-                                </div> -->
                                     <?php if (count($err) > 0) { ?>
                                         <ul class="alert alert-danger">
                                             <?php
@@ -118,19 +112,19 @@
                                     <div class="form-group row">
                                         <label class="col-sm-2 col-form-label">Tên tài khoản</label>
                                         <div class="col-sm-10">
-                                            <input name="username" type="text" class="form-control" placeholder="Nhập tên tài khoản" value="<?php echo $row['username']?>" readonly>
+                                            <input name="username" pattern="[^'\x22-]+" title="Không hợp lệ" type="text" class="form-control" placeholder="Nhập tên tài khoản" value="<?php echo $row['username']?>" readonly>
                                         </div>
                                     </div>
                                     <div class="form-group row">
                                         <label class="col-sm-2 col-form-label">Mật khẩu mới</label>
                                         <div class="col-sm-10">
-                                            <input name="mk" type="password" class="form-control" placeholder="Nhập mật khẩu mới" value="">
+                                            <input name="mk" pattern="[^'\x22-]+" title="Không hợp lệ" type="password" class="form-control" placeholder="Nhập mật khẩu mới" value="">
                                         </div>
                                     </div>
                                     <div class="form-group row">
                                         <label class="col-sm-2 col-form-label">Xác nhận mật khẩu mới</label>
                                         <div class="col-sm-10">
-                                            <input name="conf_mk" type="password" class="form-control" placeholder="Nhập lại mật khẩu mới" value="">
+                                            <input name="conf_mk" pattern="[^'\x22-]+" title="Không hợp lệ" type="password" class="form-control" placeholder="Nhập lại mật khẩu mới" value="">
                                         </div>
                                     </div>
                                     <div class="form-group row">
@@ -147,12 +141,6 @@
                                             </select>
                                         </div>
                                     </div>
-                                    <!-- <div class="form-group row">
-                                    <label class="col-sm-2 col-form-label">Ảnh đại diện</label>
-                                    <div class="col-sm-10">
-                                        <input type="file" class="form-control">
-                                    </div>
-                                </div> -->
                                     <?php if (count($err) > 0) { ?>
                                         <ul class="alert alert-danger">
                                             <?php
@@ -187,14 +175,20 @@
                             </div>
                             <div class="card-block table-border-style">
                                 <div class="table-responsive">
-                                    <table class="table table-hover">
+                                    <table class="table table-hover display">
                                         <thead>
                                             <tr>
                                                 <th>#</th>
                                                 <th>Tài khoản</th>
                                                 <th>Họ tên</th>
-                                                <th>Sửa</th>
-                                                <th>Xóa</th>
+                                                <th>Tên cửa hàng</th>
+                                                <th>Email</th>
+                                                <th>Sđt</th>
+                                                <?php if($_SESSION['login_admin']['id_role']==1){ ?>
+                                                    <th>Sửa</th>
+                                                    <th>Xóa</th>     
+                                                <?php }?>
+                                                
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -205,11 +199,15 @@
                                                     <td><?php echo $row['id_admin'] ?></td>
                                                     <td><?php echo $row['username'] ?></td>
                                                     <td><?php echo $row['fullname'] == "" ? "Chưa cập nhập" : $row['fullname'] ?></td>
-                                                    <td><a href="index.php?control=editadmin&id_admin=<?php echo $row['id_admin']?>" class="btn btn-warning">Sửa</a></td>
-                                                    <td><a href="index.php?control=deleteadmin&id_admin=<?php echo $row['id_admin']?>" class="btn btn-danger">Xóa</a></td>
+                                                    <td><a href="?control=store&id_brand=<?php echo $row['id_admin']?>"><?php echo $row['name_brand'] == "" ? "Chưa cập nhập" : $row['name_brand'] ?></a></td>
+                                                    <td><?php echo $row['email'] == "" ? "Chưa cập nhập" : $row['email'] ?></td>
+                                                    <td><?php echo $row['phone'] == "" ? "Chưa cập nhập" : $row['phone'] ?></td>
+                                                    <?php if($_SESSION['login_admin']['id_role']==1){ ?>
+                                                        <td><a href="index.php?control=editadmin&id_admin=<?php echo $row['id_admin']?>" class="btn btn-warning">Sửa</a></td>
+                                                        <td><a href="index.php?control=deleteadmin&id_admin=<?php echo $row['id_admin']?>" class="btn btn-danger">Xóa</a></td>
+                                                    <?php } ?>
                                                 </tr>
                                             <?php } ?>
-
                                         </tbody>
                                     </table>
                                 </div>

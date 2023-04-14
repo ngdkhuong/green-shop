@@ -67,11 +67,11 @@ $administrator = new Administrator;
                                 </div>
                                 <hr />
                                 <div class="input-group">
-                                    <input type="text" name="username" class="form-control" placeholder="Nhập tài khoản">
+                                    <input type="text" name="username" pattern="[^'\x22-]+" title="Không hợp lệ" class="form-control" placeholder="Nhập tài khoản">
                                     <span class="md-line"></span>
                                 </div>
                                 <div class="input-group">
-                                    <input type="password" name="mk" class="form-control" placeholder="Nhập password">
+                                    <input type="password" name="mk" pattern="[^'\x22-]+" title="Không hợp lệ" class="form-control" placeholder="Nhập password">
                                     <span class="md-line"></span>
                                 </div>
                                 <?php
@@ -89,7 +89,7 @@ $administrator = new Administrator;
                                         $_SESSION['login_admin']['id_admin'] = $row['id_admin'];
                                         $_SESSION['login_admin']['username'] = $row['username'];
                                         $_SESSION['login_admin']['id_role'] = $row['id_role'];
-                                        echo "<meta http-equiv='refresh' content='0;url=../admin/pages/index.php'>";
+                                        echo "<meta http-equiv='refresh' content='0;url=../admin/index.php'>";
                                         exit;
                                     } else { ?>
                                         <p style="color: red;">Sai mật khẩu hoặc tên đăng nhập</p>
@@ -176,16 +176,16 @@ $administrator = new Administrator;
 <![endif]-->
     <!-- Warning Section Ends -->
     <!-- Required Jquery -->
-    <script type="text/javascript" src="../../admin/assets/js/jquery/jquery.min.js"></script>
-    <script type="text/javascript" src="../../admin/assets/js/jquery-ui/jquery-ui.min.js"></script>
-    <script type="text/javascript" src="../../admin/assets/js/popper.js/popper.min.js"></script>
-    <script type="text/javascript" src="../../admin/assets/js/bootstrap/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../admin/assets/js/jquery/jquery.min.js"></script>
+    <script type="text/javascript" src="../admin/assets/js/jquery-ui/jquery-ui.min.js"></script>
+    <script type="text/javascript" src="../admin/assets/js/popper.js/popper.min.js"></script>
+    <script type="text/javascript" src="../admin/assets/js/bootstrap/js/bootstrap.min.js"></script>
     <!-- jquery slimscroll js -->
-    <script type="text/javascript" src="../../admin/assets/js/jquery-slimscroll/jquery.slimscroll.js"></script>
+    <script type="text/javascript" src="../admin/assets/js/jquery-slimscroll/jquery.slimscroll.js"></script>
     <!-- modernizr js -->
-    <script type="text/javascript" src="../../admin/assets/js/modernizr/modernizr.js"></script>
-    <script type="text/javascript" src="../../admin/assets/js/modernizr/css-scrollbars.js"></script>
-    <script type="text/javascript" src="../../admin/assets/js/common-pages.js"></script>
+    <script type="text/javascript" src="../admin/assets/js/modernizr/modernizr.js"></script>
+    <script type="text/javascript" src="../admin/assets/js/modernizr/css-scrollbars.js"></script>
+    <script type="text/javascript" src="../admin/assets/js/common-pages.js"></script>
 </body>
 
 </html>

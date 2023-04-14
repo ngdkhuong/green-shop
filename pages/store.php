@@ -7,8 +7,43 @@ if (!isset($_GET['id_brand']) || $_GET['id_brand'] == "") {
 ?>
 <?php include_once('../part/header.php'); ?>
 
+<?php
+$row = $administrator->getAdminId($id_brand);
+
+if (!isset($_SESSION['view_store'])) {
+    $_SESSION['view_store'] = [];
+}
+
+$flag1 = 0;
+
+foreach ($_SESSION['view_store'] as $view) {
+    if (isset($_GET['id_brand'])) {
+        if ($_GET['id_brand'] == $view) {
+            $flag1 = 1;
+            break;
+        }
+    }
+}
+
+$view = $row['view'];
+
+if (isset($_GET['id_brand']) && $flag1 == 0) {
+    array_push($_SESSION['view_store'], $_GET['id_brand']);
+    $view = $row['view'] + 1;
+    $administrator->viewStore($view, $id_brand);
+}
+?>
+<?php if ($administrator->getAdminId($id_brand)['banner'] != "") { ?>
+    <style>
+        .all-title-box {
+            background: url("../assets/img/upload/banner_store/<?php echo $administrator->getAdminId($id_brand)['banner'] ?>") no-repeat center center;
+            background-size: cover;
+            background-attachment: fixed;
+        }
+    </style>
+<?php } ?>
 <!-- Start All Title Box -->
-<div class="all-title-box" class="">
+<div class="all-title-box">
     <div class="container">
         <div class="row">
             <div class="col-lg-12">
@@ -39,7 +74,7 @@ if (!isset($_GET['id_brand']) || $_GET['id_brand'] == "") {
                                         <option value="2" <?php echo $sort == 2 ? "selected" : "" ?>>Low Price → High Price</option>
                                     </select>
                                 </div>
-                                <button class="ml-1 btn hvr-hover text-white title" style="line-height: 28px; font-weight: bolder;">Lọc</button>
+                                <button class="ml-1 btn hvr-hover text-white title" style="line-height: 28px; font-weight: bolder;">Sắp xếp</button>
                                 <p>Showing all <?php echo $product->countAllProductsOfBrand($id_brand) ?> results</p>
                             </form>
                         </div>
@@ -75,7 +110,6 @@ if (!isset($_GET['id_brand']) || $_GET['id_brand'] == "") {
 
                                     $rows = $product->getAllProductsNumPagesAvailableOfBrandSort($sl, $offset, $id_brand, $sort);
 
-
                                     foreach ($rows as $row) { ?>
                                         <div class="col-sm-6 col-md-6 col-lg-4 col-xl-4">
                                             <div class="products-single fix">
@@ -91,12 +125,18 @@ if (!isset($_GET['id_brand']) || $_GET['id_brand'] == "") {
                                                     <div class="mask-icon">
                                                         <ul>
                                                             <li><a href="shop-detail.php?id_prd=<?php echo $row['id_prd'] ?>" data-toggle="tooltip" data-placement="right" title="View"><i class="fas fa-eye"></i></a></li>
-                                                            <li><a href="" data-toggle="tooltip" data-placement="right" title="Compare"><i class="fas fa-sync-alt"></i></a></li>
-                                                            <li><a href="" data-toggle="tooltip" data-placement="right" title="Add to Wishlist"><i class="far fa-heart"></i></a></li>
+                                                            <li>
+                                                                <a href="">
+                                                                    <form method="post">
+                                                                        <input type="hidden" name="id_prd" value="<?php echo $row['id_prd'] ?>">
+                                                                        <button style="border: none;background-color: inherit;cursor: pointer;padding:0px;color:white;" name="add_to_wishlist" data-toggle="tooltip" data-placement="right" title="Add to Wishlist"><i class="far fa-heart"></i></button>
+                                                                    </form>
+                                                                </a>
+                                                            </li>
                                                         </ul>
                                                         <form action="" method="post">
                                                             <input hidden name="id_prd" value="<?php echo $row['id_prd'] ?>" type="text">
-                                                            <button class="cart">Add to Cart</button>
+                                                            <button name="add-to-cart" class="cart">Add to Cart</button>
                                                         </form>
                                                     </div>
                                                 </div>
@@ -130,8 +170,14 @@ if (!isset($_GET['id_brand']) || $_GET['id_brand'] == "") {
                                                         <div class="mask-icon">
                                                             <ul>
                                                                 <li><a href="shop-detail.php?id_prd=<?php echo $row['id_prd'] ?>" data-toggle="tooltip" data-placement="right" title="View"><i class="fas fa-eye"></i></a></li>
-                                                                <li><a href="" data-toggle="tooltip" data-placement="right" title="Compare"><i class="fas fa-sync-alt"></i></a></li>
-                                                                <li><a href="" data-toggle="tooltip" data-placement="right" title="Add to Wishlist"><i class="far fa-heart"></i></a></li>
+                                                                <li>
+                                                                    <a href="">
+                                                                        <form method="post">
+                                                                            <input type="hidden" name="id_prd" value="<?php echo $row['id_prd'] ?>">
+                                                                            <button style="border: none;background-color: inherit;cursor: pointer;padding:0px;color:white;" name="add_to_wishlist" data-toggle="tooltip" data-placement="right" title="Add to Wishlist"><i class="far fa-heart"></i></button>
+                                                                        </form>
+                                                                    </a>
+                                                                </li>
                                                             </ul>
                                                         </div>
                                                     </div>
@@ -149,7 +195,7 @@ if (!isset($_GET['id_brand']) || $_GET['id_brand'] == "") {
                                                     <p><?php echo $row['detail'] ?></p>
                                                     <form action="" method="post">
                                                         <input hidden name="id_prd" value="<?php echo $row['id_prd'] ?>" type="text">
-                                                        <button class="btn hvr-hover p-2 p" style="color: white; font-weight: bold;">Add to Cart</button>
+                                                        <button name="add-to-cart" class="btn hvr-hover p-2 p" style="color: white; font-weight: bold;">Add to Cart</button>
                                                     </form>
                                                 </div>
                                             </div>
@@ -171,21 +217,58 @@ if (!isset($_GET['id_brand']) || $_GET['id_brand'] == "") {
                 </div>
             </div>
             <div class="col-xl-3 col-lg-3 col-sm-12 col-xs-12 sidebar-shop-left">
+                <?php
+                include_once('../lib/likedislike.php');
+                $row1 = $administrator->getAdminId($id_brand);
+                ?>
                 <div class="product-categori">
-                    <div class="search-product">
+                    <!-- <div class="search-product">
                         <form action="#">
                             <input class="form-control" placeholder="Search here..." type="text">
                             <button type="submit"> <i class="fa fa-search"></i> </button>
                         </form>
+                    </div> -->
+                    <div class="filter-sidebar-left">
+                        <div style="text-align: center;" class="mb-2">
+                            <img style="width: 150px; height: 150px; margin: auto;" class="rounded-circle border p-1" src="../assets/img/upload/avatar_admin/<?php echo $row1['avatar'] == "" ? "avatar.jpeg" : $row1['avatar'] ?>" alt="">
+                        </div>
+                        <h3><b>Cửa hàng</b> <?php echo $row1['name_brand'] ?></h3>
+                        <p>Sản phẩm: <?php echo $product->countAllProductsOfBrand($row1['id_admin']) ?></p>
+                        <p>Đánh giá:
+                            <?php
+                            $like = $evalution->countLikeBrand($row1['id_admin'])['countLike'];
+                            $dislike = $evalution->countDisLikeBrand($row1['id_admin'])['countDisLike'];
+                            if ($like + $dislike != 0) {
+                                echo ceil($like / ($like + $dislike) * 5);
+                            } else {
+                                echo 0;
+                            }
+                            ?> <i class="fas fa-star"></i>
+                        </p>
+                        <p>
+                        <form method="post" style="display: inline-block">
+                            <input hidden name="id_brand" value="<?php echo $row1['id_admin'] ?>">
+                            <button name="like" style="border: none; background-color: inherit; cursor: pointer;<?php if (isset($_SESSION['login_user'])) {
+                                                                                                                    echo $evalution->getEvalution($row1['id_admin'], $_SESSION['login_user']['id_user'])['evalution'] != 1 ? "" : " color:#4267B2; font-weight: bold;";
+                                                                                                                } ?>"><span class="icon_like"></span> Like: <?php echo $evalution->countLikeBrand($row1['id_admin'])['countLike'] ?></button>
+                        </form>
+                        |
+                        <form method="post" style="display: inline-block">
+                            <input hidden name="id_brand" value="<?php echo $row1['id_admin'] ?>">
+                            <button name="dislike" style="border: none; background-color: inherit; cursor: pointer;<?php if (isset($_SESSION['login_user'])) {
+                                                                                                                        echo $evalution->getEvalution($row1['id_admin'], $_SESSION['login_user']['id_user'])['evalution'] != 2 ? "" : " color:#4267B2; font-weight: bold;";
+                                                                                                                    } ?>"><span class="icon_dislike"></span> Dislike: <?php echo $evalution->countDisLikeBrand($row1['id_admin'])['countDisLike'] ?></button>
+                        </form>
+                        </p>
+                        <p>Lượt xem: <?php echo $row1['view'] ?></p>
+                        <p>Lượt mua sản phẩm: <?php echo $bill->sumQuanlityProductBrand($row1['id_admin'])[0]['sumquanlity'] == "" ? "0" : $bill->sumQuanlityProductBrand($row1['id_admin'])[0]['sumquanlity']; ?></p>
                     </div>
                     <div class="filter-sidebar-left">
                         <div class="title-left">
                             <h3>Danh mục thuộc cửa hàng</h3>
                         </div>
                         <div class="list-group list-group-collapse list-group-sm list-group-tree">
-                            <?php
-                            $row1 = $administrator->getAdminId($id_brand);
-                            ?>
+
                             <div class="list-group-collapse sub-men">
                                 <a class="list-group-item list-group-item-action" href="store.php?id_brand=<?php echo $row1['id_admin'] ?>"><?php echo $row1['name_brand'] ?> <small class="text-muted">(<?php echo $product->countAllProductsOfBrand($row1['id_admin']) ?>)</small>
                                 </a>

@@ -9,10 +9,26 @@ class Product extends Database{
         return $rows;
     }
 
+    function getAllProductsOfBrand($id_admin){
+        $sql="SELECT * FROM product WHERE id_admin=?";
+        $stmt = $this->connect()->prepare($sql);
+        $stmt->execute([$id_admin]);
+        $rows = $stmt->fetchAll();
+        return $rows;
+    }
+
     function getAllProductsAvailable(){
         $sql="SELECT * FROM product WHERE quanlity>0";
         $stmt = $this->connect()->prepare($sql);
         $stmt->execute();
+        $rows = $stmt->fetchAll();
+        return $rows;
+    }
+
+    function getAllProductsCateAvailable($id_cate){
+        $sql="SELECT * FROM product WHERE quanlity>0 AND id_cate=?";
+        $stmt = $this->connect()->prepare($sql);
+        $stmt->execute([$id_cate]);
         $rows = $stmt->fetchAll();
         return $rows;
     }
@@ -37,6 +53,27 @@ class Product extends Database{
         $stmt->execute();
         $rows = $stmt->fetchAll();
         return $rows;
+    }
+
+    function getAllProductsNumPagesAvailableSortSearchFilter($search,$minprice,$maxprice,$sl,$offset,$sort){
+        if($sort==1){
+            $sql="SELECT * FROM product WHERE name_prd LIKE '%".$search."%' AND price >=".$minprice." AND price<=".$maxprice." AND quanlity>0 ORDER BY price DESC LIMIT ".$sl." OFFSET ".$offset;
+        }elseif($sort==2){
+            $sql="SELECT * FROM product WHERE name_prd LIKE '%".$search."%' AND price >=".$minprice." AND price<=".$maxprice." AND quanlity>0 ORDER BY price ASC LIMIT ".$sl." OFFSET ".$offset;
+        }else{
+            $sql="SELECT * FROM product WHERE name_prd LIKE '%".$search."%' AND price >=".$minprice." AND price<=".$maxprice." AND quanlity>0 LIMIT ".$sl." OFFSET ".$offset;
+        }
+        $stmt = $this->connect()->prepare($sql);
+        $stmt->execute();
+        $rows = $stmt->fetchAll();
+        return $rows;
+    }
+
+    function countAllProductsAvailableSearch($search,$minprice,$maxprice){
+        $sql="SELECT * FROM product WHERE name_prd LIKE '%".$search."%' AND price >=".$minprice." AND price<=".$maxprice." AND quanlity>0";
+        $stmt = $this->connect()->prepare($sql);
+        $stmt->execute();
+        return $stmt->rowCount();
     }
 
     function getAllProductsNumPagesAvailableOfBrand($sl,$offset,$id_brand){
@@ -118,6 +155,12 @@ class Product extends Database{
         $stmt->execute([$name_prd, $id_cate, $img_prd_1, $img_prd_2, $img_prd_3, $detail, $cost, $price, $quanlity, $id_prd, $id_admin]);
     }
 
+    function editQuanlityProductId($id_prd, $quanlity){
+        $sql="UPDATE product SET quanlity=? WHERE id_prd=?";
+        $stmt = $this->connect()->prepare($sql);
+        $stmt->execute([$quanlity, $id_prd]);
+    }
+    
     function deleteProductId($id_prd, $id_admin){
         $sql="DELETE FROM product WHERE id_prd=? AND id_admin=?";
         $stmt = $this->connect()->prepare($sql);
@@ -128,6 +171,12 @@ class Product extends Database{
         $sql= "INSERT INTO product(name_prd, id_cate, img_prd_1, img_prd_2, img_prd_3, detail, cost, price, quanlity, id_admin) VALUES (?,?,?,?,?,?,?,?,?,?)";
         $stmt = $this->connect()->prepare($sql);
         $stmt->execute([$name_prd, $id_cate, $img_prd_1, $img_prd_2, $img_prd_3, $detail, $cost, $price, $quanlity, $id_admin]);
+    }
+
+    function viewProduct($view,$id_prd){
+        $sql="UPDATE product SET view=? WHERE id_prd=?";
+        $stmt = $this->connect()->prepare($sql);
+        $stmt->execute([$view,$id_prd]);
     }
 }
 

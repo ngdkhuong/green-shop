@@ -1,5 +1,5 @@
 <?php include_once('../part/header.php'); ?>
-
+<?php $search = isset($_GET['search']) ? $_GET['search'] : ""; ?>
 <!-- Start All Title Box -->
 <div class="all-title-box" class="">
     <div class="container">
@@ -16,26 +16,106 @@
 </div>
 <!-- End All Title Box -->
 
+<?php if ($search != "") { ?>
+    <div class="container">
+        <div class="row">
+            <div class="card card-outline-secondary my-4 col-12 p-0">
+                <div class="card-header">
+                    <h2>Các cửa hàng liên quan đến "<span style="font-weight: 700;"><?php echo $search ?></span>"</h2>
+                </div>
+                <div class="card-body">
+                    <?php
+                    include_once('../lib/likedislike.php');
+                    ?>
+                    <?php
+                    $rows = $administrator->getAllBrandsSearch($search);
+                    if (count($rows) == 0) {
+                        echo "Không tìm thấy kết quả nào";
+                    }
+
+                    foreach ($rows as $row) { ?>
+                        <div class="media mb-3">
+                            <div class="mr-2">
+                                <img style="width: 64px; height: 64px;" class="rounded-circle border p-1" src="../assets/img/upload/avatar_admin/<?php echo $row['avatar'] == "" ? "avatar.jpeg" : $row['avatar'] ?>" alt="">
+                            </div>
+                            <div class="media-body">
+                                <h2><b>Cửa hàng</b> <?php echo $row['name_brand'] ?></h2>
+                                <div><a class="p-0" style="color:black; font-weight: 400;" href="store.php?id_brand=<?php echo $row['id_admin'] ?>">Đến trang cửa hàng</a>
+                                    | Sản phẩm: <?php echo $product->countAllProductsOfBrand($row['id_admin']) ?>
+                                    | Đánh giá:
+                                    <?php
+                                    $like = $evalution->countLikeBrand($row['id_admin'])['countLike'];
+                                    $dislike = $evalution->countDisLikeBrand($row['id_admin'])['countDisLike'];
+                                    if ($like + $dislike != 0) {
+                                        echo ceil($like / ($like + $dislike) * 5);
+                                    } else {
+                                        echo 0;
+                                    }
+                                    ?>
+
+                                    <i class="fas fa-star"></i>
+                                    |
+                                    <form method="post" style="display: inline-block">
+                                        <input hidden name="id_brand" value="<?php echo $row['id_admin'] ?>">
+                                        <button name="like" style="border: none; background-color: inherit; cursor: pointer;<?php if (isset($_SESSION['login_user'])) {
+                                                                                                                                echo $evalution->getEvalution($row['id_admin'], $_SESSION['login_user']['id_user'])['evalution'] != 1 ? "" : " color:#4267B2; font-weight: bold;";
+                                                                                                                            } ?>"><span class="icon_like"></span> Like: <?php echo $evalution->countLikeBrand($row['id_admin'])['countLike'] ?></button>
+                                    </form>
+                                    |
+                                    <form method="post" style="display: inline-block">
+                                        <input hidden name="id_brand" value="<?php echo $row['id_admin'] ?>">
+                                        <button name="dislike" style="border: none; background-color: inherit; cursor: pointer;<?php if (isset($_SESSION['login_user'])) {
+                                                                                                                                    echo $evalution->getEvalution($row['id_admin'], $_SESSION['login_user']['id_user'])['evalution'] != 2 ? "" : " color:#4267B2; font-weight: bold;";
+                                                                                                                                } ?>"><span class="icon_dislike"></span> Dislike: <?php echo $evalution->countDisLikeBrand($row['id_admin'])['countDisLike'] ?></button>
+                                    </form>
+                                    | Lượt xem: <?php echo $row['view'] ?>
+                                    | Lượt mua sản phẩm: <?php echo $bill->sumQuanlityProductBrand($row['id_admin'])[0]['sumquanlity'] == "" ? "0" : $bill->sumQuanlityProductBrand($row['id_admin'])[0]['sumquanlity']; ?>
+                                </div>
+                                <small class="text-muted">Hotline: <?php echo $row['phone'] ?> | Email: <?php echo $row['email'] ?></small>
+                            </div>
+                        </div>
+                        <hr>
+                    <?php }
+                    ?>
+                </div>
+            </div>
+        </div>
+    </div>
+<?php } ?>
+
 <!-- Start Shop Page  -->
 <div class="shop-box-inner">
     <div class="container">
         <div class="row">
             <div class="col-xl-9 col-lg-9 col-sm-12 col-xs-12 shop-content-right">
                 <div class="right-product-box">
+                    <div><?php
+                            // echo 'Mycart : ';
+                            // print_r($_SESSION['my-cart']);
+                            // echo '<br>';
+                            foreach ($_SESSION['my-cart'] as $item) {
+                                // echo "id_prd: ".$item[0]."<br>";
+                                // echo "quanlity: ".$item[1]."<br>";
+                                // echo "id_shop: ".$item[2]."<br><br>";
+                            }
+                            ?></div>
+                    <div><?php
+                            // echo 'Shopcart: ';
+                            // print_r($shopcart);
+                            ?></div>
                     <div class="product-item-filter row">
-
                         <div class="col-md-8 col-sm-12 text-center text-sm-left">
                             <form action="" method="post">
                                 <div class="toolbar-sorter-right" style="width: 50%">
                                     <span>Sort by </span>
                                     <select name="sort-view" id="basic" class="selectpicker show-tick form-control" data-placeholder="$ USD">
-                                        <option value="0" <?php echo $sort==0?"selected":""?>>Nothing</option>
-                                        <option value="1" <?php echo $sort==1?"selected":""?>>High Price → Low Price</option>
-                                        <option value="2" <?php echo $sort==2?"selected":""?>>Low Price → High Price</option>
+                                        <option value="0" <?php echo $sort == 0 ? "selected" : "" ?>>Nothing</option>
+                                        <option value="1" <?php echo $sort == 1 ? "selected" : "" ?>>High Price → Low Price</option>
+                                        <option value="2" <?php echo $sort == 2 ? "selected" : "" ?>>Low Price → High Price</option>
                                     </select>
                                 </div>
-                                <button class="ml-1 btn hvr-hover text-white title" style="line-height: 28px; font-weight: bolder;">Lọc</button>
-                                <p>Showing all <?php echo $product->countAllProducts() ?> results</p>
+                                <button class="ml-1 btn hvr-hover text-white title" style="line-height: 28px; font-weight: bolder;">Sắp xếp</button>
+                                <p>Showing all <?php echo $product->countAllProductsAvailableSearch($search, $_SESSION['min-price'], $_SESSION['max-price']) ?> results</p>
                             </form>
                         </div>
                         <div class="col-md-4 col-sm-12 text-center text-sm-right">
@@ -49,68 +129,30 @@
                             </ul>
                         </div>
                     </div>
+                    <?php
+                    $sl = 9;
+                    $maxpage = ceil($product->countAllProductsAvailableSearch($search, $_SESSION['min-price'], $_SESSION['max-price']) / $sl);
+                    if (!isset($_POST['page']) || $_POST['page'] == "" || $_POST['page'] == 0) {
+                        $page = 1;
+                    } else {
+                        $page = $_POST['page'];
+                    }
+
+                    if ($page > $maxpage) {
+                        $page = $maxpage;
+                    }
+                    $offset = ($page - 1) * $sl;
+                    ?>
                     <div class="product-categorie-box">
                         <div class="tab-content">
                             <div role="tabpanel" class="tab-pane fade show active" id="grid-view">
                                 <div class="row">
                                     <!-- Vòng lập sp -->
                                     <?php
-                                    $sl = 9;
-                                    $maxpage = ceil($product->countAllProducts() / $sl);
-                                    if (!isset($_GET['page']) || $_GET['page'] == "" || $_GET['page'] == 0) {
-                                        $page = 1;
-                                    } else {
-                                        $page = $_GET['page'];
-                                    }
+                                    if ($product->countAllProductsAvailableSearch($search, $_SESSION['min-price'], $_SESSION['max-price']) != 0) {
+                                        $rows = $product->getAllProductsNumPagesAvailableSortSearchFilter($search, $_SESSION['min-price'], $_SESSION['max-price'], $sl, $offset, $sort);
 
-                                    if ($page > $maxpage) {
-                                        $page = $maxpage;
-                                    }
-                                    $offset = ($page - 1) * $sl;
-                                    $rows = $product->getAllProductsNumPagesAvailableSort($sl, $offset, $sort);
-
-                                    foreach ($rows as $row) { ?>
-                                        <div class="col-sm-6 col-md-6 col-lg-4 col-xl-4">
-                                            <div class="products-single fix">
-                                                <div class="box-img-hover">
-                                                    <div class="type-lb">
-                                                        <?php if ($row['price'] < $row['cost']) { ?>
-                                                            <p class="sale">Sale</p>
-                                                        <?php } else { ?>
-                                                            <p class="new">New</p>
-                                                        <?php } ?>
-                                                    </div>
-                                                    <img src="../assets/img/upload/img_product/<?php echo $row['img_prd_1'] ?>" class="img-fluid" alt="Image">
-                                                    <div class="mask-icon">
-                                                        <ul>
-                                                            <li><a href="shop-detail.php?id_prd=<?php echo $row['id_prd'] ?>" data-toggle="tooltip" data-placement="right" title="View"><i class="fas fa-eye"></i></a></li>
-                                                            <li><a href="" data-toggle="tooltip" data-placement="right" title="Compare"><i class="fas fa-sync-alt"></i></a></li>
-                                                            <li><a href="" data-toggle="tooltip" data-placement="right" title="Add to Wishlist"><i class="far fa-heart"></i></a></li>
-                                                        </ul>
-                                                        <form action="" method="post">
-                                                            <input hidden name="id_prd" value="<?php echo $row['id_prd'] ?>" type="text">
-                                                            <button class="cart">Add to Cart</button>
-                                                        </form>
-                                                    </div>
-                                                </div>
-                                                <div class="why-text">
-                                                    <h4><?php echo $row['name_prd'] ?></h4>
-                                                    <h5><?php echo number_format($row['price'], 0, '', ',') ?> VNĐ</h5>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    <?php } ?>
-                                </div>
-
-
-                            </div>
-                            <div role="tabpanel" class="tab-pane fade" id="list-view">
-                                <!-- Vòng lập sp -->
-                                <?php
-                                $rows = $product->getAllProductsNumPagesAvailableSort($sl, $offset, $sort);
-                                foreach ($rows as $row) { ?>
-                                    <div class="list-view-box">
-                                        <div class="row">
+                                        foreach ($rows as $row) { ?>
                                             <div class="col-sm-6 col-md-6 col-lg-4 col-xl-4">
                                                 <div class="products-single fix">
                                                     <div class="box-img-hover">
@@ -125,41 +167,108 @@
                                                         <div class="mask-icon">
                                                             <ul>
                                                                 <li><a href="shop-detail.php?id_prd=<?php echo $row['id_prd'] ?>" data-toggle="tooltip" data-placement="right" title="View"><i class="fas fa-eye"></i></a></li>
-                                                                <li><a href="" data-toggle="tooltip" data-placement="right" title="Compare"><i class="fas fa-sync-alt"></i></a></li>
-                                                                <li><a href="" data-toggle="tooltip" data-placement="right" title="Add to Wishlist"><i class="far fa-heart"></i></a></li>
+                                                                <li>
+                                                                    <a href="">
+                                                                        <form method="post">
+                                                                            <input type="hidden" name="id_prd" value="<?php echo $row['id_prd'] ?>">
+                                                                            <button style="border: none;background-color: inherit;cursor: pointer;padding:0px;color:white;" name="add_to_wishlist" data-toggle="tooltip" data-placement="right" title="Add to Wishlist"><i class="far fa-heart"></i></button>
+                                                                        </form>
+                                                                    </a>
+                                                                </li>
                                                             </ul>
+                                                            <form action="" method="post">
+                                                                <input hidden name="id_prd" value="<?php echo $row['id_prd'] ?>" type="text">
+                                                                <button name="add-to-cart" class="cart">Add to Cart</button>
+                                                            </form>
                                                         </div>
+                                                    </div>
+                                                    <div class="why-text">
+                                                        <h4><?php echo $row['name_prd'] ?></h4>
+                                                        <h5><?php echo number_format($row['price'], 0, '', ',') ?> VNĐ</h5>
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="col-sm-6 col-md-6 col-lg-8 col-xl-8">
-                                                <div class="why-text full-width">
-                                                    <h4><?php echo $row['name_prd'] ?></h4>
-                                                    <h5>
-                                                        <?php if ($row['price'] < $row['cost']) { ?>
-                                                            <del><?php echo number_format($row['cost'], 0, '', ',') ?> VNĐ</del>
-                                                        <?php } ?>
-                                                        <?php echo number_format($row['price'], 0, '', ',') ?> VNĐ
-                                                    </h5>
-                                                    <p><?php echo $row['detail'] ?></p>
-                                                    <form action="" method="post">
-                                                        <input hidden name="id_prd" value="<?php echo $row['id_prd'] ?>" type="text">
-                                                        <button class="btn hvr-hover p-2 p" style="color: white; font-weight: bold;">Add to Cart</button>
-                                                    </form>
+                                    <?php }
+                                    } ?>
+                                </div>
+                            </div>
+                            <div role="tabpanel" class="tab-pane fade" id="list-view">
+                                <!-- Vòng lập sp -->
+                                <?php
+                                if ($product->countAllProductsAvailableSearch($search, $_SESSION['min-price'], $_SESSION['max-price']) != 0) {
+                                    $rows = $product->getAllProductsNumPagesAvailableSortSearchFilter($search, $_SESSION['min-price'], $_SESSION['max-price'], $sl, $offset, $sort);
+                                    foreach ($rows as $row) { ?>
+                                        <div class="list-view-box">
+                                            <div class="row">
+                                                <div class="col-sm-6 col-md-6 col-lg-4 col-xl-4">
+                                                    <div class="products-single fix">
+                                                        <div class="box-img-hover">
+                                                            <div class="type-lb">
+                                                                <?php if ($row['price'] < $row['cost']) { ?>
+                                                                    <p class="sale">Sale</p>
+                                                                <?php } else { ?>
+                                                                    <p class="new">New</p>
+                                                                <?php } ?>
+                                                            </div>
+                                                            <img src="../assets/img/upload/img_product/<?php echo $row['img_prd_1'] ?>" class="img-fluid" alt="Image">
+                                                            <div class="mask-icon">
+                                                                <ul>
+                                                                    <li><a href="shop-detail.php?id_prd=<?php echo $row['id_prd'] ?>" data-toggle="tooltip" data-placement="right" title="View"><i class="fas fa-eye"></i></a></li>
+                                                                    <!-- <li><a href="" data-toggle="tooltip" data-placement="right" title="Compare"><i class="fas fa-sync-alt"></i></a></li> -->
+                                                                    <li>
+                                                                        <a href="">
+                                                                            <form method="post">
+                                                                                <button style="border: none;background-color: inherit;cursor: pointer;padding:0px;color:white;" name="add_to_wishlist" data-toggle="tooltip" data-placement="right" title="Add to Wishlist"><i class="far fa-heart"></i></button>
+                                                                            </form>
+                                                                        </a>
+                                                                    </li>
+                                                                </ul>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-sm-6 col-md-6 col-lg-8 col-xl-8">
+                                                    <div class="why-text full-width">
+                                                        <h4><?php echo $row['name_prd'] ?></h4>
+                                                        <h5>
+                                                            <?php if ($row['price'] < $row['cost']) { ?>
+                                                                <del><?php echo number_format($row['cost'], 0, '', ',') ?> VNĐ</del>
+                                                            <?php } ?>
+                                                            <?php echo number_format($row['price'], 0, '', ',') ?> VNĐ
+                                                        </h5>
+                                                        <p><?php echo $row['detail'] ?></p>
+                                                        <form action="" method="post">
+                                                            <input hidden name="id_prd" value="<?php echo $row['id_prd'] ?>" type="text">
+                                                            <button name="add-to-cart" class="btn hvr-hover p-2 p" style="color: white; font-weight: bold;">Add to Cart</button>
+                                                        </form>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
-                                <?php } ?>
-
+                                <?php }
+                                } ?>
                             </div>
                             <div class="linkPage">
-                                <a class="btn hvr-hover" style="color: white; border: none;" id="linkNum" href="?page=<?php echo $page - 1; ?>">Trước</a>
+                                <form action="" style="display: inline-block;" method="post">
+                                    <input hidden type="text" name="page" value="<?php echo $page - 1; ?>">
+                                    <button class="btn hvr-hover" style="color: white; border: none;" type="submit">Trước</button>
+                                </form>
                                 <?php
                                 for ($i = 1; $i <= $maxpage; $i++) { ?>
-                                    <a class="btn hvr-hover" style="color: white; border: none; <?php echo $page == $i ? "background-color: black;" : "" ?>" id="linkNum" href="?page=<?php echo $i ?>"><?php echo $i ?></a>
+                                    <form action="" style="display: inline-block;" method="post">
+                                        <input hidden type="text" name="page" value="<?php echo $i ?>">
+                                        <button class="btn hvr-hover" style="color: white; border: none; <?php echo $page == $i ? "background-color: black;" : "" ?>" type="submit"><?php echo $i ?></button>
+                                    </form>
+                                    <!-- <a class="btn hvr-hover" style="color: white; border: none; <?php //echo $page == $i ? "background-color: black;" : "" 
+                                                                                                        ?>" id="linkNum" href="?page=<?php //echo $i 
+                                                                                                                                        ?>"><?php //echo $i 
+                                                                                                                                            ?></a> -->
                                 <?php } ?>
-                                <a class="btn hvr-hover" style="color: white; border: none;" id="linkNum" href="?page=<?php echo $page + 1; ?>">Sau</a>
+                                <form action="" style="display: inline-block;" method="post">
+                                    <input hidden type="text" name="page" value="<?php echo $page + 1; ?>">
+                                    <button class="btn hvr-hover" style="color: white; border: none;" type="submit">Sau</button>
+                                </form>
                             </div>
                         </div>
                     </div>
@@ -205,12 +314,12 @@
                         <div class="price-box-slider">
                             <div id="slider-range"></div>
                             <form action="" method="post">
-                            <p>
-                                <input hidden id="amount1" name="filter1" type="text">
-                                <input hidden id="amount2" name="filter2" type="text">
-                                <input name="filter" type="text" id="amount" readonly style="border:0; color:#fbb714; font-weight:bold; width: 100%;">
-                                <button class="btn hvr-hover" type="submit">Filter</button> 
-                            </p>
+                                <p>
+                                    <input hidden id="amount1" name="min-price" type="text">
+                                    <input hidden id="amount2" name="max-price" type="text">
+                                    <input name="filter" type="text" id="amount" readonly style="border:0; color:#fbb714; font-weight:bold; width: 100%;">
+                                    <button name="filter-price" class="btn hvr-hover" type="submit">Filter</button>
+                                </p>
                             </form>
                         </div>
                     </div>

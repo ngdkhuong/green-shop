@@ -5,10 +5,29 @@
 <?php include_once('../lib/administrator.class.php'); ?>
 <?php include_once('../lib/role.class.php'); ?>
 <?php include_once('../lib/product.class.php'); ?>
+<?php include_once('../lib/user.class.php'); ?>
+<?php include_once('../lib/bill.class.php'); ?>
+<?php include_once('../lib/coupon.class.php'); ?>
+<?php include_once('../lib/evalution.class.php'); ?>
+<?php include_once('../lib/wishlist.class.php'); ?>
+<?php include_once('../lib/comment.class.php'); ?>
+<?php include_once('../lib/contact.class.php'); ?>
 <?php
 $category = new Category;
 $administrator = new Administrator;
 $product = new Product;
+$user = new User;
+$bill = new Bill;
+$coupon = new Coupon;
+$evalution = new Evalution;
+$wishlist = new Wishlist;
+$comment = new Comment;
+$contact = new Contact;
+if (!isset($_SESSION['alert'])) {
+    $_SESSION['alert'] = "";
+}
+
+// print_r($_SESSION['login_user']);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -42,6 +61,10 @@ $product = new Product;
     <!-- Custom CSS -->
     <link rel="stylesheet" href="../assets/css/custom.css">
 
+    <!-- Datatable CSS -->
+    <link rel="stylesheet" href="../admin/assets/css/datatable/buttons.dataTables.min.css">
+    <link rel="stylesheet" href="../admin/assets/css/datatable/jquery.dataTables.min.css">
+
     <!--[if lt IE 9]>
       <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
       <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
@@ -49,33 +72,49 @@ $product = new Product;
 
 </head>
 
-<body>
+<body class="p-0">
     <!-- Start Main Top -->
     <div class="main-top">
         <div class="container-fluid">
             <div class="row">
                 <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-                    <div class="custom-select-box">
+                    <!-- <div class="custom-select-box">
                         <select id="basic" class="selectpicker show-tick form-control" data-placeholder="$ USD">
                             <option>¥ JPY</option>
                             <option>$ USD</option>
                             <option>€ EUR</option>
                         </select>
-                    </div>
+                    </div> -->
                     <div class="right-phone-box">
                         <p>Call US :- <a href=""> +11 900 800 100</a></p>
                     </div>
                     <div class="our-link">
                         <ul>
                             <li><a href="my-account.php"><i class="fa fa-user s_color"></i> My Account</a></li>
-                            <li><a href=""><i class="fas fa-location-arrow"></i> Our location</a></li>
-                            <li><a href="contact-us.php"><i class="fas fa-headset"></i> Contact Us</a></li>
+                            <?php if (isset($_SESSION['login_user'])) { ?>
+                                <li><a href=""><i class="fas fa-location-arrow"></i> Welcome
+                                        <?php
+                                        $row = $user->getUserId($_SESSION['login_user']['id_user']);
+                                        if ($row['fullname'] == "") {
+                                            echo $row['username'];
+                                        } else {
+                                            echo $row['fullname'];
+                                        }
+                                        ?>
+                                    </a></li>
+                                <?php if (isset($_GET['logout'])) {
+                                    session_unset();
+                                    echo "<meta http-equiv='refresh' content='0;url=index.php'>";
+                                    exit;
+                                } ?>
+                                <li><a href="index.php?logout"><i class="fas fa-power-off"></i> Logout</a></li>
+                            <?php } ?>
                         </ul>
                     </div>
                 </div>
                 <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
                     <div class="login-box">
-                        <select class="selectpicker show-tick form-control" onchange="location = this.options[this.selectedIndex].value;" data-title="Login" data-placeholder="Sign In">
+                        <select name="login-box" class="selectpicker show-tick form-control" onchange="location = this.options[this.selectedIndex].value;" data-title="Login" data-placeholder="Sign In">
                             <option value="signup.php">Register Here</option>
                             <option value="login.php">Sign in</option>
                         </select>
@@ -87,7 +126,7 @@ $product = new Product;
                                 <li>
                                     <i class="fab fa-opencart"></i> 20% off Entire Purchase Promo code: offT80
                                 </li>
-                                <li>
+                                <!-- <li>
                                     <i class="fab fa-opencart"></i> 50% - 80% off on Vegetables
                                 </li>
                                 <li>
@@ -107,11 +146,10 @@ $product = new Product;
                                 </li>
                                 <li>
                                     <i class="fab fa-opencart"></i> Off 50%! Shop Now
-                                </li>
+                                </li> -->
                             </ul>
                         </div>
                     </div>
-
                 </div>
             </div>
         </div>
@@ -149,11 +187,26 @@ $product = new Product;
                             </ul>
 
                         </li>
-                        <li class="nav-item"><a class="nav-link" href="gallery.php">Gallery</a></li>
+                        <li class="nav-item"><a class="nav-link" href="wishlist.php">Wishlist</a></li>
                         <li class="nav-item"><a class="nav-link" href="contact-us.php">Contact Us</a></li>
                     </ul>
                 </div>
                 <!-- /.navbar-collapse -->
+                <?php
+                if (!isset($_SESSION['min-price'])) {
+                    $_SESSION['min-price'] = 0;
+                }
+
+                if (!isset($_SESSION['max-price'])) {
+                    $_SESSION['max-price'] = 2000000;
+                }
+
+                if (isset($_POST['filter-price'])) {
+                    $_SESSION['min-price'] = $_POST['min-price'];
+                    $_SESSION['max-price'] = $_POST['max-price'];
+                }
+                ?>
+
                 <?php
                 if (!isset($_SESSION['sort-view'])) {
                     $_SESSION['sort-view'] = 0;
@@ -163,35 +216,60 @@ $product = new Product;
                 }
                 $sort = $_SESSION['sort-view'];
 
-                if (!isset($_SESSION['my-cart']) || isset($_POST['delete-cart'])) {
-                    $_SESSION['my-cart'] = [];
+                if (!isset($_SESSION['coupon'])) {
+                    $_SESSION['coupon'] = [];
                 }
 
-                $flag = 0;
-                $i = 0;
-                foreach ($_SESSION['my-cart'] as $item) {
-                    if (isset($_POST['id_prd'])) {
-                        if ($_POST['id_prd'] == $item[0]) {
-                            $flag = 1;
-                            break;
+                if (!isset($_SESSION['my-cart']) || !isset($_SESSION['coupon']) || isset($_POST['delete-cart'])) {
+                    $_SESSION['my-cart'] = [];
+                    $_SESSION['coupon'] = [];
+                }
+
+                if (isset($_POST['delete-coupon'])) {
+                    $_SESSION['coupon'] = [];
+                }
+
+                if (isset($_POST['add-to-cart'])) {
+                    $flag = 0;
+                    $i = 0;
+                    foreach ($_SESSION['my-cart'] as $item) {
+                        if (isset($_POST['id_prd'])) {
+                            if ($_POST['id_prd'] == $item[0]) {
+                                $flag = 1;
+                                break;
+                            }
+                            $i++;
                         }
-                        $i++;
+                    }
+                    $soluong = isset($_POST['soluong']) ? $_POST['soluong'] : 1;
+
+                    if (isset($_POST['id_prd']) && $flag == 0) {
+                        $idshop = $product->getProductId($_POST['id_prd'])['id_admin']; //3
+                        $item = [$_POST['id_prd'], $soluong, $idshop];
+                        array_push($_SESSION['my-cart'], $item);
+                    } else if (isset($_POST['id_prd']) && $flag == 1) {
+                        if ($_SESSION['my-cart'][$i][1] + $soluong > $product->getProductId($_SESSION['my-cart'][$i][0])['quanlity']) {
+                            $_SESSION['alert'] = "Chỉ thêm vào giỏ được " . $product->getProductId($_SESSION['my-cart'][$i][0])['quanlity'] . " sản phẩm. Vì tồn kho không đủ số lượng bạn yêu cầu";
+                            $_SESSION['my-cart'][$i][1] = $product->getProductId($_SESSION['my-cart'][$i][0])['quanlity'];
+                        } else {
+                            $_SESSION['my-cart'][$i][1] += $soluong;
+                        }
                     }
                 }
-                $soluong = isset($_POST['soluong']) ? $_POST['soluong'] : 1;
-                if (isset($_POST['id_prd']) && $flag == 0) {
-                    $item = [$_POST['id_prd'], $soluong];
-                    array_push($_SESSION['my-cart'], $item);
-                } else if (isset($_POST['id_prd']) && $flag == 1) {
-                    $_SESSION['my-cart'][$i][1] += $soluong;
-                }
+
+
+
                 if (isset($_POST['id_delete'])) {
                     array_splice($_SESSION['my-cart'], $_POST['id_delete'], 1);
                 }
 
                 if (isset($_POST['id_plus'])) {
                     $index = $_POST['id_plus'];
-                    $_SESSION['my-cart'][$index][1] += 1;
+                    if ($_SESSION['my-cart'][$index][1] == $product->getProductId($_SESSION['my-cart'][$index][0])['quanlity']) {
+                        $_SESSION['alert'] = "Sản phẩm vượt quá tồn kho, không thể đặt thêm";
+                    } else {
+                        $_SESSION['my-cart'][$index][1] += 1;
+                    }
                 }
 
                 if (isset($_POST['id_minus'])) {
@@ -202,8 +280,44 @@ $product = new Product;
                         $_SESSION['my-cart'][$index][1] = 1;
                     }
                 }
+
+                $shopcart = [];
+                foreach ($_SESSION['my-cart'] as $item) {
+                    $flag1 = 0;
+                    foreach ($shopcart as $item1) {
+                        if ($item1 == $item[2]) {
+                            $flag1 = 1;
+                            break;
+                        }
+                    }
+                    if ($flag1 == 0) {
+                        array_push($shopcart, $item[2]);
+                    }
+                }
+                ?>
+                <?php
+                if (isset($_POST['add_to_wishlist'])) {
+                    if (isset($_SESSION['login_user'])) {
+                        $id_prd = $_POST['id_prd'];
+                        $id_user = $_SESSION['login_user']['id_user'];
+                        if ($wishlist->checkIdPrdIdUserInWishlist($id_prd, $id_user) == 0) {
+                            $wishlist->insertWishlist($id_prd, $id_user);
+                            $_SESSION['alert'] = "Thêm vào Wishlist thành công";
+                        } else {
+                            $_SESSION['alert'] = "Sản phẩm này đã có trong Wishlist";
+                        }
+                    } else {
+                        $_SESSION['alert'] = "Vui lòng đăng nhập trước khi thêm sản phẩm vào Wishlist";
+                    }
+                }
+
+                if (isset($_POST['delete-wishlist'])) {
+                    $id_wishlist = $_POST['id_wishlist'];
+                    $wishlist->deleteWishlistId($id_wishlist);
+                }
                 ?>
                 <!-- Start Atribute Navigation -->
+
                 <div class="attr-nav">
                     <ul>
                         <li class="search"><a href=""><i class="fa fa-search"></i></a></li>
@@ -227,30 +341,38 @@ $product = new Product;
                     <ul class="cart-list">
                         <?php
                         $total_cart = 0;
-                        $j = 0;
-                        foreach ($_SESSION['my-cart'] as $item) {
-                            $row = $product->getProductId($item[0]);
+                        foreach ($shopcart as $item1) { ?>
+                            <li style="padding: 10px 15px 10px 15px !important;"><b><?php echo $administrator->getAdminId($item1)['name_brand'] ?></b></li>
+                            <?php
+                            $j = 0;
+                            $total_shop = 0;
+                            foreach ($_SESSION['my-cart'] as $item) {
+                                $row = $product->getProductId($item[0]);
+                                if ($item[2] == $item1) { ?>
+                                    <li>
+                                        <span class="float-right" style="margin-top: 15px;">
+                                            <form action="" method="post">
+                                                <input hidden type="text" name="id_delete" value="<?php echo $j ?>">
+                                                <button type="submit" class="btn" type="button"><i class="fa fa-times"></i></button>
+                                            </form>
+                                        </span>
+                                        <a href="shop-detail.php?id_prd=<?php echo $row['id_prd'] ?>" class="photo"><img src="../assets/img/upload/img_product/<?php echo $row['img_prd_1'] ?>" class="cart-thumb" alt="" /></a>
+                                        <h6 style="display: block;"><a href="shop-detail.php?id_prd=<?php echo $row['id_prd'] ?>"><?php echo $row['name_prd'] ?></a></h6>
+                                        <p><?php echo $item[1]; ?>x - <span class="price"><?php echo number_format($row['price'], 0, '', ',') ?> VNĐ</span></p>
+                                    </li>
+                            <?php
+                                    $total_shop += $row['price'] * $item[1];
+                                    $total_cart += $row['price'] * $item[1];
+                                }
+                                $j++;
+                            } ?>
+                            <li style="padding: 10px 15px 10px 15px !important; text-align: end; border-bottom: none;"><b><i><?php echo number_format($total_shop, 0, '', ',') ?> VNĐ</i></b></li>
+                        <?php }
                         ?>
-                            <li>
-                                <span class="float-right" style="margin-top: 15px;">
-                                    <form action="" method="post">
-                                        <input hidden type="text" name="id_delete" value="<?php echo $j ?>">
-                                        <button type="submit" class="btn" type="button"><i class="fa fa-times"></i></button>
-                                    </form>
-                                </span>
-                                <a href="shop-detail.php?id_prd=<?php echo $row['id_prd'] ?>" class="photo"><img src="../assets/img/upload/img_product/<?php echo $row['img_prd_1'] ?>" class="cart-thumb" alt="" /></a>
-                                <h6 style="display: block;"><a href="shop-detail.php?id_prd=<?php echo $row['id_prd'] ?>"><?php echo $row['name_prd'] ?></a></h6>
-                                <p><?php echo $item[1]; ?>x - <span class="price"><?php echo number_format($row['price'], 0, '', ',') ?> VNĐ</span></p>
-                            </li>
-                        <?php
-                            $total_cart += $row['price'] * $item[1];
-                            $j++;
-                        } ?>
                         <li class="total">
                             <p class="mb-2"><strong>Total</strong>: <?php echo number_format($total_cart, 0, '', ',') ?> VNĐ</p>
                             <a href="cart.php" class="btn btn-default hvr-hover btn-cart">VIEW CART</a>
                         </li>
-
                     </ul>
                 </li>
             </div>
@@ -263,11 +385,13 @@ $product = new Product;
     <!-- Start Top Search -->
     <div class="top-search">
         <div class="container">
-            <div class="input-group">
-                <span class="input-group-addon"><i class="fa fa-search"></i></span>
-                <input type="text" class="form-control" placeholder="Search">
-                <span class="input-group-addon close-search"><i class="fa fa-times"></i></span>
-            </div>
+            <form action="shop.php" method="get">
+                <div class="input-group">
+                    <button style="cursor: pointer;" class="input-group-addon"><i class="fa fa-search"></i></button>
+                    <input name="search" type="text" class="form-control" pattern="[^'\x22-]+" title="Không hợp lệ" placeholder="Search">
+                    <span class="input-group-addon close-search"><i class="fa fa-times"></i></span>
+                </div>
+            </form>
         </div>
     </div>
     <!-- End Top Search -->
