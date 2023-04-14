@@ -25,32 +25,37 @@
                 </div>
             </div>
             <div class="col-lg-6">
-                <h2 class="noo-sh-title-top">We are <span>Greenshop</span></h2>
-                <p>"Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam
-                    voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit,
-                    sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur?
-                    Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur.</p>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+                <h2 class="noo-sh-title-top">Nông nghiệp <span>Việt Nam</span></h2>
+                <p>Nông nghiệp là ngành kinh tế quan trọng của Việt Nam.
+                Hiện nay, Việt Nam vẫn là một nước nông nghiệp. Năm 2009, giá trị sản lượng của nông nghiệp đạt 71,473 nghìn tỷ đồng 
+                (giá so sánh với năm 1994), tăng 1,32% so với năm 2008 và chiếm 13,85% tổng sản phẩm trong nước. Ngược lại vào năm 2020, 
+                giá trị sản lượng đạt khoảng 27 nghìn tỷ đồng. [1] [2] Tỷ trọng của nông nghiệp trong nền kinh tế bị 
+                sụt giảm trong những năm gần đây, trong khi các lĩnh vực kinh tế khác gia tăng. Đóng góp của nông nghiệp 
+                vào tạo việc làm còn lớn hơn cả đóng góp của ngành này vào GDP. </p>
+                <p>Trong năm 2020, có khoảng 17.5 triệu lao động làm việc 
+                trong lĩnh vực nông, lâm nghiệp, và thủy sản.[3] Sản lượng nông nghiệp xuất khẩu chiếm khoảng 30% trong năm 2005.[3] [4] 
+                Việc tự do hóa sản xuất nông nghiệp, đặc biệt là sản xuất lúa gạo, đã giúp Việt Nam là nước thứ hai trên thế giới về xuất khẩu gạo.</p>
+
                 <a class="btn hvr-hover" href="">Read More</a>
             </div>
         </div>
         <div class="row my-5">
             <div class="col-sm-6 col-lg-4">
                 <div class="service-block-inner">
-                    <h3>We are Trusted</h3>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. </p>
+                    <h3>Các loại cây ăn quả</h3>
+                    <p>Bất kì khu vườn của một gia đình nào cũng nên trồng ít nhất vài cây ăn quả. Quả nhà trồng được bao giờ cũng tươi ngon và đảm bảo an toàn sức khỏe.</p>
                 </div>
             </div>
             <div class="col-sm-6 col-lg-4">
                 <div class="service-block-inner">
-                    <h3>We are Professional</h3>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. </p>
+                    <h3>Mẹo mua sắm hiệu quả</h3>
+                    <p>Mùa hè là thời điểm có nhiều loại trái cây được giới trẻ yêu thích như mận, mơ, thanh mai, các loại trái cây rất tốt cho sức khỏe </p>
                 </div>
             </div>
             <div class="col-sm-6 col-lg-4">
                 <div class="service-block-inner">
-                    <h3>We are Expert</h3>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. </p>
+                    <h3>Chúng tôi là chuyên gia </h3>
+                    <p>Chúng tôi là các chuyên gia sức khỏe sẽ luôn đưa ra những gợi ý cho những lựa chọn của bạn thêm phần hợp lý và đúng nhất để nâng cao sức khỏe bản thân</p>
                 </div>
             </div>
         </div>
@@ -60,9 +65,9 @@
             </div>
             <div class="col-sm-6 col-lg-3">
                 <div class="hover-team">
-                    <div class="our-team"> <img src="../assets/images/img-1.jpg" alt="" />
+                    <div class="our-team"> <img src="../assets/images/avata4.jpg" alt="" />
                         <div class="team-content">
-                            <h3 class="title">Williamson</h3> <span class="post">Web Developer</span>
+                            <h3 class="title">Huy ngô</h3> <span class="post">Web Developer</span>
                         </div>
                         <ul class="social">
                             <li>
@@ -88,9 +93,9 @@
             </div>
             <div class="col-sm-6 col-lg-3">
                 <div class="hover-team">
-                    <div class="our-team"> <img src="../assets/images/img-2.jpg" alt="" />
+                    <div class="our-team"> <img src="../assets/images/avata3.jpg" alt="" />
                         <div class="team-content">
-                            <h3 class="title">Kristiana</h3> <span class="post">Web Developer</span>
+                            <h3 class="title">Đình dũng</h3> <span class="post">Web Developer</span>
                         </div>
                         <ul class="social">
                             <li>
@@ -116,9 +121,9 @@
             </div>
             <div class="col-sm-6 col-lg-3">
                 <div class="hover-team">
-                    <div class="our-team"> <img src="../assets/images/img-3.jpg" alt="" />
+                    <div class="our-team"> <img src="../assets/images/avata5.jpg" alt="" />
                         <div class="team-content">
-                            <h3 class="title">Steve Thomas</h3> <span class="post">Web Developer</span>
+                            <h3 class="title">Đạt dương</h3> <span class="post">Web Developer</span>
                         </div>
                         <ul class="social">
                             <li>
@@ -144,9 +149,9 @@
             </div>
             <div class="col-sm-6 col-lg-3">
                 <div class="hover-team">
-                    <div class="our-team"> <img src="../assets/images/img-1.jpg" alt="" />
+                    <div class="our-team"> <img src="../assets/images/avata2.png" alt="" />
                         <div class="team-content">
-                            <h3 class="title">Williamson</h3> <span class="post">Web Developer</span>
+                            <h3 class="title">Thuận kiên</h3> <span class="post">Web Developer</span>
                         </div>
                         <ul class="social">
                             <li>

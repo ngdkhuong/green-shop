@@ -7,22 +7,16 @@
     <title>Document</title>
 </head>
 <body>
-    <?php 
-    include_once('db.php');
-    include_once('product.php');
-    include_once('category.php');
-    // $prd = new product;
-    // $prd->insertProduct('Táo','tao123.png');
-    // $prd->insertProduct('Chuối','chuoi123.png');
-    // $prd->getAllProducts();
-    // $prd->getProductId(2);
-    // $name_prd='Chanh';
-    // $img_prd='chanh123.png';
-    // $prd->editProductId(2,$name_prd,$img_prd);
-    $category = new Category;
-    $category->deleteCategoryId(3);
-    // echo $prd ->getProducts();
+    <?php
     
+    include('function.php');
+    $min=3;
+    $max=8;
+    $time=3;
+    $array=arrayRand($min, $max, $time);
+    foreach ($array as $value) {
+        echo $value."<br>";
+    }
     ?>
 </body>
 </html>

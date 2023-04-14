@@ -10,7 +10,7 @@
                     <div class="col-md-12">
                         <h1 class="m-b-20"><strong>Welcome To <br> Greenshop</strong></h1>
                         <p class="m-b-40">See how your users experience your website in realtime or view <br> trends to see any changes in performance over time.</p>
-                        <p><a class="btn hvr-hover" href="">Shop New</a></p>
+                        <p><a class="btn hvr-hover" href="shop.php">Shop New</a></p>
                     </div>
                 </div>
             </div>
@@ -51,22 +51,28 @@
 <div class="categories-shop">
     <div class="container">
         <div class="row">
+            <?php
+            $min = 3;
+            $max = 8;
+            $time = 3;
+            $array = arrayRand($min, $max, $time);
+            ?>
             <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
                 <div class="shop-cat-box">
                     <img class="img-fluid" src="../assets/images/categories_img_01.jpg" alt="" />
-                    <a class="btn hvr-hover" href="">Lorem ipsum dolor</a>
+                    <a class="btn hvr-hover" href="store.php?id_brand=<?php echo $array[0] ?>"><?php echo $administrator->getAdminId($array[0])['name_brand'] ?></a>
                 </div>
             </div>
             <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
                 <div class="shop-cat-box">
                     <img class="img-fluid" src="../assets/images/categories_img_02.jpg" alt="" />
-                    <a class="btn hvr-hover" href="">Lorem ipsum dolor</a>
+                    <a class="btn hvr-hover" href="store.php?id_brand=<?php echo $array[1] ?>"><?php echo $administrator->getAdminId($array[1])['name_brand'] ?></a>
                 </div>
             </div>
             <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
                 <div class="shop-cat-box">
                     <img class="img-fluid" src="../assets/images/categories_img_03.jpg" alt="" />
-                    <a class="btn hvr-hover" href="">Lorem ipsum dolor</a>
+                    <a class="btn hvr-hover" href="store.php?id_brand=<?php echo $array[2] ?>"><?php echo $administrator->getAdminId($array[2])['name_brand'] ?></a>
                 </div>
             </div>
         </div>
@@ -79,12 +85,12 @@
         <div class="row">
             <div class="col-lg-6 col-md-6 col-sm-12">
                 <div class="offer-box-products">
-                    <img class="img-fluid" src="../assets/images/add-img-01.jpg" alt="" />
+                    <img class="img-fluid" src="../assets/images/add-img-01.png" alt="" />
                 </div>
             </div>
             <div class="col-lg-6 col-md-6 col-sm-12">
                 <div class="offer-box-products">
-                    <img class="img-fluid" src="../assets/images/add-img-02.jpg" alt="" />
+                    <img class="img-fluid" src="../assets/images/add-img-02.png" alt="" />
                 </div>
             </div>
         </div>
@@ -115,171 +121,49 @@
         </div>
 
         <div class="row special-list">
-            <div class="col-lg-3 col-md-6 special-grid best-seller">
-                <div class="products-single fix">
-                    <div class="box-img-hover">
-                        <div class="type-lb">
-                            <p class="sale">Sale</p>
+            <?php
+            $min = 1;
+            $max = $product->countAllProducts();;
+            $time = 4;
+            $array = arrayRand($min, $max, $time);
+            $x = 1;
+            foreach ($array as $value) { ?>
+                <div class="col-lg-3 col-md-6 special-grid <?php echo $x % 2 == 0 ? "best-seller" : "top-featured" ?>">
+                    <div class="products-single fix">
+                        <div class="box-img-hover">
+                            <div class="type-lb">
+                                <?php
+                                if ($product->getProductId($value)['price'] < $product->getProductId($value)['cost']) { ?>
+                                    <p class="sale">Sale</p>
+                                <?php } else { ?>
+                                    <p class="new">New</p>
+                                <?php } ?>
+                            </div>
+                            <img src="../assets/img/upload/img_product/<?php echo $product->getProductId($value)['img_prd_1']; ?>" class="img-fluid" alt="Image">
+                            <div class="mask-icon">
+                                <ul>
+                                    <li><a href="shop-detail.php?id_prd=<?php echo $product->getProductId($value)['id_prd']; ?>" data-toggle="tooltip" data-placement="right" title="View"><i class="fas fa-eye"></i></a></li>
+                                    <li><a href="" data-toggle="tooltip" data-placement="right" title="Compare"><i class="fas fa-sync-alt"></i></a></li>
+                                    <li><a href="" data-toggle="tooltip" data-placement="right" title="Add to Wishlist"><i class="far fa-heart"></i></a></li>
+                                </ul>
+                                <form action="" method="post">
+                                    <input hidden name="id_prd" value="<?php echo $product->getProductId($value)['id_prd']; ?>" type="text">
+                                    <button class="cart">Add to Cart</button>
+                                </form>
+                            </div>
                         </div>
-                        <img src="../assets/images/img-pro-01.jpg" class="img-fluid" alt="Image">
-                        <div class="mask-icon">
-                            <ul>
-                                <li><a href="" data-toggle="tooltip" data-placement="right" title="View"><i class="fas fa-eye"></i></a></li>
-                                <li><a href="" data-toggle="tooltip" data-placement="right" title="Compare"><i class="fas fa-sync-alt"></i></a></li>
-                                <li><a href="" data-toggle="tooltip" data-placement="right" title="Add to Wishlist"><i class="far fa-heart"></i></a></li>
-                            </ul>
-                            <a class="cart" href="">Add to Cart</a>
+                        <div class="why-text">
+                            <h4><?php echo $product->getProductId($value)['name_prd']; ?></h4>
+                            <h5><?php echo number_format($product->getProductId($value)['price'], 0, '', ',') ?> VNĐ</h5>
                         </div>
-                    </div>
-                    <div class="why-text">
-                        <h4>Lorem ipsum dolor sit amet</h4>
-                        <h5> $7.79</h5>
                     </div>
                 </div>
-            </div>
 
-            <div class="col-lg-3 col-md-6 special-grid top-featured">
-                <div class="products-single fix">
-                    <div class="box-img-hover">
-                        <div class="type-lb">
-                            <p class="new">New</p>
-                        </div>
-                        <img src="../assets/images/img-pro-02.jpg" class="img-fluid" alt="Image">
-                        <div class="mask-icon">
-                            <ul>
-                                <li><a href="" data-toggle="tooltip" data-placement="right" title="View"><i class="fas fa-eye"></i></a></li>
-                                <li><a href="" data-toggle="tooltip" data-placement="right" title="Compare"><i class="fas fa-sync-alt"></i></a></li>
-                                <li><a href="" data-toggle="tooltip" data-placement="right" title="Add to Wishlist"><i class="far fa-heart"></i></a></li>
-                            </ul>
-                            <a class="cart" href="">Add to Cart</a>
-                        </div>
-                    </div>
-                    <div class="why-text">
-                        <h4>Lorem ipsum dolor sit amet</h4>
-                        <h5> $9.79</h5>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-lg-3 col-md-6 special-grid top-featured">
-                <div class="products-single fix">
-                    <div class="box-img-hover">
-                        <div class="type-lb">
-                            <p class="sale">Sale</p>
-                        </div>
-                        <img src="../assets/images/img-pro-03.jpg" class="img-fluid" alt="Image">
-                        <div class="mask-icon">
-                            <ul>
-                                <li><a href="" data-toggle="tooltip" data-placement="right" title="View"><i class="fas fa-eye"></i></a></li>
-                                <li><a href="" data-toggle="tooltip" data-placement="right" title="Compare"><i class="fas fa-sync-alt"></i></a></li>
-                                <li><a href="" data-toggle="tooltip" data-placement="right" title="Add to Wishlist"><i class="far fa-heart"></i></a></li>
-                            </ul>
-                            <a class="cart" href="">Add to Cart</a>
-                        </div>
-                    </div>
-                    <div class="why-text">
-                        <h4>Lorem ipsum dolor sit amet</h4>
-                        <h5> $10.79</h5>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-lg-3 col-md-6 special-grid best-seller">
-                <div class="products-single fix">
-                    <div class="box-img-hover">
-                        <div class="type-lb">
-                            <p class="sale">Sale</p>
-                        </div>
-                        <img src="../assets/images/img-pro-04.jpg" class="img-fluid" alt="Image">
-                        <div class="mask-icon">
-                            <ul>
-                                <li><a href="" data-toggle="tooltip" data-placement="right" title="View"><i class="fas fa-eye"></i></a></li>
-                                <li><a href="" data-toggle="tooltip" data-placement="right" title="Compare"><i class="fas fa-sync-alt"></i></a></li>
-                                <li><a href="" data-toggle="tooltip" data-placement="right" title="Add to Wishlist"><i class="far fa-heart"></i></a></li>
-                            </ul>
-                            <a class="cart" href="">Add to Cart</a>
-                        </div>
-                    </div>
-                    <div class="why-text">
-                        <h4>Lorem ipsum dolor sit amet</h4>
-                        <h5> $15.79</h5>
-                    </div>
-                </div>
-            </div>
+            <?php $x++;
+            } ?>
         </div>
     </div>
 </div>
 <!-- End Products  -->
-
-<!-- Start Blog  -->
-<div class="latest-blog">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-12">
-                <div class="title-all text-center">
-                    <h1>latest blog</h1>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed sit amet lacus enim.</p>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-6 col-lg-4 col-xl-4">
-                <div class="blog-box">
-                    <div class="blog-img">
-                        <img class="img-fluid" src="../assets/images/blog-img.jpg" alt="" />
-                    </div>
-                    <div class="blog-content">
-                        <div class="title-blog">
-                            <h3>Fusce in augue non nisi fringilla</h3>
-                            <p>Nulla ut urna egestas, porta libero id, suscipit orci. Quisque in lectus sit amet urna dignissim feugiat. Mauris molestie egestas pharetra. Ut finibus cursus nunc sed mollis. Praesent laoreet lacinia elit id lobortis.</p>
-                        </div>
-                        <ul class="option-blog">
-                            <li><a href=""><i class="far fa-heart"></i></a></li>
-                            <li><a href=""><i class="fas fa-eye"></i></a></li>
-                            <li><a href=""><i class="far fa-comments"></i></a></li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-6 col-lg-4 col-xl-4">
-                <div class="blog-box">
-                    <div class="blog-img">
-                        <img class="img-fluid" src="../assets/images/blog-img-01.jpg" alt="" />
-                    </div>
-                    <div class="blog-content">
-                        <div class="title-blog">
-                            <h3>Fusce in augue non nisi fringilla</h3>
-                            <p>Nulla ut urna egestas, porta libero id, suscipit orci. Quisque in lectus sit amet urna dignissim feugiat. Mauris molestie egestas pharetra. Ut finibus cursus nunc sed mollis. Praesent laoreet lacinia elit id lobortis.</p>
-                        </div>
-                        <ul class="option-blog">
-                            <li><a href=""><i class="far fa-heart"></i></a></li>
-                            <li><a href=""><i class="fas fa-eye"></i></a></li>
-                            <li><a href=""><i class="far fa-comments"></i></a></li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-6 col-lg-4 col-xl-4">
-                <div class="blog-box">
-                    <div class="blog-img">
-                        <img class="img-fluid" src="../assets/images/blog-img-02.jpg" alt="" />
-                    </div>
-                    <div class="blog-content">
-                        <div class="title-blog">
-                            <h3>Fusce in augue non nisi fringilla</h3>
-                            <p>Nulla ut urna egestas, porta libero id, suscipit orci. Quisque in lectus sit amet urna dignissim feugiat. Mauris molestie egestas pharetra. Ut finibus cursus nunc sed mollis. Praesent laoreet lacinia elit id lobortis.</p>
-                        </div>
-                        <ul class="option-blog">
-                            <li><a href=""><i class="far fa-heart"></i></a></li>
-                            <li><a href=""><i class="fas fa-eye"></i></a></li>
-                            <li><a href=""><i class="far fa-comments"></i></a></li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<!-- End Blog  -->
 
 <?php include_once('../part/footer.php'); ?>

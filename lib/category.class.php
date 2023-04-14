@@ -37,10 +37,16 @@ class Category extends Database {
         $stmt->execute([$id_cate, $id_admin]);
     }
 
-    function editCateId($id_cate, $name_cate){
-        $sql="UPDATE category SET name_cate=? WHERE id_cate=?";
+    function editCateId($id_cate, $name_cate, $id_admin){
+        $sql="UPDATE category SET name_cate=? WHERE id_cate=? AND id_admin=?";
         $stmt = $this->connect()->prepare($sql);
-        $stmt->execute([$name_cate, $id_cate]);
+        $stmt->execute([$name_cate, $id_cate, $id_admin]);
+    }
+
+    function viewCate($view,$id_cate){
+        $sql="UPDATE category SET view=? WHERE id_cate=?";
+        $stmt = $this->connect()->prepare($sql);
+        $stmt->execute([$view,$id_cate]);
     }
 }
 ?>

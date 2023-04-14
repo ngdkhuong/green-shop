@@ -16,22 +16,24 @@
                             <form action="" method="post">
                                 <div class="form-group row mb-2">
                                     <div class="col-sm-8">
-                                        <input name="name_cate_update" type="text" class="form-control form-control-sm" placeholder="Nhập tên danh mục muốn thay đổi" value="<?php echo $row['name_cate']; ?>">
+                                        <input name="name_cate_update" pattern="[^'\x22-]+" title="Không hợp lệ" type="text" class="form-control form-control-sm" placeholder="Nhập tên danh mục muốn thay đổi" value="<?php echo $row['name_cate']; ?>">
                                     </div>
                                 </div>
                                 <button class="btn btn-primary mb-2">Sửa danh mục</button>
                             </form>
                         <?php } else { ?>
                             <h4 class="m-b-10">Danh mục sản phẩm</h4>
-                            <form action="" method="post">
-                                <div class="form-group row mb-2">
-                                    <div class="col-sm-8">
-                                        <input name="name_cate" type="text" class="form-control form-control-sm" placeholder="Nhập tên danh mục cần thêm mới">
+                            <?php if ($_SESSION['login_admin']['id_role'] == 3) { ?>
+                                <form action="" method="post">
+                                    <div class="form-group row mb-2">
+                                        <div class="col-sm-8">
+                                            <input name="name_cate" pattern="[^'\x22-]+" title="Không hợp lệ" type="text" class="form-control form-control-sm" placeholder="Nhập tên danh mục cần thêm mới">
+                                        </div>
                                     </div>
-                                </div>
-                                <button class="btn btn-primary mb-2">Thêm mới danh mục</button>
-                            </form>
-                        <?php } ?>
+                                    <button name="add-cate" class="btn btn-primary mb-2">Thêm mới danh mục</button>
+                                </form>
+                        <?php }
+                        } ?>
                         <!-- <p class="text-muted m-b-10">lorem ipsum dolor sit amet, consectetur adipisicing elit</p> -->
                         <!-- <ul class="breadcrumb-title b-t-default p-t-10">
                             <li class="breadcrumb-item">
@@ -48,7 +50,6 @@
 
                 <!-- Page-body start -->
                 <div class="page-body">
-
                     <!-- Hover table card start -->
                     <div class="card">
                         <div class="card-header">
@@ -66,26 +67,38 @@
                         </div>
                         <div class="card-block table-border-style">
                             <div class="table-responsive">
-                                <table class="table table-hover">
+                                <table class="table table-hover display">
                                     <thead>
                                         <tr>
                                             <th>#</th>
                                             <th>Tên danh mục</th>
-                                            <th>Id nhãn hàng</th>
-                                            <th>Sửa</th>
-                                            <th>Xóa</th>
+                                            <?php if ($_SESSION['login_admin']['id_role'] != 3) { ?>
+                                                <th>Id nhãn hàng</th>
+                                            <?php } ?>
+                                            <?php if ($_SESSION['login_admin']['id_role'] == 3) { ?>
+                                                <th>Sửa</th>
+                                                <th>Xóa</th>
+                                            <?php } ?>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <?php
-                                        $rows = $category->getAllCategorys();
+                                        if ($_SESSION['login_admin']['id_role'] == 1) {
+                                            $rows = $category->getAllCategorys($id_admin);
+                                        } else {
+                                            $rows = $category->getAllCategorysOfidAdmin($id_admin);
+                                        }
                                         foreach ($rows as $row) { ?>
                                             <tr>
                                                 <td><?php echo $row['id_cate'] ?></td>
                                                 <td><?php echo $row['name_cate'] ?></td>
-                                                <td><?php echo $row['id_admin'] ?></td>
-                                                <td><a href="?control=editcategory&id_cate=<?php echo $row['id_cate'] ?>" class="btn btn-warning">Sửa</a></td>
-                                                <td><a href="?control=deletecategory&id_cate=<?php echo $row['id_cate'] ?>" class="btn btn-danger">Xóa</a></td>
+                                                <?php if ($_SESSION['login_admin']['id_role'] != 3) { ?>
+                                                    <td><?php echo $administrator->getAdminId($row['id_admin'])['name_brand']; ?></td>
+                                                <?php } ?>
+                                                <?php if ($_SESSION['login_admin']['id_role'] == 3) { ?>
+                                                    <td><a href="?control=editcategory&id_cate=<?php echo $row['id_cate'] ?>" class="btn btn-warning">Sửa</a></td>
+                                                    <td><a href="?control=deletecategory&id_cate=<?php echo $row['id_cate'] ?>" class="btn btn-danger">Xóa</a></td>
+                                                <?php } ?>
                                             </tr>
                                         <?php } ?>
                                     </tbody>
