@@ -1,14 +1,13 @@
 <?php
 
-class Administrator extends Database
-{
-    function insertAdmin($username, $mk, $id_role)
-    {
-        $sql = "INSERT INTO administrator (username, mk, id_role) VALUES (?,?,?)";
+class Administrator extends Database {
+    function insertAdmin($username, $mk, $id_role){
+        $sql= "INSERT INTO administrator (username, mk, id_role) VALUES (?,?,?)";
         $stmt = $this->connect()->prepare($sql);
         $stmt->execute([$username, $mk, $id_role]);
     }
 
+<<<<<<< HEAD
     function getAllAdmins()
     {
         $sql = "SELECT * FROM administrator";
@@ -20,12 +19,27 @@ class Administrator extends Database
 
     function getAllBrands(){
         $sql="SELECT * FROM administrator WHERE id_role=3";
+=======
+    function getAllAdmins(){
+        $sql="SELECT * FROM administrator";
+>>>>>>> 6d2ed111b7f00328b5e66f18533e7da0b6e94a69
         $stmt = $this->connect()->prepare($sql);
         $stmt->execute();
         $rows = $stmt->fetchAll();
         return $rows;
     }
 
+<<<<<<< HEAD
+=======
+    function getAllBrands(){
+        $sql="SELECT * FROM administrator WHERE id_role=3";
+        $stmt = $this->connect()->prepare($sql);
+        $stmt->execute();
+        $rows = $stmt->fetchAll();
+        return $rows;
+    }
+
+>>>>>>> 6d2ed111b7f00328b5e66f18533e7da0b6e94a69
     function getAllBrandsSearch($search){
         $sql="SELECT * FROM administrator WHERE id_role=3 AND name_brand LIKE '%".$search."%' LIMIT 3";
         $stmt = $this->connect()->prepare($sql);
@@ -42,25 +56,22 @@ class Administrator extends Database
         return $row;
     }
 
-    function checkUsername($username)
-    {
-        $sql = "SELECT * FROM administrator WHERE username=?";
+    function checkUsername($username){
+        $sql="SELECT * FROM administrator WHERE username=?";
         $stmt = $this->connect()->prepare($sql);
         $stmt->execute([$username]);
         return $stmt->rowCount();
     }
 
-    function checkLoginAdmin($username, $mk)
-    {
-        $sql = "SELECT * FROM administrator WHERE username=? AND mk=?";
+    function checkLoginAdmin($username, $mk){
+        $sql="SELECT * FROM administrator WHERE username=? AND mk=?";
         $stmt = $this->connect()->prepare($sql);
         $stmt->execute([$username, $mk]);
         return $stmt->rowCount();
     }
-
-    function getLoginAdmin($username, $mk)
-    {
-        $sql = "SELECT * FROM administrator WHERE username=? AND mk=?";
+    
+    function getLoginAdmin($username, $mk){
+        $sql="SELECT * FROM administrator WHERE username=? AND mk=?";
         $stmt = $this->connect()->prepare($sql);
         $stmt->execute([$username, $mk]);
         $row = $stmt->fetch();
@@ -73,9 +84,8 @@ class Administrator extends Database
         $stmt->execute([$id_admin]);
     }
 
-    function editAdminId($id_admin, $mk, $id_role)
-    {
-        $sql = "UPDATE administrator SET mk=?, id_role=? WHERE id_admin=?";
+    function editAdminId($id_admin, $mk, $id_role){
+        $sql="UPDATE administrator SET mk=?, id_role=? WHERE id_admin=?";
         $stmt = $this->connect()->prepare($sql);
         $stmt->execute([$mk, $id_role, $id_admin]);
     }
@@ -86,5 +96,22 @@ class Administrator extends Database
         $stmt->execute([$fullname,$name_brand, $phone, $email, $address, $avatar, $banner, $id_admin]);
     }
 
+<<<<<<< HEAD
     
 }
+=======
+    function changePasswordAdmin($id_admin, $mk){
+        $sql="UPDATE administrator SET mk=? WHERE id_admin=?";
+        $stmt = $this->connect()->prepare($sql);
+        $stmt->execute([$mk, $id_admin]);
+    }
+
+    function viewStore($view,$id_admin){
+        $sql="UPDATE administrator SET view=? WHERE id_admin=?";
+        $stmt = $this->connect()->prepare($sql);
+        $stmt->execute([$view,$id_admin]);
+    }
+
+    
+}
+>>>>>>> 6d2ed111b7f00328b5e66f18533e7da0b6e94a69

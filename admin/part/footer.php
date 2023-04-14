@@ -1,7 +1,25 @@
 </div>
 </div>
 </div>
-
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="exampleModalLabel">Thông báo</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p><?php echo $_SESSION['alert']; ?></p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
 <!-- Warning Section Starts -->
 <!-- Older IE warning message -->
 <!-- [if lt IE 9]>
@@ -70,6 +88,52 @@
 <script src="../assets/js/pcoded.min.js"></script>
 <script src="../assets/js/vartical-demo.js"></script>
 <script src="../assets/js/jquery.mCustomScrollbar.concat.min.js"></script>
+
+<!-- jquery datatable js -->
+<!-- <script src="https://code.jquery.com/jquery-3.5.1.js"></script> -->
+<script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/2.3.6/js/dataTables.buttons.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+<script src="https://cdn.datatables.net/buttons/2.3.6/js/buttons.html5.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/2.3.6/js/buttons.print.min.js"></script>
+<script>
+    $(document).ready(function() {
+        $('table.display').DataTable({
+            dom: 'Bfrtip',
+            buttons: [
+                'pageLength', 'copy', 'csv', 'excel', 'pdf', 'print'
+            ],
+            lengthMenu: [
+                [10, 25, 50, -1],
+                [10, 25, 50, 'All'],
+            ],
+            order: [[0, 'desc']],
+        });
+    });
+
+    $(document).ready(function() {
+        $('table.display1').DataTable({
+            dom: 'Bfrtip',
+            buttons: [
+                'pageLength', 'copy', 'csv', 'excel', 'pdf', 'print'
+            ],
+            lengthMenu: [
+                [5, 10, 15, -1],
+                [5, 10, 15, 'All'],
+            ],
+            order: [[5, 'desc']],
+        });
+    });
+</script>
+<?php if($_SESSION['alert']!=""){?> 
+<script>
+    $('#exampleModal').modal('show')
+</script>
+<?php 
+$_SESSION['alert'] = "";
+} ?>
 </body>
 
 </html>

@@ -1,14 +1,38 @@
 <?php
-if (isset($_GET['id_prd'])) {
-    $id_prd = $_GET['id_prd'];
-} else {
+if (!isset($_GET['id_prd']) || $_GET['id_prd'] == "") {
     header("location: shop.php");
     exit;
+} else {
+    $id_prd = $_GET['id_prd'];
 }
 ?>
 <?php
 include_once('../part/header.php');
 $row = $product->getProductId($id_prd);
+
+if (!isset($_SESSION['view_prd'])) {
+    $_SESSION['view_prd'] = [];
+}
+
+$flag1 = 0;
+
+foreach ($_SESSION['view_prd'] as $view) {
+    if (isset($id_prd)) {
+        if ($_GET['id_prd'] == $view) {
+            $flag1 = 1;
+            break;
+        }
+    }
+}
+
+$view = $row['view'];
+
+if (isset($_GET['id_prd']) && $flag1 == 0) {
+    array_push($_SESSION['view_prd'], $_GET['id_prd']);
+    $view = $row['view'] + 1;
+    $product->viewProduct($view, $id_prd);
+}
+
 ?>
 <!-- Start All Title Box -->
 <div class="all-title-box">
@@ -68,7 +92,7 @@ $row = $product->getProductId($id_prd);
                         <?php echo number_format($row['price'], 0, '', ',') ?> VNĐ
                     </h5>
                     <p class="available-stock">
-                        <span> Còn lại: <?php echo $row['quanlity']?> sản phẩm 
+                        <span> Còn lại: <?php echo $row['quanlity'] ?> sản phẩm
                             <!-- / <a href="">8 sold </a> -->
                         </span>
                     <p>
@@ -79,7 +103,7 @@ $row = $product->getProductId($id_prd);
                             <li>
                                 <div class="form-group quantity-box">
                                     <label class="control-label">Quantity</label>
-                                    <input name="soluong" class="form-control" value="1" min="1" max="<?php echo $row['quanlity']?>" type="number">
+                                    <input name="soluong" class="form-control" value="1" min="1" max="<?php echo $row['quanlity'] ?>" type="number">
                                     <input type="hidden" name="id_prd" value="<?php echo $row['id_prd'] ?>">
                                 </div>
                             </li>
@@ -87,14 +111,16 @@ $row = $product->getProductId($id_prd);
                         <div class="price-box-bar">
                             <div class="cart-and-bay-btn">
                                 <!-- <a class="btn hvr-hover" data-fancybox-close="" href="">Buy New</a> -->
-                                <button class="btn hvr-hover text-white font-weight-bold" data-fancybox-close="" href="">Add to cart</button>
+                                <button name="add-to-cart" class="btn hvr-hover text-white font-weight-bold" data-fancybox-close="" href="">Add to cart</button>
                             </div>
                         </div>
                     </form>
                     <div class="add-to-btn">
                         <div class="add-comp">
-                            <a class="btn hvr-hover" href=""><i class="fas fa-heart"></i> Add to wishlist</a>
-                            <a class="btn hvr-hover" href=""><i class="fas fa-sync-alt"></i> Add to Compare</a>
+                            <form action="" method="post">
+                                <input type="hidden" name="id_prd" value="<?php echo $row['id_prd'] ?>">
+                                <button class="btn hvr-hover text-white font-weight-bold" name="add_to_wishlist"><i class="fas fa-heart"></i> Add to wishlist</button>
+                            </form>
                         </div>
                         <div class="share-bar">
                             <a class="btn hvr-hover" href=""><i class="fab fa-facebook" aria-hidden="true"></i></a>
@@ -107,48 +133,97 @@ $row = $product->getProductId($id_prd);
                 </div>
             </div>
         </div>
+        <?php
+        $cmt = isset($_POST['cmt']) ? $_POST['cmt'] : "";
+        if (isset($_POST['btn-cmt'])) {
+            if (isset($_SESSION['login_user'])) {
+                if ($cmt != "") {
+                    $cmt = htmlspecialchars(addslashes(trim($cmt)));
+                    $id_prd = $_GET['id_prd'];
+                    $id_user = $_SESSION['login_user']['id_user'];
+                    $comment->insertComment($id_prd, $id_user, $cmt);
+                    $id_cmt = $comment->getCommentIdPrdIdUserLast($id_prd, $id_user)[0]['id_cmt'];
+                    $id_admin = $product->getProductId($id_prd)['id_admin'];
+                    $comment->insertRepComment($id_admin, $id_cmt);
+                    $_SESSION['alert'] = "Bình luận thành công";
+                }
+            } else {
+                $_SESSION['alert'] = "Vui lòng đăng nhập trước khi bình luận";
+            }
+        }
 
+        if (isset($_POST['delete_cmt'])) {
+            $id_cmt = $_POST['id_cmt'];
+            $comment->deleteComment($id_cmt);
+        }
+        ?>
         <div class="row my-5">
-            <div class="card card-outline-secondary my-4">
+            <div class="card card-outline-secondary my-4 col-xl-12 col-lg-12 col-md-12 p-0">
                 <div class="card-header">
                     <h2>Product Reviews</h2>
                 </div>
+
+                <div class="card-body" style="padding-bottom: 0px;">
+                    <form method="post">
+                        <input name="cmt" type="text" style="height: 40px;padding: 10px;width:85%">
+                        <button name="btn-cmt" type="submit" class="btn hvr-hover text-white" style="margin-bottom: 3px; height: 40px;">Bình luận</button>
+                    </form>
+                </div>
                 <div class="card-body">
-                    <div class="media mb-3">
-                        <div class="mr-2">
-                            <img class="rounded-circle border p-1" src="data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2264%22%20height%3D%2264%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%20preserveAspectRatio%3D%22none%22%3E%3Cdefs%3E%3Cstyle%20type%3D%22text%2Fcss%22%3E%23holder_160c142c97c%20text%20%7B%20fill%3Argba(255%2C255%2C255%2C.75)%3Bfont-weight%3Anormal%3Bfont-family%3AHelvetica%2C%20monospace%3Bfont-size%3A10pt%20%7D%20%3C%2Fstyle%3E%3C%2Fdefs%3E%3Cg%20id%3D%22holder_160c142c97c%22%3E%3Crect%20width%3D%2264%22%20height%3D%2264%22%20fill%3D%22%23777%22%3E%3C%2Frect%3E%3Cg%3E%3Ctext%20x%3D%2213.5546875%22%20y%3D%2236.5%22%3E64x64%3C%2Ftext%3E%3C%2Fg%3E%3C%2Fg%3E%3C%2Fsvg%3E" alt="Generic placeholder image">
-                        </div>
-                        <div class="media-body">
-                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Omnis et enim aperiam inventore, similique necessitatibus neque non! Doloribus, modi sapiente laboriosam aperiam fugiat laborum. Sequi mollitia, necessitatibus quae sint natus.</p>
-                            <small class="text-muted">Posted by Anonymous on 3/1/18</small>
-                        </div>
-                    </div>
                     <hr>
-                    <div class="media mb-3">
-                        <div class="mr-2">
-                            <img class="rounded-circle border p-1" src="data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2264%22%20height%3D%2264%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%20preserveAspectRatio%3D%22none%22%3E%3Cdefs%3E%3Cstyle%20type%3D%22text%2Fcss%22%3E%23holder_160c142c97c%20text%20%7B%20fill%3Argba(255%2C255%2C255%2C.75)%3Bfont-weight%3Anormal%3Bfont-family%3AHelvetica%2C%20monospace%3Bfont-size%3A10pt%20%7D%20%3C%2Fstyle%3E%3C%2Fdefs%3E%3Cg%20id%3D%22holder_160c142c97c%22%3E%3Crect%20width%3D%2264%22%20height%3D%2264%22%20fill%3D%22%23777%22%3E%3C%2Frect%3E%3Cg%3E%3Ctext%20x%3D%2213.5546875%22%20y%3D%2236.5%22%3E64x64%3C%2Ftext%3E%3C%2Fg%3E%3C%2Fg%3E%3C%2Fsvg%3E" alt="Generic placeholder image">
+                    <?php
+                    $rows = $comment->getCommentIdPrd($id_prd);
+                    foreach ($rows as $row) { ?>
+                        <div class="media mb-3">
+                            <div class="mr-2">
+                                <img width="64px" height="64px" class="rounded-circle border p-1" src="../assets/img/upload/avatar_user/<?php echo $user->getUserId($row['id_user'])['avatar'] == "" ? "avatar.jpeg" : $user->getUserId($row['id_user'])['avatar']; ?>" alt="Generic placeholder image">
+                            </div>
+                            <div class="media-body">
+                                <h3 class="pb-0">
+                                    <b><?php echo $user->getUserId($row['id_user'])['fullname'] == "" ? $user->getUserId($row['id_user'])['username'] : $user->getUserId($row['id_user'])['fullname'] ?></b>
+                                    <?php if (isset($_SESSION['login_user']) && $_SESSION['login_user']['id_user'] == $row['id_user']) { ?>
+                                        <form method="post" style="display: inline-block;">
+                                            <input type="hidden" name="id_cmt" value="<?php echo $row['id_cmt'] ?>">
+                                            <button name="delete_cmt" style="background: #000000; color: #ffffff;cursor: pointer;">Xóa</button>
+                                        </form>
+                                    <?php }
+                                    ?>
+
+                                </h3>
+                                <p style=""><?php echo $row['cmt'] ?></p>
+                                <small class="text-muted">Thời gian bình luận
+                                    <?php
+                                    $date = date_create($row['time_cmt']);
+                                    echo date_format($date, "d/m/Y H:i:s");
+                                    ?>
+                                </small>
+                            </div>
                         </div>
-                        <div class="media-body">
-                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Omnis et enim aperiam inventore, similique necessitatibus neque non! Doloribus, modi sapiente laboriosam aperiam fugiat laborum. Sequi mollitia, necessitatibus quae sint natus.</p>
-                            <small class="text-muted">Posted by Anonymous on 3/1/18</small>
-                        </div>
-                    </div>
-                    <hr>
-                    <div class="media mb-3">
-                        <div class="mr-2">
-                            <img class="rounded-circle border p-1" src="data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2264%22%20height%3D%2264%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%20preserveAspectRatio%3D%22none%22%3E%3Cdefs%3E%3Cstyle%20type%3D%22text%2Fcss%22%3E%23holder_160c142c97c%20text%20%7B%20fill%3Argba(255%2C255%2C255%2C.75)%3Bfont-weight%3Anormal%3Bfont-family%3AHelvetica%2C%20monospace%3Bfont-size%3A10pt%20%7D%20%3C%2Fstyle%3E%3C%2Fdefs%3E%3Cg%20id%3D%22holder_160c142c97c%22%3E%3Crect%20width%3D%2264%22%20height%3D%2264%22%20fill%3D%22%23777%22%3E%3C%2Frect%3E%3Cg%3E%3Ctext%20x%3D%2213.5546875%22%20y%3D%2236.5%22%3E64x64%3C%2Ftext%3E%3C%2Fg%3E%3C%2Fg%3E%3C%2Fsvg%3E" alt="Generic placeholder image">
-                        </div>
-                        <div class="media-body">
-                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Omnis et enim aperiam inventore, similique necessitatibus neque non! Doloribus, modi sapiente laboriosam aperiam fugiat laborum. Sequi mollitia, necessitatibus quae sint natus.</p>
-                            <small class="text-muted">Posted by Anonymous on 3/1/18</small>
-                        </div>
-                    </div>
-                    <hr>
-                    <a href="" class="btn hvr-hover">Leave a Review</a>
+                        <?php
+                        $rows1 = $comment->getRepCommentIdComment($row['id_cmt']);
+                        foreach ($rows1 as $key => $row1) { ?>
+                            <div class="media mb-3 ml-5">
+                                <div class="mr-2">
+                                    <img width="64px" height="64px" class="rounded-circle border p-1" src="../assets/img/upload/avatar_admin/<?php echo $administrator->getAdminId($row1['id_admin'])['avatar'] == "" ? "avatar.jpeg" : $administrator->getAdminId($row1['id_admin'])['avatar'] ?>" alt="Generic placeholder image">
+                                </div>
+                                <div class="media-body">
+                                    <h3 class="pb-0"><b><?php echo $administrator->getAdminId($row1['id_admin'])['name_brand'] == "" ? $administrator->getAdminId($row1['id_admin'])['username'] : $administrator->getAdminId($row1['id_admin'])['name_brand'] ?></b></h3>
+                                    <p><?php echo $row1['rep_cmt'] ?></p>
+                                    <small class="text-muted">Thời gian bình luận
+                                        <?php
+                                        $date = date_create($row1['time_rep_cmt']);
+                                        echo date_format($date, "d/m/Y H:i:s");
+                                        ?>
+                                    </small>
+                                </div>
+                            </div>
+                        <?php }
+                        ?>
+                        <hr>
+                    <?php } ?>
                 </div>
             </div>
         </div>
-
         <div class="row my-5">
             <div class="col-lg-12">
                 <div class="title-all text-center">
@@ -156,158 +231,39 @@ $row = $product->getProductId($id_prd);
                     <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed sit amet lacus enim.</p>
                 </div>
                 <div class="featured-products-box owl-carousel owl-theme">
-                    <div class="item">
-                        <div class="products-single fix">
-                            <div class="box-img-hover">
-                                <img src="../assets/images/img-pro-01.jpg" class="img-fluid" alt="Image">
-                                <div class="mask-icon">
-                                    <ul>
-                                        <li><a href="" data-toggle="tooltip" data-placement="right" title="View"><i class="fas fa-eye"></i></a></li>
-                                        <li><a href="" data-toggle="tooltip" data-placement="right" title="Compare"><i class="fas fa-sync-alt"></i></a></li>
-                                        <li><a href="" data-toggle="tooltip" data-placement="right" title="Add to Wishlist"><i class="far fa-heart"></i></a></li>
-                                    </ul>
-                                    <a class="cart" href="">Add to Cart</a>
+                    <?php
+                    $rows = $product->getAllProductsCateAvailable($product->getProductId($_GET['id_prd'])['id_cate']);
+                    foreach ($rows as $row) { ?>
+                        <div class="item">
+                            <div class="products-single fix">
+                                <div class="box-img-hover">
+                                    <img src="../assets/img/upload/img_product/<?php echo $row['img_prd_1'] ?>" class="img-fluid" alt="Image">
+                                    <div class="mask-icon">
+                                        <ul>
+                                            <li><a href="" data-toggle="tooltip" data-placement="right" title="View"><i class="fas fa-eye"></i></a></li>
+                                            <li>
+                                                <a href="">
+                                                    <form method="post">
+                                                        <input type="hidden" name="id_prd" value="<?php echo $row['id_prd'] ?>">
+                                                        <button style="border: none;background-color: inherit;cursor: pointer;padding:0px;color:white;" name="add_to_wishlist" data-toggle="tooltip" data-placement="right" title="Add to Wishlist"><i class="far fa-heart"></i></button>
+                                                    </form>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                        <form action="" method="post">
+                                            <input hidden name="id_prd" value="<?php echo $row['id_prd'] ?>" type="text">
+                                            <button name="add-to-cart" class="cart">Add to Cart</button>
+                                        </form>
+                                    </div>
+                                </div>
+                                <div class="why-text">
+                                    <h4><?php echo $row['name_prd'] ?></h4>
+                                    <h5><?php echo number_format($row['price'], 0, ",") ?> VNĐ</h5>
                                 </div>
                             </div>
-                            <div class="why-text">
-                                <h4>Lorem ipsum dolor sit amet</h4>
-                                <h5> $9.79</h5>
-                            </div>
                         </div>
-                    </div>
-                    <div class="item">
-                        <div class="products-single fix">
-                            <div class="box-img-hover">
-                                <img src="../assets/images/img-pro-02.jpg" class="img-fluid" alt="Image">
-                                <div class="mask-icon">
-                                    <ul>
-                                        <li><a href="" data-toggle="tooltip" data-placement="right" title="View"><i class="fas fa-eye"></i></a></li>
-                                        <li><a href="" data-toggle="tooltip" data-placement="right" title="Compare"><i class="fas fa-sync-alt"></i></a></li>
-                                        <li><a href="" data-toggle="tooltip" data-placement="right" title="Add to Wishlist"><i class="far fa-heart"></i></a></li>
-                                    </ul>
-                                    <a class="cart" href="">Add to Cart</a>
-                                </div>
-                            </div>
-                            <div class="why-text">
-                                <h4>Lorem ipsum dolor sit amet</h4>
-                                <h5> $9.79</h5>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="item">
-                        <div class="products-single fix">
-                            <div class="box-img-hover">
-                                <img src="../assets/images/img-pro-03.jpg" class="img-fluid" alt="Image">
-                                <div class="mask-icon">
-                                    <ul>
-                                        <li><a href="" data-toggle="tooltip" data-placement="right" title="View"><i class="fas fa-eye"></i></a></li>
-                                        <li><a href="" data-toggle="tooltip" data-placement="right" title="Compare"><i class="fas fa-sync-alt"></i></a></li>
-                                        <li><a href="" data-toggle="tooltip" data-placement="right" title="Add to Wishlist"><i class="far fa-heart"></i></a></li>
-                                    </ul>
-                                    <a class="cart" href="">Add to Cart</a>
-                                </div>
-                            </div>
-                            <div class="why-text">
-                                <h4>Lorem ipsum dolor sit amet</h4>
-                                <h5> $9.79</h5>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="item">
-                        <div class="products-single fix">
-                            <div class="box-img-hover">
-                                <img src="../assets/images/img-pro-04.jpg" class="img-fluid" alt="Image">
-                                <div class="mask-icon">
-                                    <ul>
-                                        <li><a href="" data-toggle="tooltip" data-placement="right" title="View"><i class="fas fa-eye"></i></a></li>
-                                        <li><a href="" data-toggle="tooltip" data-placement="right" title="Compare"><i class="fas fa-sync-alt"></i></a></li>
-                                        <li><a href="" data-toggle="tooltip" data-placement="right" title="Add to Wishlist"><i class="far fa-heart"></i></a></li>
-                                    </ul>
-                                    <a class="cart" href="">Add to Cart</a>
-                                </div>
-                            </div>
-                            <div class="why-text">
-                                <h4>Lorem ipsum dolor sit amet</h4>
-                                <h5> $9.79</h5>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="item">
-                        <div class="products-single fix">
-                            <div class="box-img-hover">
-                                <img src="../assets/images/img-pro-01.jpg" class="img-fluid" alt="Image">
-                                <div class="mask-icon">
-                                    <ul>
-                                        <li><a href="" data-toggle="tooltip" data-placement="right" title="View"><i class="fas fa-eye"></i></a></li>
-                                        <li><a href="" data-toggle="tooltip" data-placement="right" title="Compare"><i class="fas fa-sync-alt"></i></a></li>
-                                        <li><a href="" data-toggle="tooltip" data-placement="right" title="Add to Wishlist"><i class="far fa-heart"></i></a></li>
-                                    </ul>
-                                    <a class="cart" href="">Add to Cart</a>
-                                </div>
-                            </div>
-                            <div class="why-text">
-                                <h4>Lorem ipsum dolor sit amet</h4>
-                                <h5> $9.79</h5>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="item">
-                        <div class="products-single fix">
-                            <div class="box-img-hover">
-                                <img src="../assets/images/img-pro-02.jpg" class="img-fluid" alt="Image">
-                                <div class="mask-icon">
-                                    <ul>
-                                        <li><a href="" data-toggle="tooltip" data-placement="right" title="View"><i class="fas fa-eye"></i></a></li>
-                                        <li><a href="" data-toggle="tooltip" data-placement="right" title="Compare"><i class="fas fa-sync-alt"></i></a></li>
-                                        <li><a href="" data-toggle="tooltip" data-placement="right" title="Add to Wishlist"><i class="far fa-heart"></i></a></li>
-                                    </ul>
-                                    <a class="cart" href="">Add to Cart</a>
-                                </div>
-                            </div>
-                            <div class="why-text">
-                                <h4>Lorem ipsum dolor sit amet</h4>
-                                <h5> $9.79</h5>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="item">
-                        <div class="products-single fix">
-                            <div class="box-img-hover">
-                                <img src="../assets/images/img-pro-03.jpg" class="img-fluid" alt="Image">
-                                <div class="mask-icon">
-                                    <ul>
-                                        <li><a href="" data-toggle="tooltip" data-placement="right" title="View"><i class="fas fa-eye"></i></a></li>
-                                        <li><a href="" data-toggle="tooltip" data-placement="right" title="Compare"><i class="fas fa-sync-alt"></i></a></li>
-                                        <li><a href="" data-toggle="tooltip" data-placement="right" title="Add to Wishlist"><i class="far fa-heart"></i></a></li>
-                                    </ul>
-                                    <a class="cart" href="">Add to Cart</a>
-                                </div>
-                            </div>
-                            <div class="why-text">
-                                <h4>Lorem ipsum dolor sit amet</h4>
-                                <h5> $9.79</h5>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="item">
-                        <div class="products-single fix">
-                            <div class="box-img-hover">
-                                <img src="../assets/images/img-pro-04.jpg" class="img-fluid" alt="Image">
-                                <div class="mask-icon">
-                                    <ul>
-                                        <li><a href="" data-toggle="tooltip" data-placement="right" title="View"><i class="fas fa-eye"></i></a></li>
-                                        <li><a href="" data-toggle="tooltip" data-placement="right" title="Compare"><i class="fas fa-sync-alt"></i></a></li>
-                                        <li><a href="" data-toggle="tooltip" data-placement="right" title="Add to Wishlist"><i class="far fa-heart"></i></a></li>
-                                    </ul>
-                                    <a class="cart" href="">Add to Cart</a>
-                                </div>
-                            </div>
-                            <div class="why-text">
-                                <h4>Lorem ipsum dolor sit amet</h4>
-                                <h5> $9.79</h5>
-                            </div>
-                        </div>
-                    </div>
+                    <?php }
+                    ?>
                 </div>
             </div>
         </div>

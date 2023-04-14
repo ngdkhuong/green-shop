@@ -3,7 +3,11 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1
+<<<<<<< HEAD
 -- Thời gian đã tạo: Th3 19, 2023 lúc 10:14 PM
+=======
+-- Thời gian đã tạo: Th4 12, 2023 lúc 08:55 AM
+>>>>>>> 6d2ed111b7f00328b5e66f18533e7da0b6e94a69
 -- Phiên bản máy phục vụ: 10.4.24-MariaDB
 -- Phiên bản PHP: 8.1.6
 
@@ -38,13 +42,19 @@ CREATE TABLE `administrator` (
   `address` varchar(200) COLLATE utf8_unicode_ci NOT NULL,
   `avatar` varchar(200) COLLATE utf8_unicode_ci NOT NULL,
   `banner` varchar(200) COLLATE utf8_unicode_ci NOT NULL,
+<<<<<<< HEAD
   `mk` varchar(100) COLLATE utf8_unicode_ci NOT NULL
+=======
+  `mk` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
+  `view` int(11) NOT NULL
+>>>>>>> 6d2ed111b7f00328b5e66f18533e7da0b6e94a69
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Đang đổ dữ liệu cho bảng `administrator`
 --
 
+<<<<<<< HEAD
 INSERT INTO `administrator` (`id_admin`, `id_role`, `username`, `name_brand`, `fullname`, `phone`, `email`, `address`, `avatar`, `banner`, `mk`) VALUES
 (1, 1, 'admin', '', 'Ngô Quang Huy', '0378396888', 'huy123@gmail.com', '123/123 cmt8', '03192023163732289400huy-ngo-avatar.png', '', '202cb962ac59075b964b07152d234b70'),
 (2, 2, 'subadmin', '', '', '', '', '', '', '', '202cb962ac59075b964b07152d234b70'),
@@ -54,6 +64,18 @@ INSERT INTO `administrator` (`id_admin`, `id_role`, `username`, `name_brand`, `f
 (6, 3, 'dalatfruitstore', 'Đà Lạt Fruit Store', '', '', '', '', '', '', '202cb962ac59075b964b07152d234b70'),
 (7, 3, 'citifruitstore', 'Citi Fruits Store', '', '', '', '', '', '', '202cb962ac59075b964b07152d234b70'),
 (8, 3, 'nongsansachstore', 'Nông Sản Sạch Store', 'Phạm Quang C', '1900456123', 'nongsansach@store.com', '456/789 Bình Thạnh Tp Hồ Chí Minh', '03192023205600843100logo3.jpg', '03192023205600843700banner3.jpg', '202cb962ac59075b964b07152d234b70');
+=======
+INSERT INTO `administrator` (`id_admin`, `id_role`, `username`, `name_brand`, `fullname`, `phone`, `email`, `address`, `avatar`, `banner`, `mk`, `view`) VALUES
+(1, 1, 'admin', '', 'Ngô Quang Huy', '0378396888', 'huy123@gmail.com', '123/123 cmt8', '03192023163732289400huy-ngo-avatar.png', '', '202cb962ac59075b964b07152d234b70', 0),
+(2, 2, 'subadmin', '', '', '', '', '', '', '', '202cb962ac59075b964b07152d234b70', 0),
+(3, 3, 'freshfruitshop', 'Fresh Fruit Shop', 'Nguyễn Văn A', '1900123456', 'freshfruitshop@store.com', '123/456 Tân Bình Thành Phố Hồ Chí Minh', '03192023203236274200logo1.jpg', '03192023203236274800banner1.jpg', '202cb962ac59075b964b07152d234b70', 18),
+(4, 3, 'hahafoodshop', 'Haha Food Shop', 'Nguyễn Văn D', '1900456789', 'hahafoodshop@store.com', '456/123 Tân Phú TP Hồ Chí Minh', '03192023204547710700logo2.jpg', '03192023204547711300banner2.jpg', '202cb962ac59075b964b07152d234b70', 7),
+(5, 3, 'deliciousfruitshop', 'Delicious Fruit Shop', 'Nguyễn Văn D', '1900444666', 'deliciousfruitshop@store.com', '456/789 Phú Nhuận TP Hồ Chí Minh', '03222023043924591600avatar6.png', '03222023043924592200deliciousfruit.png', '202cb962ac59075b964b07152d234b70', 6),
+(6, 3, 'dalatfruitstore', 'Đà Lạt Fruit Store', 'Trần Quang C', '1900111222', 'dalatfruitstore@store.com', '111/222 Bình Thạnh TP Hồ Chí Minh', '03222023044011225600avatar5.png', '03222023044011226300dalatfruit.png', '202cb962ac59075b964b07152d234b70', 5),
+(7, 3, 'citifruitstore', 'Citi Fruits Store', 'Nguyễn Thị T', '1900987654', 'citifruitstore@store.com', '456/777 Thủ Đúc Tp Hồ Chí Minh', '03222023044103822400avatar4.png', '03222023044103822900citifruit.png', '202cb962ac59075b964b07152d234b70', 6),
+(8, 3, 'nongsansachstore', 'Nông Sản Sạch Store', 'Phạm Quang C', '1900456123', 'nongsansach@store.com', '456/789 Bình Thạnh Tp Hồ Chí Minh', '03192023205600843100logo3.jpg', '03192023205600843700banner3.jpg', '202cb962ac59075b964b07152d234b70', 5),
+(9, 1, 'khuong123', '', '', '', '', '', '', '', '202cb962ac59075b964b07152d234b70', 0);
+>>>>>>> 6d2ed111b7f00328b5e66f18533e7da0b6e94a69
 
 -- --------------------------------------------------------
 
@@ -63,15 +85,20 @@ INSERT INTO `administrator` (`id_admin`, `id_role`, `username`, `name_brand`, `f
 
 CREATE TABLE `bill` (
   `id_bill` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
+  `total` double NOT NULL,
+  `id_user` int(11) DEFAULT NULL,
   `fullname` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
-  `phone` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
-  `email` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
-  `stk` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
-  `bank` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
   `address` varchar(500) COLLATE utf8_unicode_ci NOT NULL,
-  `total_cart` int(11) NOT NULL,
+  `email` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
+  `phone` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
+  `id_admin` int(11) NOT NULL,
+  `name_brand` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
+  `id_coupon` int(11) DEFAULT NULL,
+  `coupondiscount` double NOT NULL,
   `time` datetime NOT NULL DEFAULT current_timestamp(),
-  `status` tinyint(1) NOT NULL
+  `status` int(11) NOT NULL DEFAULT 1,
+  `payment` tinyint(1) NOT NULL,
+  `status_payment` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
@@ -83,32 +110,33 @@ CREATE TABLE `bill` (
 CREATE TABLE `category` (
   `id_cate` int(11) NOT NULL,
   `name_cate` varchar(200) COLLATE utf8_unicode_ci NOT NULL,
-  `id_admin` int(11) NOT NULL
+  `id_admin` int(11) NOT NULL,
+  `view` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Đang đổ dữ liệu cho bảng `category`
 --
 
-INSERT INTO `category` (`id_cate`, `name_cate`, `id_admin`) VALUES
-(1, 'Trái cây nhập khẩu', 3),
-(2, 'Nấm hữu cơ', 3),
-(3, 'Rau sạch', 3),
-(4, 'Rau quả hữu cơ', 4),
-(5, 'Rau củ sạch', 4),
-(6, 'Trái cây nhập khẩu', 4),
-(7, 'Hoa Quả nhập khẩu ', 5),
-(8, 'Trái cây nội địa', 5),
-(9, 'Rau củ hữu cơ', 5),
-(10, 'Các loại củ', 6),
-(11, 'Rau lấy bông', 6),
-(12, 'Rau gia vị - rau sống', 6),
-(13, 'Trái cây vườn', 7),
-(14, 'Cây ăn quả nhập khẩu', 7),
-(15, 'Trái cây Đặc sản vùng miền', 7),
-(16, 'Trái cây Việt Nam', 8),
-(17, 'Cà chua các loại', 8),
-(18, 'Trái cây Đặc sản vùng miền', 8);
+INSERT INTO `category` (`id_cate`, `name_cate`, `id_admin`, `view`) VALUES
+(1, 'Trái cây nhập khẩu', 3, 3),
+(2, 'Nấm hữu cơ', 3, 1),
+(3, 'Rau sạch', 3, 0),
+(4, 'Rau quả hữu cơ', 4, 3),
+(5, 'Rau củ sạch', 4, 0),
+(6, 'Trái cây nhập khẩu', 4, 1),
+(7, 'Hoa Quả nhập khẩu ', 5, 2),
+(8, 'Trái cây nội địa', 5, 0),
+(9, 'Rau củ hữu cơ', 5, 0),
+(10, 'Các loại củ', 6, 1),
+(11, 'Rau lấy bông', 6, 0),
+(12, 'Rau gia vị - rau sống', 6, 0),
+(13, 'Trái cây vườn', 7, 1),
+(14, 'Cây ăn quả nhập khẩu', 7, 0),
+(15, 'Trái cây Đặc sản vùng miền', 7, 2),
+(16, 'Trái cây Việt Nam', 8, 0),
+(17, 'Cà chua các loại', 8, 1),
+(18, 'Trái cây Đặc sản vùng miền', 8, 0);
 
 -- --------------------------------------------------------
 
@@ -127,14 +155,59 @@ CREATE TABLE `comment` (
 -- --------------------------------------------------------
 
 --
+-- Cấu trúc bảng cho bảng `contact_us`
+--
+
+CREATE TABLE `contact_us` (
+  `id_contact` int(11) NOT NULL,
+  `name` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
+  `email` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
+  `subject` varchar(500) COLLATE utf8_unicode_ci NOT NULL,
+  `message` varchar(500) COLLATE utf8_unicode_ci NOT NULL,
+  `time` datetime NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Cấu trúc bảng cho bảng `coupon`
+--
+
+CREATE TABLE `coupon` (
+  `id_coupon` int(11) NOT NULL,
+  `id_admin` int(11) NOT NULL,
+  `code_coupon` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
+  `discount` double NOT NULL,
+  `time_start` date NOT NULL,
+  `time_end` date NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Cấu trúc bảng cho bảng `detail_bill`
 --
 
 CREATE TABLE `detail_bill` (
   `id_detail_bill` int(11) NOT NULL,
   `id_bill` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
-  `id_prd` int(11) NOT NULL,
+  `id_prd` int(11) DEFAULT NULL,
+  `name_prd` varchar(200) COLLATE utf8_unicode_ci NOT NULL,
+  `price` double NOT NULL,
   `quanlity` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Cấu trúc bảng cho bảng `evalution`
+--
+
+CREATE TABLE `evalution` (
+  `id_evalution` int(11) NOT NULL,
+  `id_admin` int(11) NOT NULL,
+  `id_user` int(11) NOT NULL,
+  `evalution` int(11) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
@@ -163,14 +236,14 @@ CREATE TABLE `product` (
 --
 
 INSERT INTO `product` (`id_prd`, `name_prd`, `id_cate`, `img_prd_1`, `img_prd_2`, `img_prd_3`, `detail`, `cost`, `price`, `quanlity`, `view`, `id_admin`) VALUES
-(1, 'Dâu tây Hàn Quốc 330g', 1, '03152023035127726100Rectangle 1.png', '03152023035127730900Rectangle 2.png', '03152023035127733700Rectangle 3.png', 'Dâu tây Hàn được mệnh danh là “nữ hoàng trái cây” của xứ sở Kim Chi, chinh phục người tiêu dùng bởi hương thơm tự nhiên, vị ngọt thanh cũng như vẻ ngoài và chất lượng vượt trội. Dâu tây Hàn Quốc là trái cây chủ lực của Hàn Quốc bên cạnh Dưa lê vàng, Hồng giòn Hàn Quốc hay các loại trái cây sấy khô và sữa trái cây khác. Hiện nay, dâu tây Hàn Quốc trở thành mặt hàng nông sản xuất khẩu chủ lực của Hàn Quốc tại 20 quốc gia như Hồng Kông, Singapore, Thái Lan,… Dâu tây Hàn đã được cấp phép nhập khẩu c', 399000, 399000, 20, 0, 3),
-(2, 'Hồng giòn Hàn Quốc', 1, '03152023035411525100Rectangle 7.png', '03152023035411530100Rectangle 8.png', '03152023035411533800Rectangle 9.png', 'Hồng giòn Hàn Quốc là trái cây nhập khẩu trực tiếp từ xứ sở Kim Chi, có vị giòn tan, ngọt đậm ngon ngất ngây. Hồng giòn Hàn Quốc chắc chắn sẽ khiến bạn hài lòng. Hồng giòn Hàn Quốc có vị ngọt đậm, giòn tan, khối lượng từ 200 -300g/ trái. Được trồng theo phương pháp hữu cơ, trái có lớp vỏ siêu mỏng. Hồng giòn Hàn Quốc chứa nhiều vitamin, khoáng chất, chất béo, chất chống oxy hóa.. giúp tăng cường sức khỏe, tăng cường thị lực, ngăn ngừa lão hóa, phòng chống bệnh ung thư, hỗ trợ tiêu hóa và chống t', 299000, 299000, 25, 0, 3),
+(1, 'Dâu tây Hàn Quốc 330g', 1, '03152023035127726100Rectangle 1.png', '03152023035127730900Rectangle 2.png', '03152023035127733700Rectangle 3.png', 'Dâu tây Hàn được mệnh danh là “nữ hoàng trái cây” của xứ sở Kim Chi, chinh phục người tiêu dùng bởi hương thơm tự nhiên, vị ngọt thanh cũng như vẻ ngoài và chất lượng vượt trội. Dâu tây Hàn Quốc là trái cây chủ lực của Hàn Quốc bên cạnh Dưa lê vàng, Hồng giòn Hàn Quốc hay các loại trái cây sấy khô và sữa trái cây khác. Hiện nay, dâu tây Hàn Quốc trở thành mặt hàng nông sản xuất khẩu chủ lực của Hàn Quốc tại 20 quốc gia như Hồng Kông, Singapore, Thái Lan,… Dâu tây Hàn đã được cấp phép nhập khẩu c', 399000, 399000, 20, 6, 3),
+(2, 'Hồng giòn Hàn Quốc', 1, '03152023035411525100Rectangle 7.png', '03152023035411530100Rectangle 8.png', '03152023035411533800Rectangle 9.png', 'Hồng giòn Hàn Quốc là trái cây nhập khẩu trực tiếp từ xứ sở Kim Chi, có vị giòn tan, ngọt đậm ngon ngất ngây. Hồng giòn Hàn Quốc chắc chắn sẽ khiến bạn hài lòng. Hồng giòn Hàn Quốc có vị ngọt đậm, giòn tan, khối lượng từ 200 -300g/ trái. Được trồng theo phương pháp hữu cơ, trái có lớp vỏ siêu mỏng. Hồng giòn Hàn Quốc chứa nhiều vitamin, khoáng chất, chất béo, chất chống oxy hóa.. giúp tăng cường sức khỏe, tăng cường thị lực, ngăn ngừa lão hóa, phòng chống bệnh ung thư, hỗ trợ tiêu hóa và chống t', 299000, 299000, 25, 7, 3),
 (3, 'Táo Ambrosia nhập khẩu Canada', 1, '03152023035752810300Rectangle 10.png', '03152023035752816400Rectangle 11.png', '03152023035752806300Rectangle 12.png', 'TÁO AMBROSIA CANADA đầu tiên được phát hiện ở một vườn tại thung lũng Simikameen, British Columbia, Canada – đây cũng là vùng trồng Ambrosia lớn nhất trên thế giới hiện nay nơi mà khí hậu đêm mát mẻ và ngày nắng ấm rất thuận tiện cho việc trồng táo, Táo am là một trong những sản phẩm hoa quả nhập khẩu được tiêu thụ rất mạnh tại thị trường Việt Nam. Loại táo này được đặt tên bởi Wilfrid Mennell và vợ những người đã phát hiện ra, có ý nghĩa là “thức ăn của các vị thần” để nói đến vẻ đẹp cũng như ', 100000, 99000, 30, 0, 3),
 (4, 'Lê ngọt Singapo 1 thùng', 1, '03152023035925659300Rectangle 13.png', '03152023035925660700Rectangle 14.png', '03152023035925661800Rectangle 15.png', 'Giống lê Singo nhập khẩu Trung Quốc (có giấy chứng nhận nhập khẩu), là trái cây đảm bảo tiêu chuẩn xuất nhập khẩu toàn cầu. Bảo quản tươi ngon đến tận tay khách hàng. Lê singapo to tròn, vỏ màu vàng đậm, thịt bên trong trắng phau, ít hạt Lê có vị ngọt thanh mát, rất giòn và mọng nước. Trong quả lê có chứa nhiều chất xơ, vitamin C và vitamin K, vitamin PP, canxi, phốt-pho, betacaroten, axit folic rất tốt cho hệ tiêu hoá và hệ xương. Trong 100g lên Singo có chứa 57 calo. Giúp làm giảm lượng choles', 656000, 656000, 20, 0, 3),
-(5, 'Xoài Cát Indo túi 1kg', 1, '03152023040133672200Rectangle 16.png', '03152023040133674300Rectangle 17.png', '03152023040133675700Rectangle 18.png', 'Xoài cát chu với hương thơm nồng nàn quyến rũ, là trái cây có vị ngọt đậm đà hấp dẫn khó chối từ. Xoài cát Indo ngọt nhất khi chín vàng, ấn nhẹ tay mềm nhưng chắc. Xoài chứa vitamin dồi dào cung cấp năng lượng, tăng cường đề kháng cho cơ thể khỏe mạnh. Xoài cát chu tươi ngon, chất lượng, trái to, da trơn. Xoài thoảng mùi hương thơm nồng nàn, nhẹ, khi ăn cảm nhận được vị ngọt thanh rất đậm đà. Xoài cát chu thường được ăn khi chín - khi trái chuyển màu vàng tươi có mùi thơm đặc trưng. Khi còn sống', 115000, 110000, 30, 0, 3),
+(5, 'Xoài Cát Indo túi 1kg', 1, '03152023040133672200Rectangle 16.png', '03152023040133674300Rectangle 17.png', '03152023040133675700Rectangle 18.png', 'Xoài cát chu với hương thơm nồng nàn quyến rũ, là trái cây có vị ngọt đậm đà hấp dẫn khó chối từ. Xoài cát Indo ngọt nhất khi chín vàng, ấn nhẹ tay mềm nhưng chắc. Xoài chứa vitamin dồi dào cung cấp năng lượng, tăng cường đề kháng cho cơ thể khỏe mạnh. Xoài cát chu tươi ngon, chất lượng, trái to, da trơn. Xoài thoảng mùi hương thơm nồng nàn, nhẹ, khi ăn cảm nhận được vị ngọt thanh rất đậm đà. Xoài cát chu thường được ăn khi chín - khi trái chuyển màu vàng tươi có mùi thơm đặc trưng. Khi còn sống', 115000, 110000, 30, 1, 3),
 (6, 'Nho mẫu đơn Hàn quốc', 1, '03152023040333813800Rectangle 5.png', '03152023040333815000Rectangle 4.png', '03152023040333816200Rectangle 6.png', 'Nho mẫu đơn Shine Muscat có xuất xứ từ Nhật Bản và được trồng tại Hàn Quốc. Đây là loại nho thường làm quà trong các dịp lễ, Tết của người có điều kiện trong những năm gần đây. Nho xanh mẫu đơn Shine Muscat được trồng ở Hàn Quốc theo phương pháp hữu cơ, hoàn toàn trồng trong nhà kính nên nho rất sạch, rất thơm ngon và có mùi vị thơm mát đặc biệt. Shine Muscat là kết quả của sự lai tạo giữa hai giống nho Akitsu-21 và Haku Nan, thực hiện bởi Viện Khoa học cây ăn quả quốc gia Nhật Bản từ những năm ', 1400000, 1300000, 15, 0, 3),
 (7, 'Nấm hương túi 1kg', 2, '03152023040642239900Rectangle 3.png', '03152023040642243400Rectangle 2.png', '03152023040642248200Rectangle 1.png', 'Nấm hương là một loại nấm có mùi hương thơm đặc biệt từ chất adenine. Món ăn chế biến từ nấm này có hương vị thơm ngon. Không chỉ có mùi thơm hấp dẫn nấm hương còn chứa thành phần dinh dưỡng rất cao và hàm lượng protein phong phú. Trong nấm có đến 9 loại acid amin, sắt, vitamin B, Egosterol đều có thể chuyển hóa thành vitamin D có tác dụng ngăn ngừa thiếu máu, cao huyết áp và bệnh loãng xương rất tốt cho sức khỏe . Ngoài ra, nấm hương còn được chứng minh có tác dụng nâng cao khả năng miễn dịch c', 230000, 230000, 25, 0, 3),
-(8, 'Nấm kim châm gói 150g', 2, '03152023040843721400Rectangle 6.png', '03152023040843722600Rectangle 5.png', '03152023040843723900Rectangle 4.png', 'Loại nấm này chứa hàm lượng lớn protein và chất xơ, có mùi vị thơm ngon và hấp dẫn. Ngoài ra, các chất xơ trong nấm giúp thúc dạ dày, đường ruột nhu động hoạt động tốt, qua đó phòng chống táo bón và béo phì hiệu quả. Đây là nấm tươi hoặc đóng hộp, với các chuyên gia khuyên dùng khi nấm tươi với mũ chắc, màu trắng, mũ bóng, và tránh dùng nấm có thân nhầy nhụa hoặc hơi nâu Loại nấm này theo truyền thống được sử dụng nấu món lẩu, nhưng cũng có thể được sử dụng cho món salad và các món ăn khác. Có t', 16000, 16000, 30, 0, 3),
+(8, 'Nấm kim châm gói 150g', 2, '03152023040843721400Rectangle 6.png', '03152023040843722600Rectangle 5.png', '03152023040843723900Rectangle 4.png', 'Loại nấm này chứa hàm lượng lớn protein và chất xơ, có mùi vị thơm ngon và hấp dẫn. Ngoài ra, các chất xơ trong nấm giúp thúc dạ dày, đường ruột nhu động hoạt động tốt, qua đó phòng chống táo bón và béo phì hiệu quả. Đây là nấm tươi hoặc đóng hộp, với các chuyên gia khuyên dùng khi nấm tươi với mũ chắc, màu trắng, mũ bóng, và tránh dùng nấm có thân nhầy nhụa hoặc hơi nâu Loại nấm này theo truyền thống được sử dụng nấu món lẩu, nhưng cũng có thể được sử dụng cho món salad và các món ăn khác. Có t', 16000, 16000, 30, 1, 3),
 (9, 'Nấm rơm túi 200g', 2, '03152023041001424200Rectangle 9.png', '03152023041001428000Rectangle 8.png', '03152023041001431700Rectangle 7.png', 'Là một loại nấm ăn được trồng phổ biến ở Việt Nam. Trong nấm rơm chữa hàm lượng Vitamin C cao gấp 6 lần so với hàm lượng vitamin C có trong cam quýt. Bên cạnh đó loại nấm này chứa hàm lượng protein cao, các chất béo không hòa tan, các loại đường, sắt, canxi, photpho, vitamin B. Hơn nữa, nấm rơm còn chứa hơn 7 loại acid amin và một loại protit khác có tác dụng đặc biệt trong việc ngăn chặn sự phát triển của tế bào ung thư, giúp phòng ngừa ung thư hiệu quả.', 30000, 30000, 26, 0, 3),
 (10, 'Nấm tuyết gói 50g', 2, '03152023041117180800Rectangle 10.png', '03152023041117185200Rectangle 11.png', '03152023041117188700Rectangle 12.png', 'Nấm tuyết còn có tên là mộc nhĩ trắng được sử dụng nhiều trong các bài thuốc Đông y có tác dụng cầm máu, nhuận tràng, chữa ho, cải thiện não, bổ khí, nhuận phổi, ích ấm, tốt cho thận nằm trong top những loại thực phẩm bổ dưỡng nổi tiếng. Ngoài ra, nấm tuyết cũng được chứng minh có tac dụng làm đẹp, làm mờ vết thâm nám và bổ dưỡng dung nhan.  Nấm tuyết còn là thực phẩm được sử dụng rất nhiều trong các món ăn Việt Nam. Ngoài ra, nó được biết đến như một thực phẩm dưỡng sinh, có tác dụng bồi bổ sức', 30000, 30000, 18, 0, 3),
 (11, 'Nấm bào ngư túi 300g', 2, '03152023041318059900Rectangle 15.png', '03152023041318061100Rectangle 13.png', '03152023041318062200Rectangle 14.png', 'Nấm bào ngư còn được biết với các tên gọi khác như: nấm sò, nấm trắng,… Loại nấm này thường mọc thành từng cụm xếp chồng lên nhau. Nấm thường sinh trưởng tốt trên thân cây gỗ, rơm rạ, mùn cưa,… Nấm bào ngư có hình dạng giống một chiếc phễu lệch. Phần mũ nấm xòe ra, lồi lên và mặt mũ nhẵn bóng, mép mũ cuộn vào trong. Mũ nấm có màu xám – nâu sẫm và màu trắng nhạt. Đây là 2 màu sắc đặc trưng của loại nấm này. Cuống nấm ngắn được phủ lông mịn có màu nhạt hơn phần mũ nấm, mọc sát nhau. chứa lượng lớn', 45000, 45000, 11, 0, 3),
@@ -182,8 +255,8 @@ INSERT INTO `product` (`id_prd`, `name_prd`, `id_cate`, `img_prd_1`, `img_prd_2`
 (17, 'Xà lách gói 500g', 3, '03152023043220378600Rectangle 13.png', '03152023043220383400Rectangle 14.png', '03152023043220387600Rectangle 15.png', 'Rau xà lách là cây thuộc họ cúc, còn được gọi rau diếp hoặc cải bèo từ thời xa xưa đã được biết đến như là một vị thuốc giúp thanh nhiệt, điều trị một số bệnh như táo báo và có tác dụng ngăn ngừa ung thư, viêm khớp, tim mạch… Rau xà lách tiếng anh là lettuce có tên khoa học khác là lactuca sativa được nhà thực vật người Thụy Điển Carl Linnaeus mô tả khoa học lần đầu tiên vào năm 1753. Đây là loại rau chuyên dùng để ăn sống, nhúng lẩu hoặc dùng để gói kèm với các loại thức ăn khác.', 21000, 21000, 12, 0, 3),
 (18, 'Rau ngót bó 500g', 3, '03152023043331230000Rectangle 18.png', '03152023043331233100Rectangle 17.png', '03152023043331236500Rectangle 16.png', 'Theo Đông y, lá bù ngót có tác dụng giải độc, hoạt huyết, lợi tiểu và mát huyết. Trong khi đó, rễ rau ngót có công tiêu độc, chữa viêm phổi, ban sởi hoặc tiểu dắt, sốt cao. Còn theo Y học hiện đại, rau ngót có những tác dụng chính như: Thanh nhiệt: Rau ngót có công dụng giúp lợi tiểu, giải độc và làm mát cơ thể Giúp cải thiện đời sống tình dục: Hợp chất phytochemical có trong rau ngót có tác dụng làm tăng ham muốn tình dục. Chưa kể đến, sterol có trong rau ngót có công dụng như một loại hormone ', 18000, 18000, 30, 0, 3),
 (19, 'Củ Dền KHC - 300gr', 4, '03152023045119088400Rectangle 1.png', '03152023045119093800Rectangle 2.png', '03152023045119097700Rectangle 3.png', 'Trong củ dền đỏ có chứa sắc tố màu betacyanin. Đây là hoạt chất có tác dụng giúp gan giải độc tốt hơn thông qua việc tạo hiệu ứng dây chuyền đến mạch máu giúp loại bỏ các độc tố trong gan. Tính năng này rất hiệu quả trong việc chữa lành độc tính của gan hoặc các bệnh gan mật, như: Vàng da, viêm gan, ngộ độc thực phẩm, tiêu chảy hoặc nôn mửa. Đồng thời, củ dền đỏ có khả năng chống sự hình thành các lớp mỡ trong cơ thể. Khi sử dụng củ dền đỏ làm nước ép hoặc bổ sung dền đỏ vào thực đơn hàng ngày s', 23800, 23800, 29, 0, 4),
-(20, 'Baro Hành KHC - 200gr', 4, '03152023045214572000Rectangle 4.png', '03152023045214575600Rectangle 5.png', '03152023045214578400Rectangle 6.png', 'Hành baro (tỏi tây) hay còn được biết đến với tên gọi hành boa rô. Loại hành này có tên khoa học là Allium ampeloprasum var. Porrum, thuộc giống Porrum Group hay Allium ampeloprasum Leek Group. Tỏi tây cũng là một loại rau gia vị, giống như hành, tỏi, kiệu, thuộc Họ Hành. Hành baro là cây thân thảo, lá dài, dẹp. Phần củ và lá có mùi thơm, được dùng để chế biến thức ăn. Loại cây gia vị này được trồng bằng củ. Những bằng chứng khảo cổ tìm thấy tại lăng mộ Ai Cập cùng với các bức vẽ chưa đã cho thấ', 18000, 18000, 21, 0, 4),
-(21, 'Cà rốt KHC – 500g', 4, '03152023045314631400Rectangle 7.png', '03152023045314635700Rectangle 8.png', '03152023045314639800Rectangle 9.png', 'Cà rốt được trồng đầu tiên ở Afghanistan vào khoảng năm 900 sau Công nguyên. Nhiều người biết đến cà rốt với màu cam rực rỡ đặc trưng, nhưng thực tế thì loại củ này cũng có các màu sắc khác, chẳng hạn như tím hoặc vàng, đỏ và trắng. Loại củ phổ biến và đa năng này có thể mang hương vị hơi khác nhau tùy thuộc vào màu sắc, kích thước và nơi trồng. Đường trong cà rốt tạo ra vị ngọt nhẹ, nhưng đôi khi cũng có thể mang mùi đất hoặc hơi đắng. Một khẩu phần nửa cốc cà rốt có: 25 calo, 6 gram carbohydra', 40000, 40000, 30, 0, 4),
+(20, 'Baro Hành KHC - 200gr', 4, '03152023045214572000Rectangle 4.png', '03152023045214575600Rectangle 5.png', '03152023045214578400Rectangle 6.png', 'Hành baro (tỏi tây) hay còn được biết đến với tên gọi hành boa rô. Loại hành này có tên khoa học là Allium ampeloprasum var. Porrum, thuộc giống Porrum Group hay Allium ampeloprasum Leek Group. Tỏi tây cũng là một loại rau gia vị, giống như hành, tỏi, kiệu, thuộc Họ Hành. Hành baro là cây thân thảo, lá dài, dẹp. Phần củ và lá có mùi thơm, được dùng để chế biến thức ăn. Loại cây gia vị này được trồng bằng củ. Những bằng chứng khảo cổ tìm thấy tại lăng mộ Ai Cập cùng với các bức vẽ chưa đã cho thấ', 18000, 18000, 21, 3, 4),
+(21, 'Cà rốt KHC – 500g', 4, '03152023045314631400Rectangle 7.png', '03152023045314635700Rectangle 8.png', '03152023045314639800Rectangle 9.png', 'Cà rốt được trồng đầu tiên ở Afghanistan vào khoảng năm 900 sau Công nguyên. Nhiều người biết đến cà rốt với màu cam rực rỡ đặc trưng, nhưng thực tế thì loại củ này cũng có các màu sắc khác, chẳng hạn như tím hoặc vàng, đỏ và trắng. Loại củ phổ biến và đa năng này có thể mang hương vị hơi khác nhau tùy thuộc vào màu sắc, kích thước và nơi trồng. Đường trong cà rốt tạo ra vị ngọt nhẹ, nhưng đôi khi cũng có thể mang mùi đất hoặc hơi đắng. Một khẩu phần nửa cốc cà rốt có: 25 calo, 6 gram carbohydra', 40000, 40000, 30, 2, 4),
 (22, 'Cần Tàu Hữu Cơ - 100gr', 4, '03152023045418868000Rectangle 10.png', '03152023045418871600Rectangle 11.png', '03152023045418877000Rectangle 12.png', 'Rau cần tây (cần tàu) được nhiều người ăn kiêng lựa chọn vì chứa ít năng lượng. Khi ăn 100 g rau cần tây tươi, cơ thể bạn chỉ nạp thêm 16 kcal nhưng lại bổ sung được nhiều loại vitamin và khoáng chất. Rau cần tây không giúp giảm cân nhanh chóng mà chỉ hỗ trợ giảm cân bởi loại rau này chứa nhiều chất xơ và ít năng lượng (ít hơn cả rau muống). Điều đó có nghĩa là, khi dùng rau cần tây, bạn cũng cần kết hợp với chế độ ăn uống khoa học, hợp lý mới có thể giảm cân thành công.', 18000, 18000, 21, 0, 4),
 (23, 'Xu hào KHC – 300g', 4, '03152023045558420400Rectangle 14.png', '03152023045558424100Rectangle 15.png', '03152023045558427400Rectangle 13.png', 'Su hào là một giống cây trồng thân thấp và mập của giống cải bắp dại, chúng được chọn lựa bởi thân mập và có dạng hình cầu, chứa nhiều nước. Su hào được tạo ra từ quá trình chọn lọc nhân tạo để lấy phần tăng trưởng của mô phân sinh ở thân (hay còn gọi là củ). Su hào được chia làm 4 loại đó là: Giống su hào trắng: Có đặc điểm là lá ngắn khoảng 30 - 40cm, có cọng dày như ngón tay, củ màu xanh nhạt hoặc màu trắng, đường kính khoảng 12 - 20cm. Giống su hào này cần khoảng 4 tháng mới có thể thu hoạch', 22500, 22500, 23, 0, 4),
 (24, 'Cải dún HKC – 500g', 4, '03152023045717483100Rectangle 18.png', '03152023045717487500Rectangle 19.png', '03152023045717498600Rectangle 17.png', 'Trong rau cải xanh có chứa các chất chống stress oxy hóa như  vitamin E, vitamin C và các khoáng chất khác như beta carotene, flavonoid, lutein với hàm lượng dồi dào giúp cơ thể bảo vệ và chống oxy hóa do dư thừa các gốc tự do. Các gốc tự do là những phân tử không ổn định có thể làm hỏng các tế bào của cơ thể. Dài lâu sẽ dễ dẫn đến các tình trạng bệnh nghiêm trọng như bệnh tim, ung thư và bệnh Alzheimer. Thế nên việc ăn nhiều rau cải xanh có thể giúp bảo vệ khỏi các bệnh liên quan đến stress ', 47000, 47000, 30, 0, 4),
@@ -201,7 +274,7 @@ INSERT INTO `product` (`id_prd`, `name_prd`, `id_cate`, `img_prd_1`, `img_prd_2`
 (36, 'Xoài Cát Indo túi 1kg', 6, '03152023051327809100Rectangle 18.png', '03152023051327812800Rectangle 17.png', '03152023051327817800Rectangle 19.png', 'Xoài cát chu với hương thơm nồng nàn quyến rũ, là trái cây có vị ngọt đậm đà hấp dẫn khó chối từ. Xoài cát Indo ngọt nhất khi chín vàng, ấn nhẹ tay mềm nhưng chắc. Xoài chứa vitamin dồi dào cung cấp năng lượng, tăng cường đề kháng cho cơ thể khỏe mạnh. Xoài cát chu tươi ngon, chất lượng, trái to, da trơn. Xoài thoảng mùi hương thơm nồng nàn, nhẹ, khi ăn cảm nhận được vị ngọt thanh rất đậm đà. Xoài cát chu thường được ăn khi chín - khi trái chuyển màu vàng tươi có mùi thơm đặc trưng. Khi còn sống', 110000, 100000, 30, 0, 4),
 (37, 'Táo Envy Size 24 Mỹ', 7, '03152023140510456000image 3.png', '03152023140510460200image 2.png', '03152023140510461200image 1.png', 'Nhập khẩu trực tiếp từ Mỹ.Táo Envy Mỹ là giống táo ngon nhất thế giới.Khi ăn, táo có mùi thơm đậm, ăn cảm giác rất ngọt và thanh mát.Chứa nhiều chất dinh dưỡng như B1, B2, Vitamin C, Canxi,…Táo giúp nạp ít lượng calo, phù hợp để giảm cân.Táo Envy chứa nhiều vitamin nhóm B như: B1, B2… là những dưỡng chất có lợi cho não duy trì bộ não khỏe mạnh và sáng suốt.', 350000, 349999, 30, 0, 5),
 (38, 'Cam Vàng Mafa Ai Cập', 7, '03152023141039274600image 4.png', '03152023141039275700image 5.png', '03152023141039277900image 6.png', 'Cam vàng Ai Cập có màu sắc vàng tươi, quả to, mọng nước, có mùi thơm rất đặc trưng. Giống Cam Ai Cập mà VinFruits nhập khẩu về Việt Nam là cam Daltex – loại cam ngon nhất của đất nước Kim tự tháp.Cam có thể được bảo quản ở nhiệt độ thường hoặc trong tủ lạnh. Nếu bảo quản trong tủ lạnh, nhiệt độ thích hợp nhất từ 7oC – 10oC. Đối với cả hai phương pháp bảo quản, cam thường sẽ tươi được trong khoảng 2 tuần và sẽ giữ được độ tươi cùng hàm lượng vitamin.Cách tốt nhất để bảo quản cam là để tự nhiên th', 139000, 119000, 16, 0, 5),
-(39, 'Táo Xanh Granny Smith Mỹ', 7, '03152023141108180700image 10.png', '03152023141108182000image 11.png', '03152023141108183000image 12.png', 'Táo Xanh hay còn gọi với tên quốc tế là Granny Smith được nhập khẩu từ Mỹ là loại trái cây đạt chuẩn chất lượng cả về mẫu mã và hương vị, thích hợp để sử dụng trong gia đình hoặc làm quà biếu tặng cực kỳ sang trọng và lịch sự.Táo xanh có nguồn gốc từ trang trại ở Eastwood, New South Wasles, Úc năm 1868 và chính thức được công bố ra thị trường năm 1924. Táo xanh Granny Smith du nhập và được trồng thương mại tại Mỹ bắt đầu từ cuối năm 1960.Đây là một trong những giống táo được trồng phổ biến nhất', 145000, 145000, 24, 0, 5),
+(39, 'Táo Xanh Granny Smith Mỹ', 7, '03152023141108180700image 10.png', '03152023141108182000image 11.png', '03152023141108183000image 12.png', 'Táo Xanh hay còn gọi với tên quốc tế là Granny Smith được nhập khẩu từ Mỹ là loại trái cây đạt chuẩn chất lượng cả về mẫu mã và hương vị, thích hợp để sử dụng trong gia đình hoặc làm quà biếu tặng cực kỳ sang trọng và lịch sự.Táo xanh có nguồn gốc từ trang trại ở Eastwood, New South Wasles, Úc năm 1868 và chính thức được công bố ra thị trường năm 1924. Táo xanh Granny Smith du nhập và được trồng thương mại tại Mỹ bắt đầu từ cuối năm 1960.Đây là một trong những giống táo được trồng phổ biến nhất', 145000, 145000, 24, 1, 5),
 (40, 'Nho kẹo Mỹ không hạt', 7, '03152023141208367700image 8.png', '03152023141208368700image 7.png', '03152023141208369400image 9.png', 'Nho kẹo Mỹ được trồng tại vùng đất có nhiệt độ chênh lệch giữa ngày và đêm từ 2-3 độ. Trồng ở vùng trung du ít sương, thu hoạch vào cuối tháng 8 và đầu tháng 9 hằng năm.Nho được gắn cái tên là KẸO bởi nó có hương vị ngọt lịm thơm lừng của tuổi thơ. Vị ngọt mà bất cứ ai điều cũng thích thú và cuốn hút. Vị ngọt của nho KẸO không hẳn là vị ngọt đơn thuần, mà nó chứa vị của tiềm thức trẻ tuổi vị của nhớ nhung.Cũng giống như các loại nho khác. Nho kẹo được cửa hàng bảo quản ở nhiệt độ từ 0-4 độ để gi', 299000, 299000, 15, 0, 5),
 (41, 'Lê nhập khẩu Hàn Quốc', 7, '03152023141256143700image 13.png', '03152023141256145500image 14.png', '03152023141256146500image 15.png', 'Lê Hàn Quốc còn có tên gọi khác là Pyrus Pyrifolia hay lê Châu Á, lê Cát,.. Lê Hàn Quốc là loại trái cây nhập khẩu và được ưa chuộng tại Việt Nam. Những dịp lễ, tết, người ta thường mua lê Hàn Quốc để biếu cho nhau.Đây là loại trái cây có nguồn gốc từ xứ sở kim chi và được trồng nhiều ở Nachi. Lê Hàn Quốc trong và to lớn hơn nhiều, trọng lượng từ 600 – 800g/quả.Lê giúp giảm cân hiệu quả, tăng sức đề kháng, cung cấp năng lượng, giảm nguy cơ đột quỵ, bảo vệ sức khỏe tim mạch.Hỗ trợ xương chắc khỏe', 199000, 199000, 30, 0, 5),
 (42, 'Việt Quất Mỹ Nhập Khẩu', 7, '03152023141336589300image 17.png', '03152023141336590300image 18.png', '03152023141336591300image 16.png', 'Quả Việt quất hay còn gọi là Blueberry, có hình dạng khá giống với quả sim của Việt Nam, quả có màu đậm, gần như đen với một chút ánh tím, thịt bên trong có màu đỏ hoặc ngã tím.Quả Việt quất được phát hiện bởi người bản địa tại các khu rừng ở Bắc Mỹ, Mỹ. Đây là nước có sản lượng Blueberry nhiều nhất trên thế giới.Quả Việt quất Mỹ trồng nhiều nhất tại bang Oregon, Washington, California.Quả Việt quất có nhiều chất bổ dưỡng giúp cơ thể chống lại nhiều bệnh tật và mang đến những dưỡng chất cần thiế', 145000, 145000, 24, 0, 5),
@@ -236,8 +309,8 @@ INSERT INTO `product` (`id_prd`, `name_prd`, `id_cate`, `img_prd_1`, `img_prd_2`
 (71, 'Rau hương thảo 100g', 12, '03152023153407419700Rectangle 20.png', '03152023153407420400Rectangle 21.png', '03152023153407421800Rectangle 22.png', 'Cây Rosemary hay còn được gọi là cây Hương Thảo, Cây  Tây  Dương  Chổi, …Theo Đông y, hương thảo có vị chát, mùi thơm nồng, tính ấm nóng, tác dụng bổ dưỡng, tăng cường sinh lực, hoạt huyết, tẩy uế trọc, kích thích hoạt động của hệ tiêu hóa, lợi mật, lợi tiểu, nhuận trường, chống viêm sưng, chống oxy hóa, kích thích tuần hoàn máu lên não, giúp tăng cường trí nhớ và sự tập trung, giúp chống rụng tóc và mau mọc tóc, giúp khử trùng đường hô hấp và làm long đàm, dễ khạc đàm.', 31000, 30000, 28, 0, 6),
 (72, 'Rau ôm đà lạt 200g', 12, '03152023153452455100image 109.png', '03152023153452456900image 110.png', '03152023153452457800image 111.png', 'Rau ôm hay còn gọi là Ngò ôm hay ngò om, Các tỉnh miền Nam gọi là rau om hay rau ôm. Tại các tỉnh miền Trung, rau này còn được gọi là ngổ hương. Các tên gọi khác ngổ thơm, ngổ om, mò om hoặc ngổ điếc, ngổ trâu.Thành phần hóa học: Trong rau ngò ôm có 92% nước, 2,1% protid, 1,2% glucid, 2,1% cenluloza, 0,8% tro, 0,29% vitamin B, 2,11% vitamin C, 2,11% caroten, có chứa nhiều tinh dầu (0,1%), chủ yếu là limonene, aldehyd perilla, monoterpenoid cetone, và cis-4-caranone, ngoài ra còn có các nhóm hợp ', 7000, 6500, 25, 0, 6),
 (73, 'Sầu riêng Ri6 nguyên trái', 13, '03162023045732362200image 112.png', '03162023045732374300image 113.png', '03162023045732377400image 114.png', 'Sầu riêng là trái cây có mùi nồng đặc trưng nhưng lại được nhiều người rất ưa chuộng. Loại trái cây này chứa nhiều dinh dưỡng tốt cho sức khỏe. Đặc biệt, ăn sầu riêng sẽ mang đến nhiều lợi ích mà nhiều người vẫn chưa biết đến. Hiện nay, sầu riêng đang là trái cây được cung cấp rộng rãi trên thị trường Việt và nhiều quốc gia tại Đông Nam Á.Sầu riêng được mệnh danh là “vua” của các loài trái cây. Nguồn gốc của nó xuất phát từ các quốc gia vùng nhiệt đới ở Đông Nam Á. Loại trái cây này có mùi nồng ', 120000, 110000, 21, 0, 7),
-(74, 'Dưa hấu không hạt 1kg', 13, '03162023045839698400image 117.png', '03162023045839702600image 116.png', '03162023045839707100image 115.png', 'Sự xuất hiện của dưa hấu không hạt mang đến những trải nghiệm thú vị hơn với những ai đam mê loại trái cây ăn. Không chỉ hương vị hấp dẫn, thanh mát mà việc ăn dưa hấu cũng không cần phải nhả hạt như trước. Chính ưu điểm này đã khiến nhiều người đổ xô lựa chọn loại dưa này ngày càng nhiều hơn. Đây là giống dưa hấu có vị ngọt thanh, dễ chịu. Ruột dưa màu đỏ tươi và không có hạt hoặc rất ít hạt. Hương thơm của dưa hấu không hạt cũng rất hấp dẫn. Đặc biệt, nó có thể phù hợp với cả người lớn hay trẻ', 30000, 27000, 12, 0, 7),
-(75, 'Ổi nữ hoàng giòn 1kg', 13, '03162023045944311900image 119.png', '03162023045944314600image 120.png', '03162023045944319100image 118.png', 'Ổi Nữ Hoàng luôn là lựa chọn của rất nhiều “tín đồ” yêu thích loại trái cây này. Với ưu điểm giòn, ngọt, ít hạt, loại ổi này hiện bán rất “chạy” trên thị trường. Kể từ khi du nhập vào Việt Nam, Nữ Hoàng vẫn luôn là loại ổi được nhiều nhà vườn lựa chọn để trồng và cung cấp ra thị trường.  Sở dĩ giống ổi này được gọi tên là Nữ Hoàng không chỉ bởi hương vị thơm ngon mà còn là nhờ nguồn dinh dưỡng phong phú bên trong. Loại ổi này có rất nhiều vitamin, khoáng chất và nhiều chất xơ. Đặc biệt, hàm lượn', 27000, 27000, 30, 0, 7),
+(74, 'Dưa hấu không hạt 1kg', 13, '03162023045839698400image 117.png', '03162023045839702600image 116.png', '03162023045839707100image 115.png', 'Sự xuất hiện của dưa hấu không hạt mang đến những trải nghiệm thú vị hơn với những ai đam mê loại trái cây ăn. Không chỉ hương vị hấp dẫn, thanh mát mà việc ăn dưa hấu cũng không cần phải nhả hạt như trước. Chính ưu điểm này đã khiến nhiều người đổ xô lựa chọn loại dưa này ngày càng nhiều hơn. Đây là giống dưa hấu có vị ngọt thanh, dễ chịu. Ruột dưa màu đỏ tươi và không có hạt hoặc rất ít hạt. Hương thơm của dưa hấu không hạt cũng rất hấp dẫn. Đặc biệt, nó có thể phù hợp với cả người lớn hay trẻ', 30000, 27000, 12, 1, 7),
+(75, 'Ổi nữ hoàng giòn 1kg', 13, '03162023045944311900image 119.png', '03162023045944314600image 120.png', '03162023045944319100image 118.png', 'Ổi Nữ Hoàng luôn là lựa chọn của rất nhiều “tín đồ” yêu thích loại trái cây này. Với ưu điểm giòn, ngọt, ít hạt, loại ổi này hiện bán rất “chạy” trên thị trường. Kể từ khi du nhập vào Việt Nam, Nữ Hoàng vẫn luôn là loại ổi được nhiều nhà vườn lựa chọn để trồng và cung cấp ra thị trường.  Sở dĩ giống ổi này được gọi tên là Nữ Hoàng không chỉ bởi hương vị thơm ngon mà còn là nhờ nguồn dinh dưỡng phong phú bên trong. Loại ổi này có rất nhiều vitamin, khoáng chất và nhiều chất xơ. Đặc biệt, hàm lượn', 27000, 27000, 30, 1, 7),
 (76, 'Mận an phước bịt 1kg', 13, '03162023050039676600image 122.png', '03162023050039679300image 121.png', '03162023050039683400image 123.png', 'Mận An Phước có phần thịt trắng, giòn và vị ngọt thanh rất dễ chịu. Hơn thế nữa, do không có hạt nên mận luôn khiến người dùng thấy thích thú, tiện lợi hơn khi thưởng thức. Thông thường, mận sẽ có trọng lượng 8 – 10 quả/kg. Nếu là quả to thì từ 4 - 6 quả/kg.Điểm nổi bật của Mận An Phước chính là chứa nhiều chất xơ và không có chất béo. Ngoài ra, các vitamin, khoáng chất và nhiều dưỡng chất thiết yếu khác bên trong mận cũng giúp ích rất lớn với việc chăm sóc sức khỏe người dùng', 40000, 40000, 23, 0, 7);
 INSERT INTO `product` (`id_prd`, `name_prd`, `id_cate`, `img_prd_1`, `img_prd_2`, `img_prd_3`, `detail`, `cost`, `price`, `quanlity`, `view`, `id_admin`) VALUES
 (77, 'Xoài Đài Loan loại 1', 13, '03162023050159416100image 126.png', '03162023050159420000image 124.png', '03162023050159422600image 125.png', 'Xoài Đài Loan cũng được trồng tại Việt Nam và là loại trái cây ăn sống rất ngon, đủ độ giòn và không quá chua. Xoài Đài Loan được xếp vào dòng xoài ăn sống ngon nhất hiện nay. Một điểm đặc biệt khác với xoài keo, xoài Đài Loan ăn chín cũng rất ngon và ngọt lịm, hương thơm nhẹ. Người ta thường dùng xoài Đài Loan để ăn sống, làm gỏi, xay sinh tố và làm bánh xoài. Với giá thành rất rẻ, có khi còn hạ nhiệt hơn so với xoài keo, vào mùa xoài Đài Loan giá khởi điểm khoảng 9000đồng/kg, một mức giá vô cù', 30000, 25000, 30, 0, 7),
@@ -248,15 +321,15 @@ INSERT INTO `product` (`id_prd`, `name_prd`, `id_cate`, `img_prd_1`, `img_prd_2`
 (82, 'Cherry nhập khẩu từ Mỹ', 14, '03162023051028891800image 139.png', '03162023051028896100image 140.png', '03162023051028899100image 141.png', 'Trong tất cả các hàng lạnh cao cấp hiện nay, Cherry được xếp vào hàng loại đặc biệt ngon nhất và xuất khẩu  sang thị trường nhiều nước khác nhau. Cherry được trồng nhiều ở Mỹ, Canada, Newzealand, Úc và Chile... và đây cũng là loại quả cung cấp nhiều dưỡng chất tốt cho sức khoẻ mọi nhà. Kết cấu của quả cherry có hình bi, nhỏ và màu tím, cherry xanh cuống rất tươi và trông rất đẹp mắt, Cherry khi nhập khẩu còn mới sẽ có độ ngọt thanh, đậm đà vị và tan giòn, hương thơm nhẹ...', 660000, 649000, 16, 0, 7),
 (83, 'Lê Nam Phi nhập khẩu', 14, '03162023051134040100image 142.png', '03162023051134044000image 143.png', '03162023051134046400image 144.png', 'Có nguồn gốc từ các tỉnh phía Tây Nam của Nam Phi, lê Nam Phi có màu sắc đặc biệt là sự xen kẽ của 3 màu: xanh, đỏ, vàng rất đẹp mắt. Sở hữu hình dáng đặc biệt như hình giọt nước, hương vị lại đặc biệt, tuy nhiên công dụng của lê Nam Phi mới thực sự là lý do loại quả này được ưa chuộng trên thị trường Việt Nam. Lê Nam Phi có thể hấp thụ glucose và chuyển hoá thành năng lượng để cơ thể hoạt động khoẻ mạnh. Ăn một quả lê Nam Phi vào lúc cơ thể có dấu hiệu mệt mỏi hay suy nhược sẽ là một lựa chọn t', 120000, 119000, 23, 0, 7),
 (84, 'Táo gala Mỹ nhập khẩu', 14, '03162023051225381200image 146.png', '03162023051225384000image 145.png', '03162023051225388600image 147.png', 'Những quả đỏ tròn, được dán tem USA lên từng quả, kích thước 1 quả khoảng 0,15kg - 0,2kg, màu đỏ tươi. Vị của táo Gala Mỹ là vị ngọt thanh, rất giòn và không hề bị xốp bột, hương thơm nhẹ, vì là loại trái cây cao cấp nên táo Gala Mỹ luôn được bảo quản lạnh, đủ nhiệt độ để trái táo được tươi nhất khi vận chuyển xa. Khác với các loại táo khác, Táo Gala Mỹ giá bình ổn hơn táo Envy, nhưng lại cao hơn táo New Zealand hay táo Trung Quốc', 149000, 149000, 12, 0, 7),
-(85, 'Mít nghệ tiền giang 1kg', 15, '03162023051838669400Rectangle 20.png', '03162023051838672500Rectangle 21.png', '03162023051838676900image 148.png', 'Tiền Giang được biết đến là vùng đất trồng nhiều hoa quả đặc sản, trong đó không thể không nhắc tới mít nghệ. Mít nghệ Tiền Giang có vị ngọt thanh tự nhiên, mùi thơm đặc trưng, múi mít dày, ít xơ, màu vàng hấp dẫn. Khi gọt bỏ cùi và lõi thì múi mít nghệ sẽ hết mủ, nên khi ăn sẽ không bị dính tay. Mít rất giàu các chất dinh dưỡng quan trọng như vitamin A, vitamin C, canxi, kali, sắt, thiamin, riboflavin, niacin, magneisum và nhiều chất dinh dưỡng khác.', 36000, 34000, 30, 0, 7),
+(85, 'Mít nghệ tiền giang 1kg', 15, '03162023051838669400Rectangle 20.png', '03162023051838672500Rectangle 21.png', '03162023051838676900image 148.png', 'Tiền Giang được biết đến là vùng đất trồng nhiều hoa quả đặc sản, trong đó không thể không nhắc tới mít nghệ. Mít nghệ Tiền Giang có vị ngọt thanh tự nhiên, mùi thơm đặc trưng, múi mít dày, ít xơ, màu vàng hấp dẫn. Khi gọt bỏ cùi và lõi thì múi mít nghệ sẽ hết mủ, nên khi ăn sẽ không bị dính tay. Mít rất giàu các chất dinh dưỡng quan trọng như vitamin A, vitamin C, canxi, kali, sắt, thiamin, riboflavin, niacin, magneisum và nhiều chất dinh dưỡng khác.', 36000, 34000, 30, 1, 7),
 (86, 'Na Dai núi Bà đen', 15, '03162023051950061100image 151.png', '03162023051950065500image 152.png', '03162023051950069300image 153.png', 'Na dai thương hiệu Bà Đen Tây Ninh được trồng hữu cơ theo tiêu chuẩn sạch quốc tế. Mãng cầu ta Tây Ninh nổi tiếng về độ ngon ngọt. Đất Tây Ninh là đất thịt pha sỏi và cát nên cây mãng cầu ở đây phát triển rất tốt và cho chất lượng rất ngon. Đặc biệt vùng quanh núi Bà Đen là mãng cầu ngon nhất.', 220000, 210000, 22, 0, 7),
 (87, 'Bơ sáp đăk lăk 1kg', 15, '03162023052043931500image 154.png', '03162023052043935700image 155.png', '03162023052043939900image 156.png', 'Bơ sáp Đăk Lăk được mọi người yêu thích bởi giá trị dinh dưỡng rất cao, hương vị thơm ngon và nhiều tác dụng tích cực tới sức khoẻ con người. Nếu có dịp ghé qua vùng  Đắk Lắk ngay mùa bơ sáp bạn sẽ càng trĩu lòng hơn bởi hình ảnh những quả bơ sáp trĩu cả ngọn đồi bazan. Bơ là một loại quả vừa ngon vừa bổ dưỡng', 35000, 32000, 23, 0, 7),
 (88, 'Dừa sáp Trà Vinh  1kg', 15, '03162023052138314000image 158.png', '03162023052138317800image 159.png', '03162023052138320300image 157.png', 'Dừa Sáp đặc sản vùng đất Cầu Kè – Trà Vinh , dừa dày cơm sáp đặc nước dừa sệt kẹo … Nạo cơm dừa sáp cùng với nước dừa sáp , cho thêm tí đuờng , sữa đặc thêm tí đậu phộng rang ăn cùng nước đá xay nhuyễn hoặc bỏ tủ lạnh ăn dần …Dừa sáp được ưa chuộng không chỉ vì vị ngon của chúng mà là còn vì hàm lượng dưỡng chất có trong nó rất cao. Giúp bổ xung các chất quan trọng và cần thiết cho cơ thể, tăng cường sức khỏe cho người sử dụng.', 95000, 95000, 30, 0, 7),
 (89, 'Măng cụt lái thiêu 1kg', 15, '03162023052239113100image 160.png', '03162023052239117600image 161.png', '03162023052239120700image 162.png', 'Măng Cụt Lái Thiêu là một trong những món đặc sản Bình Dương mà ai cũng muốn được thử một lần trong đời. Với hương vị ngọt ngào như chính lòng hiếu khách của người Bình Dương – măng cụt Lái Thiêu sẽ khiến du khách nhớ mãi không quên về mảnh đất hữu tình này. Măng cụt là trái cây bổ dưỡng cần thiết cho những ngày hè, loại trái cây này cũng là nguyên liệu chế biến món ăn ngon bổ dưỡng.', 63000, 53000, 12, 0, 7),
 (90, 'Dâu tây đà lạt 1kg', 15, '03162023052347218800image 163.png', '03162023052347222100image 164.png', '03162023052347225200image 165.png', 'Dâu tây là một nguồn cung cấp chất chống oxy hóa và chất dinh dưỡng có tác dụng bảo vệ sức khỏe mạnh mẽ. Chúng có hàm lượng calo thấp, giàu chất xơ và dồi dào chất chống oxy hóa và polyphenol.Một cốc dâu tây chứa hơn 100% mục tiêu tối thiểu hàng ngày đối với vitamin C hỗ trợ miễn dịch. Ngoài chức năng như một chất chống oxy hóa phòng chống lại bệnh tật và tuổi tác, vitamin C còn giúp tạo ra collagen và duy trì sức khỏe của da.', 280000, 263000, 30, 0, 7),
 (91, 'Bưởi 5roi Việt Nam', 16, '03162023053803988500Rectangle 2.png', '03162023053803991200Rectangle 3.png', '03162023053803993700Rectangle 1.png', 'Bưởi là một loại trái cây bổ dưỡng và bạn có thể để thêm nó vào chế độ ăn uống hằng ngày. Quả bưởi không chỉ “nổi tiếng” vì cung cấp hàm lượng dinh dưỡng cao mà còn chứa rất ít calo. Trên thực tế, bưởi chính là một trong những trái cây chứa hàm lượng calo thấp nhất. Quả bưởi cung cấp một lượng chất xơ cao, cùng hơn 15 loại vitamin và khoáng chất tốt cho sức khỏe. Ăn bưởi thường xuyên giúp bạn tăng cường hệ miễn dịch. Nó được đánh giá cao vì giàu hàm lượng vitamin C cùng tính chất chống oxy hóa, ', 35000, 35000, 30, 0, 8),
-(92, 'Sầu riêng Ri 6', 16, '03162023053902421200Rectangle 4.png', '03162023053902423700Rectangle 5.png', '03162023053902426700Rectangle 6.png', 'Giống sầu riêng Ri 6 là giống sầu riêng có nguồn gốc từ Myanmar và gắn liền với tên tuổi ông Sáu Ri (tên thật là Nguyễn Minh Châu) sống tại xã Bình Hòa, huyện Long Hồ, tỉnh Vĩnh Long. Năm 1990, gia đình ông đã mua 6 cây giống của người họ hàng mang về từ Myanmar với giá 30 giạ lúa. Năm 1999, ông mang giống sầu riêng này đến hội thi hội thi Trái Cây Ngon Đồng Bằng Sông Cửu Long và đoạt giải nhất. Từ đó giống sầu riêng này được nhiều người biết đến và được trồng phổ biến tại nhiều địa phương và đư', 160000, 160000, 13, 0, 8),
-(93, 'Nhãn tiêu da bò', 16, '03162023053953055400Rectangle 8.png', '03162023053953059000Rectangle 9.png', '03162023053953062700Rectangle 7.png', 'Loại nhãn này có rất nhiều tại miền Tây và rất được ưa chuộng. Bởi loại nhãn có cơm rất dày, hạt nhỏ như hạt tiêu kèm thêm vỏ nhãn có màu vàng như da bò nên dân gian đặt tên là nhãn tiêu da bò. Khi thưởng thức bạn sẽ cảm nhận được hương thơm mát cùng vị ngọt thanh lưu lại trên đầu lưỡi và dưới cuống họng. Những cây nhãn càng nhiều tuổi thì phần thịt cơm bên trong lại càng dày và quả sẽ càng ngọt và thơm hơn.', 60000, 60000, 23, 0, 8),
+(92, 'Sầu riêng Ri 6', 16, '03162023053902421200Rectangle 4.png', '03162023053902423700Rectangle 5.png', '03162023053902426700Rectangle 6.png', 'Giống sầu riêng Ri 6 là giống sầu riêng có nguồn gốc từ Myanmar và gắn liền với tên tuổi ông Sáu Ri (tên thật là Nguyễn Minh Châu) sống tại xã Bình Hòa, huyện Long Hồ, tỉnh Vĩnh Long. Năm 1990, gia đình ông đã mua 6 cây giống của người họ hàng mang về từ Myanmar với giá 30 giạ lúa. Năm 1999, ông mang giống sầu riêng này đến hội thi hội thi Trái Cây Ngon Đồng Bằng Sông Cửu Long và đoạt giải nhất. Từ đó giống sầu riêng này được nhiều người biết đến và được trồng phổ biến tại nhiều địa phương và đư', 160000, 160000, 10, 1, 8),
+(93, 'Nhãn tiêu da bò', 16, '03162023053953055400Rectangle 8.png', '03162023053953059000Rectangle 9.png', '03162023053953062700Rectangle 7.png', 'Loại nhãn này có rất nhiều tại miền Tây và rất được ưa chuộng. Bởi loại nhãn có cơm rất dày, hạt nhỏ như hạt tiêu kèm thêm vỏ nhãn có màu vàng như da bò nên dân gian đặt tên là nhãn tiêu da bò. Khi thưởng thức bạn sẽ cảm nhận được hương thơm mát cùng vị ngọt thanh lưu lại trên đầu lưỡi và dưới cuống họng. Những cây nhãn càng nhiều tuổi thì phần thịt cơm bên trong lại càng dày và quả sẽ càng ngọt và thơm hơn.', 60000, 60000, 22, 0, 8),
 (94, 'Na Kiên Giang', 16, '03162023054045565200Rectangle 10.png', '03162023054045568500Rectangle 11.png', '03162023054045570900Rectangle 12.png', 'Na được xem là nguồn cung cấp vitamin C, A dồi dào có khả năng cải thiện thị lực. Bên cạnh đó, nó còn chứa riboflavin, vitamin B2 khi đi vào cơ thể có tác dụng chống lại sự hình thành các gốc tự do, khiến mọi người có được đôi mắt sáng, tinh anh. Na chứa lượng lớn magie, kali và các khoáng chất có lợi. Khi đi vào cơ thể, những dưỡng chất này có khả năng bảo vệ tim mạch, thư giãn cơ bắp và kiểm soát huyết áp, giúp mọi người có được một trái tim khỏe mạnh.', 16000, 16000, 23, 0, 8),
 (95, 'Cam sành đồng tháp', 16, '03162023054149542200Rectangle 13.png', '03162023054149545600Rectangle 14.png', '03162023054149549400Rectangle 15.png', 'Cam sành là loại trái cây vốn được nhiều người yêu thích, đặc biệt là trẻ nhỏ và chị em phụ nữ, bởi cam rất bổ dưỡng và cao cấp. Trái cam sành có đặc điểm mang màu xanh sậm đến khi chín thì ngả màu vàng, dáng tròn dẹt, hương vị chua ngọt, thị trái nhiều nước. Một đặc điểm nữa đó là cam sành có khá nhiều hạt nên thường được dùng phổ biến để vắt cam. Vỏ ngoài cam sần sùi, dày 3-5mm, trọng lượng trung bình mỗi trái khoảng 275gram. Chu kỳ khai thác là 10-15 năm. Giống cây này được trồng nhiều nhất t', 30000, 30000, 23, 0, 8),
 (96, 'Vải thiều Kiên Giang', 16, '03162023054246549200Rectangle 18.png', '03162023054246553500Rectangle 19.png', '03162023054246556300Rectangle 17.png', 'Chiết xuất vải thiều có khả năng chống ung thư. Nó có thể có khả năng ngăn chặn sự phát triển tế bào của các bệnh ung thư khác nhau. Nhưng để kiểm chứng công dụng này vẫn cần nhiều nghiên cứu hơn nữa. Bạn nên ăn ít nhất 1,5 đến 2,5 cốc trái cây mỗi ngày và 2 đến 4 cốc rau. Ăn nhiều trái cây và rau quả có thể giúp giảm nguy cơ phát triển các bệnh như bệnh tim mạch, đột quỵ và một số loại ung thư.‌ Chất chống oxy hóa trong quả vải giúp cải thiện hệ miễn dịch, làm chậm sự tiến triển của bệnh đục th', 45000, 45000, 23, 0, 8),
@@ -283,7 +356,7 @@ CREATE TABLE `rep_comment` (
   `id_rep_cmt` int(11) NOT NULL,
   `id_admin` int(11) NOT NULL,
   `id_cmt` int(11) NOT NULL,
-  `rep_cmt` varchar(500) COLLATE utf8_unicode_ci NOT NULL,
+  `rep_cmt` varchar(500) COLLATE utf8_unicode_ci NOT NULL DEFAULT 'Cảm ơn ý kiến của bạn, Cửa hàng đã ghi nhận đóng góp của bạn',
   `time_rep_cmt` datetime NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
@@ -310,6 +383,29 @@ INSERT INTO `role` (`id_role`, `name_role`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Cấu trúc bảng cho bảng `statusbill`
+--
+
+CREATE TABLE `statusbill` (
+  `id_statusbill` int(11) NOT NULL,
+  `name_status` varchar(50) COLLATE utf8_unicode_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Đang đổ dữ liệu cho bảng `statusbill`
+--
+
+INSERT INTO `statusbill` (`id_statusbill`, `name_status`) VALUES
+(1, 'Chưa xác nhận'),
+(2, 'Đã xác nhận'),
+(3, 'Đã hủy'),
+(4, 'Hàng đang được giao'),
+(5, 'Thành công'),
+(6, 'Thất bại');
+
+-- --------------------------------------------------------
+
+--
 -- Cấu trúc bảng cho bảng `user`
 --
 
@@ -327,6 +423,34 @@ CREATE TABLE `user` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
+-- Đang đổ dữ liệu cho bảng `user`
+--
+
+INSERT INTO `user` (`id_user`, `username`, `fullname`, `phone`, `email`, `avatar`, `mk`, `stk`, `address`, `bank`) VALUES
+(1, 'nam123@gmail.com', '', '0987876234', 'nam123@gmail.com', '', '05f0dece93002318d43e2c699c07db57', '', '', ''),
+(2, 'manh123@gmail.com', '', '0823984763', 'manh123@gmail.com', '', '05f0dece93002318d43e2c699c07db57', '', '', ''),
+(3, 'kieu123@gmail.com', '', '0237892341', 'kieu123@gmail.com', '', '05f0dece93002318d43e2c699c07db57', '', '', ''),
+(4, 'thuy123@gmail.com', '', '0638324876', 'thuy123@gmail.com', '', '05f0dece93002318d43e2c699c07db57', '', '', ''),
+(5, 'nhat123@gmail.com', '', '0382873444', 'nhat123@gmail.com', '', '05f0dece93002318d43e2c699c07db57', '', '', ''),
+(6, 'tuan123@gmail.com', '', '0347876345', 'tuan123@gmail.com', '', '05f0dece93002318d43e2c699c07db57', '', '', ''),
+(7, 'phong123@gmail.com', '', '0273948234', 'phong123@gmail.com', '', '05f0dece93002318d43e2c699c07db57', '', '', ''),
+(8, 'nhatanh123@gmail.com', '', '0647834777', 'nhatanh123@gmail.com', '', '05f0dece93002318d43e2c699c07db57', '', '', ''),
+(9, 'ngoc123@gmail.com', '', '0475834746', 'ngoc123@gmail.com', '', '05f0dece93002318d43e2c699c07db57', '', '', ''),
+(10, 'minhanh123@gmail.com', '', '0424873999', 'minhanh123@gmail.com', '', '05f0dece93002318d43e2c699c07db57', '', '', '');
+
+-- --------------------------------------------------------
+
+--
+-- Cấu trúc bảng cho bảng `wishlist`
+--
+
+CREATE TABLE `wishlist` (
+  `id_wishlist` int(11) NOT NULL,
+  `id_prd` int(11) NOT NULL,
+  `id_user` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
 -- Chỉ mục cho các bảng đã đổ
 --
 
@@ -341,7 +465,11 @@ ALTER TABLE `administrator`
 -- Chỉ mục cho bảng `bill`
 --
 ALTER TABLE `bill`
-  ADD PRIMARY KEY (`id_bill`);
+  ADD PRIMARY KEY (`id_bill`),
+  ADD KEY `id_user_bill` (`id_user`),
+  ADD KEY `id_coupon_bill` (`id_coupon`),
+  ADD KEY `id_admin_bill` (`id_admin`),
+  ADD KEY `id_statusbill` (`status`);
 
 --
 -- Chỉ mục cho bảng `category`
@@ -359,12 +487,33 @@ ALTER TABLE `comment`
   ADD KEY `id_prd_cmt` (`id_prd`);
 
 --
+-- Chỉ mục cho bảng `contact_us`
+--
+ALTER TABLE `contact_us`
+  ADD PRIMARY KEY (`id_contact`);
+
+--
+-- Chỉ mục cho bảng `coupon`
+--
+ALTER TABLE `coupon`
+  ADD PRIMARY KEY (`id_coupon`),
+  ADD KEY `id_admin_coupon` (`id_admin`);
+
+--
 -- Chỉ mục cho bảng `detail_bill`
 --
 ALTER TABLE `detail_bill`
   ADD PRIMARY KEY (`id_detail_bill`),
   ADD KEY `id_bill` (`id_bill`),
   ADD KEY `id_prd` (`id_prd`);
+
+--
+-- Chỉ mục cho bảng `evalution`
+--
+ALTER TABLE `evalution`
+  ADD PRIMARY KEY (`id_evalution`),
+  ADD KEY `id_admin_evalution` (`id_admin`),
+  ADD KEY `id_user_evalution` (`id_user`);
 
 --
 -- Chỉ mục cho bảng `product`
@@ -389,10 +538,24 @@ ALTER TABLE `role`
   ADD PRIMARY KEY (`id_role`);
 
 --
+-- Chỉ mục cho bảng `statusbill`
+--
+ALTER TABLE `statusbill`
+  ADD PRIMARY KEY (`id_statusbill`);
+
+--
 -- Chỉ mục cho bảng `user`
 --
 ALTER TABLE `user`
   ADD PRIMARY KEY (`id_user`);
+
+--
+-- Chỉ mục cho bảng `wishlist`
+--
+ALTER TABLE `wishlist`
+  ADD PRIMARY KEY (`id_wishlist`),
+  ADD KEY `id_prd_wishlist` (`id_prd`),
+  ADD KEY `id_user_wishlist` (`id_user`);
 
 --
 -- AUTO_INCREMENT cho các bảng đã đổ
@@ -402,7 +565,7 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT cho bảng `administrator`
 --
 ALTER TABLE `administrator`
-  MODIFY `id_admin` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id_admin` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT cho bảng `category`
@@ -417,10 +580,28 @@ ALTER TABLE `comment`
   MODIFY `id_cmt` int(11) NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT cho bảng `contact_us`
+--
+ALTER TABLE `contact_us`
+  MODIFY `id_contact` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT cho bảng `coupon`
+--
+ALTER TABLE `coupon`
+  MODIFY `id_coupon` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT cho bảng `detail_bill`
 --
 ALTER TABLE `detail_bill`
   MODIFY `id_detail_bill` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT cho bảng `evalution`
+--
+ALTER TABLE `evalution`
+  MODIFY `id_evalution` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT cho bảng `product`
@@ -441,10 +622,22 @@ ALTER TABLE `role`
   MODIFY `id_role` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
+-- AUTO_INCREMENT cho bảng `statusbill`
+--
+ALTER TABLE `statusbill`
+  MODIFY `id_statusbill` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
+--
 -- AUTO_INCREMENT cho bảng `user`
 --
 ALTER TABLE `user`
-  MODIFY `id_user` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_user` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+
+--
+-- AUTO_INCREMENT cho bảng `wishlist`
+--
+ALTER TABLE `wishlist`
+  MODIFY `id_wishlist` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- Các ràng buộc cho các bảng đã đổ
@@ -457,38 +650,66 @@ ALTER TABLE `administrator`
   ADD CONSTRAINT `id_role` FOREIGN KEY (`id_role`) REFERENCES `role` (`id_role`);
 
 --
+-- Các ràng buộc cho bảng `bill`
+--
+ALTER TABLE `bill`
+  ADD CONSTRAINT `id_admin_bill` FOREIGN KEY (`id_admin`) REFERENCES `administrator` (`id_admin`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `id_statusbill` FOREIGN KEY (`status`) REFERENCES `statusbill` (`id_statusbill`),
+  ADD CONSTRAINT `id_user_bill` FOREIGN KEY (`id_user`) REFERENCES `user` (`id_user`) ON DELETE SET NULL ON UPDATE SET NULL;
+
+--
 -- Các ràng buộc cho bảng `category`
 --
 ALTER TABLE `category`
-  ADD CONSTRAINT `id_admin_addcate` FOREIGN KEY (`id_admin`) REFERENCES `administrator` (`id_admin`);
+  ADD CONSTRAINT `id_admin_addcate` FOREIGN KEY (`id_admin`) REFERENCES `administrator` (`id_admin`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Các ràng buộc cho bảng `comment`
 --
 ALTER TABLE `comment`
   ADD CONSTRAINT `id_prd_cmt` FOREIGN KEY (`id_prd`) REFERENCES `product` (`id_prd`),
-  ADD CONSTRAINT `id_user` FOREIGN KEY (`id_user`) REFERENCES `user` (`id_user`);
+  ADD CONSTRAINT `id_user` FOREIGN KEY (`id_user`) REFERENCES `user` (`id_user`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Các ràng buộc cho bảng `coupon`
+--
+ALTER TABLE `coupon`
+  ADD CONSTRAINT `id_admin_coupon` FOREIGN KEY (`id_admin`) REFERENCES `administrator` (`id_admin`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Các ràng buộc cho bảng `detail_bill`
 --
 ALTER TABLE `detail_bill`
-  ADD CONSTRAINT `id_bill` FOREIGN KEY (`id_bill`) REFERENCES `bill` (`id_bill`),
-  ADD CONSTRAINT `id_prd` FOREIGN KEY (`id_prd`) REFERENCES `product` (`id_prd`);
+  ADD CONSTRAINT `id_bill` FOREIGN KEY (`id_bill`) REFERENCES `bill` (`id_bill`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `id_prd_detailbill` FOREIGN KEY (`id_prd`) REFERENCES `product` (`id_prd`) ON DELETE SET NULL ON UPDATE SET NULL;
+
+--
+-- Các ràng buộc cho bảng `evalution`
+--
+ALTER TABLE `evalution`
+  ADD CONSTRAINT `id_admin_evalution` FOREIGN KEY (`id_admin`) REFERENCES `administrator` (`id_admin`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `id_user_evalution` FOREIGN KEY (`id_user`) REFERENCES `user` (`id_user`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Các ràng buộc cho bảng `product`
 --
 ALTER TABLE `product`
-  ADD CONSTRAINT `id_brand` FOREIGN KEY (`id_admin`) REFERENCES `administrator` (`id_admin`),
-  ADD CONSTRAINT `id_cate` FOREIGN KEY (`id_cate`) REFERENCES `category` (`id_cate`);
+  ADD CONSTRAINT `id_brand` FOREIGN KEY (`id_admin`) REFERENCES `administrator` (`id_admin`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `id_cate` FOREIGN KEY (`id_cate`) REFERENCES `category` (`id_cate`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Các ràng buộc cho bảng `rep_comment`
 --
 ALTER TABLE `rep_comment`
-  ADD CONSTRAINT `id_admin` FOREIGN KEY (`id_admin`) REFERENCES `administrator` (`id_admin`),
-  ADD CONSTRAINT `id_cmt` FOREIGN KEY (`id_cmt`) REFERENCES `comment` (`id_cmt`);
+  ADD CONSTRAINT `id_admin` FOREIGN KEY (`id_admin`) REFERENCES `administrator` (`id_admin`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `id_cmt` FOREIGN KEY (`id_cmt`) REFERENCES `comment` (`id_cmt`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Các ràng buộc cho bảng `wishlist`
+--
+ALTER TABLE `wishlist`
+  ADD CONSTRAINT `id_prd_wishlist` FOREIGN KEY (`id_prd`) REFERENCES `product` (`id_prd`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `id_user_wishlist` FOREIGN KEY (`id_user`) REFERENCES `user` (`id_user`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

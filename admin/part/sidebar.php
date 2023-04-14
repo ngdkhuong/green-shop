@@ -2,7 +2,7 @@
     <div class="sidebar_toggle"><a href=""><i class="icon-close icons"></i></a></div>
     <div class="pcoded-inner-navbar main-menu">
 
-        <div class="pcoded-navigatio-lavel" data-i18n="nav.category.navigation">Layout</div>
+        <div class="pcoded-navigatio-lavel" data-i18n="nav.category.navigation">Main</div>
         <ul class="pcoded-item pcoded-left-item">
             <li class="active">
                 <a href="index.php">
@@ -112,12 +112,20 @@
             </li>
         </ul> -->
 
+<<<<<<< HEAD
             <div class="pcoded-navigatio-lavel" data-i18n="nav.category.forms">Quản trị
             </div>
 
             <ul class="pcoded-item pcoded-left-item">
                 <?php
                 if ($_SESSION['login_admin']['id_role'] == 1 || $_SESSION['login_admin']['id_role'] == 2) { ?>
+=======
+            <div class="pcoded-navigatio-lavel" data-i18n="nav.category.forms">Manege</div>
+
+            <ul class="pcoded-item pcoded-left-item">
+                <?php
+                if ($_SESSION['login_admin']['id_role'] != 3) { ?>
+>>>>>>> 6d2ed111b7f00328b5e66f18533e7da0b6e94a69
                     <li>
                         <a href="index.php?control=administrator">
                             <span class="pcoded-micon"><i class="ti-layers"></i><b>FC</b></span>
@@ -125,6 +133,16 @@
                             <span class="pcoded-mcaret"></span>
                         </a>
                     </li>
+<<<<<<< HEAD
+=======
+                    <li>
+                        <a href="index.php?control=contact">
+                            <span class="pcoded-micon"><i class="ti-layers"></i><b>FC</b></span>
+                            <span class="pcoded-mtext" data-i18n="nav.form-components.main">Liên hệ</span>
+                            <span class="pcoded-mcaret"></span>
+                        </a>
+                    </li>
+>>>>>>> 6d2ed111b7f00328b5e66f18533e7da0b6e94a69
                 <?php }
                 ?>
                 <?php
@@ -136,16 +154,47 @@
                             <span class="pcoded-mcaret"></span>
                         </a>
                     </li>
+<<<<<<< HEAD
                     
                 <?php }
                 ?>
                 <li>
+=======
+                    <li>
+>>>>>>> 6d2ed111b7f00328b5e66f18533e7da0b6e94a69
                         <a href="index.php?control=product">
                             <span class="pcoded-micon"><i class="ti-layers"></i><b>FC</b></span>
                             <span class="pcoded-mtext" data-i18n="nav.form-components.main">Sản Phẩm</span>
                             <span class="pcoded-mcaret"></span>
                         </a>
                     </li>
+<<<<<<< HEAD
+=======
+                    <li>
+                        <a href="index.php?control=coupon">
+                            <span class="pcoded-micon"><i class="ti-layers"></i><b>FC</b></span>
+                            <span class="pcoded-mtext" data-i18n="nav.form-components.main">Coupon khuyến mãi</span>
+                            <span class="pcoded-mcaret"></span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="index.php?control=bill">
+                            <span class="pcoded-micon"><i class="ti-layers"></i><b>FC</b></span>
+                            <span class="pcoded-mtext" data-i18n="nav.form-components.main">Đơn hàng</span>
+                            <span class="pcoded-mcaret"></span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="index.php?control=comment">
+                            <span class="pcoded-micon"><i class="ti-layers"></i><b>FC</b></span>
+                            <span class="pcoded-mtext" data-i18n="nav.form-components.main">Bình luận</span>
+                            <span class="pcoded-mcaret"></span>
+                        </a>
+                    </li>
+                <?php }
+                ?>
+
+>>>>>>> 6d2ed111b7f00328b5e66f18533e7da0b6e94a69
 
             </ul>
 
