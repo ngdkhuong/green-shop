@@ -1,4 +1,4 @@
-versions: "2.1"
+versions: "3.8"
 services:
   client:
     build: .
